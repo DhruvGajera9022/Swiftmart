@@ -14,5 +14,9 @@ public class EarbudsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earbuds);
+
+        // have game e file ma change karish ne etle blue thay jase and new file red color ni aavse
+        // ae to khaber che pachi commit km thay?
+        // ha
     }
 }
