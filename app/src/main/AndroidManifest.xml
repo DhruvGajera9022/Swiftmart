@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Swiftmart"
         tools:targetApi="31">
         <activity
+            android:name=".ElectionicsActivity"
+            android:exported="false" />
+        <activity
             android:name=".EarbusDetailsActivity"
             android:exported="false" />
         <activity
