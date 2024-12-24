@@ -15,18 +15,7 @@ public class EarbudsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earbuds);
 
-        // have game e file ma change karish ne etle blue thay jase and new file red color ni aavse
-        // ae to khaber che pachi commit km thay?
-        // ha
-
-        // commit thay gyu pachi push karvanu
-
-        // hu pan aavi rite j karish tu jayre pan project khol ne tyare pull lay levanu
-
-        //aatyare ekey file navi nathi etle baki je changes hase e aavi jase
-
-        //wait aek file banavu chav
-
+        
 
     }
 }

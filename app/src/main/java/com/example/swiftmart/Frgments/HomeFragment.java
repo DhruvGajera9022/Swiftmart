@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.swiftmart.GadgetActivity;
+import com.example.swiftmart.EarbudsActivity;
+import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.MobilesActivity;
 import com.example.swiftmart.R;
 
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
         gadgets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), GadgetActivity.class);
+                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
                 startActivity(gadgets);
             }
         });
