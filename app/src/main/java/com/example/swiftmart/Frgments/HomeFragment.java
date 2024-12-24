@@ -1,5 +1,6 @@
 package com.example.swiftmart.Frgments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,13 +18,14 @@ import com.example.swiftmart.R;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout mobiles,gadgets,electronics,tv;
+    LinearLayout mobiles,earbuds,tv,leptop,headphone,speaker,keyword,mouse,camero,smartwatch,tablet;
 
     public HomeFragment() {
 
     }
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,9 +33,16 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mobiles = view.findViewById(R.id.mobiles);
-        gadgets = view.findViewById(R.id.gadgets);
-        electronics = view.findViewById(R.id.electronics);
+        earbuds = view.findViewById(R.id.earbuds);
         tv = view.findViewById(R.id.tv);
+        leptop = view.findViewById(R.id.leptop);
+        headphone = view.findViewById(R.id.headphone);
+        speaker = view.findViewById(R.id.speaker);
+        keyword = view.findViewById(R.id.keyword);
+        mouse = view.findViewById(R.id.mouse);
+        camero = view.findViewById(R.id.camero);
+        smartwatch = view.findViewById(R.id.smartwatch);
+        tablet = view.findViewById(R.id.tablet);
 
         mobiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +51,7 @@ public class HomeFragment extends Fragment {
                 startActivity(mobiles);
             }
         });
-        gadgets.setOnClickListener(new View.OnClickListener() {
+        earbuds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);

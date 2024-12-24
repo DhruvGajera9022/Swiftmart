@@ -320,7 +320,55 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Onepluws"/>
+                    android:text="Oneplus"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/iqoo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10sp"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:src="@drawable/iqoo"
+                    android:layout_gravity="center"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="Iqoo"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nothing"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:src="@drawable/nothing"
+                    android:layout_gravity="center"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="Nothing"/>
 
             </LinearLayout>
 
