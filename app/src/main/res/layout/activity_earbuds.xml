@@ -66,12 +66,15 @@
     </RelativeLayout>
 
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
             android:orientation="horizontal">
 
+            
             <LinearLayout
                 android:id="@+id/earbudsdetailes"
                 android:layout_width="match_parent"
@@ -216,11 +219,11 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <ImageView
+                <VideoView
+                    android:id="@+id/videoView"
                     android:layout_width="match_parent"
-                    android:layout_height="147dp"
-                    android:src="@drawable/boatearbuds1" />
-
+                    android:layout_gravity="center"
+                    android:layout_height="147sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -229,6 +232,7 @@
                     android:layout_marginHorizontal="10sp"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
