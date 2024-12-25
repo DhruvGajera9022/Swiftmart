@@ -27,9 +27,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_gravity="bottom"
                 android:layout_height="1dp"
-                android:labelFor="@+id/frameLayout"
                 android:background="#090909" />
 
             <LinearLayout
