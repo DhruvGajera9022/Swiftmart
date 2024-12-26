@@ -34,11 +34,6 @@
                 android:orientation="vertical">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20sp"
-                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -46,6 +41,7 @@
                         android:text="boAt"
                         android:textStyle="bold"
                         android:textSize="15sp"
+                        android:layout_marginStart="5sp"
                         android:textColor="@color/black"/>
 
 
@@ -58,25 +54,39 @@
                         android:textColor="@color/black"/>
 
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2sp"
+                    android:layout_marginTop="13sp"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="80sp"
+                        android:layout_height="25sp"
+                        android:src="@drawable/rating"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.9"
+                        android:layout_marginStart="10sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4,43,600  ratings"
+                        android:layout_marginStart="10sp"
+                        android:textColor="@color/blue"
+                        android:layout_gravity="center"
+                        android:textSize="15sp"/>
+
+
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹4,290/month"
-                    android:layout_marginTop="4sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="36 months Cost EMI Plan with HDFC credit-card."
-                    android:textSize="15sp"
-                    android:textColor="@color/black"/>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,16 +105,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="26%"
+                        android:text="71%"
                         android:layout_gravity="center"
                         android:textColor="@color/green"
                         android:textSize="15sp"/>
 
                     <TextView
-                        android:id="@+id/iphonetext"
+                        android:id="@+id/earbudstext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,64,900"
+                        android:text="3,490"
                         android:layout_marginStart="3sp"
                         android:textColor="@color/gray"
                         android:textSize="15sp"/>
@@ -112,7 +122,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₹1,21,999"
+                        android:text="₹999"
                         android:layout_marginStart="5sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -121,20 +131,61 @@
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+ ₹99 Secured Packaging fee"
                     android:layout_marginTop="5sp"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Free delivery"
-                    android:layout_marginTop="3sp"
-                    android:textSize="13sp"
-                    android:textColor="@color/black"/>
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/express"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EXPRESS "
+                        android:layout_marginStart="5sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Free"
+                        android:layout_marginStart="2sp"
+                        android:textColor="@color/green"
+                        android:layout_gravity="center"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹40"
+                        android:layout_marginStart="2sp"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery by Tomorrow"
+                        android:layout_marginStart="5sp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="13sp"/>
+
+
+
+                </LinearLayout>
 
 
 
@@ -162,9 +213,9 @@
 
                     <ImageView
                         android:layout_width="100sp"
-                        android:layout_height="40sp"
+                        android:layout_height="80sp"
                         android:layout_margin="5sp"
-                        android:src="@drawable/apple"/>
+                        android:src="@drawable/boat"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -175,20 +226,13 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:text="1 year warranty for phone and 1 year"
+                            android:text="1 year warranty form the Date of Purchase"
                             />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:text="warranty for in Box Accessories."
-                                />
 
 
                             <TextView
@@ -196,45 +240,15 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/blue"
                                 android:textSize="14sp"
-                                android:text="Know"
+                                android:text="Know More"
                                 />
 
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/blue"
-                            android:textSize="14sp"
-                            android:text="More"
-                            />
+
                     </LinearLayout>
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10sp"
-                    android:layout_marginTop="10sp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="40sp"
-                        android:layout_height="40sp"
-                        android:layout_margin="10sp"
-                        android:src="@drawable/destination"/>
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:layout_margin="10sp"
-                        android:text="Brand authorised service center is just 4 km from your pincode (395010)"
-                        />
-                </LinearLayout>
 
             </LinearLayout>
 
