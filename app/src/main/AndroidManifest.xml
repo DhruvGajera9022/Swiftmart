@@ -16,13 +16,22 @@
         android:theme="@style/Theme.Swiftmart"
         tools:targetApi="31">
         <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".TV_Activity"
             android:exported="false" />
         <activity
             android:name=".tv_brandActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ElectionicsActivity"
             android:exported="false" />
         <activity
             android:name=".EarbusDetailsActivity"
@@ -32,9 +41,6 @@
             android:exported="false" />
         <activity
             android:name=".EarphoneActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GadgetActivity"
             android:exported="false" />
         <activity
             android:name=".WarrantyDetails"
@@ -56,13 +62,7 @@
             android:exported="false" />
         <activity
             android:name=".Activity_splash"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

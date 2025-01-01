@@ -23,4 +23,10 @@
     <color name="blue">#011B9C</color>
     <color name="blue1">#0061FF</color>
 
+    <color name="link_color">#1E88E5</color>
+    <color name="border_color">#BDBDBD</color>
+    <color name="background_color">#FFFFFF</color>
+    <color name="primary_text_color">#000000</color>
+    <color name="secondary_text_color">#757575</color>
+
 </resources>

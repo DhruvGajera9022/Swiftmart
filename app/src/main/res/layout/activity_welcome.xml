@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".WelcomeActivity">
+
+    <ScrollView
+        android:id="@+id/welcomeScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
+                android:text="Sign in"
+                android:textColor="#000000"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <!-- Terms and Privacy Statement -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="Please enter your details to sign in."
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <!-- Sign in with Email Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/welcomeEmailBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/white"
+                android:text="Sign in with email"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="5dp"
+                app:icon="@drawable/img_mail"
+                app:iconSize="20dp"
+                app:iconGravity="textStart"
+                app:iconPadding="16dp"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/border_color"
+                app:strokeWidth="1dp"
+                android:textAllCaps="false"
+                android:layout_marginTop="30dp"/>
+
+            <!-- Sign in with Google Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/welcomeGoogleBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="36dp"
+                android:backgroundTint="@color/white"
+                android:text="Sign in with google"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="5dp"
+                app:icon="@drawable/img_google"
+                app:iconSize="20dp"
+                app:iconGravity="textStart"
+                app:iconPadding="16dp"
+                app:iconTint="@color/black"
+                android:textAllCaps="false"
+                app:strokeColor="@color/border_color"
+                app:strokeWidth="1dp" />
+
+            <!-- Create Account Text -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:text="New here?"
+                    android:textColor="#757575"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/welcomeCreateAccountTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="5dp"
+                    android:text="Create Account"
+                    android:textColor="@color/link_color"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
