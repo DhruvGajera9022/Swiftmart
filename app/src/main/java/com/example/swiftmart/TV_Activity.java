@@ -1,10 +1,12 @@
 package com.example.swiftmart;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +19,7 @@ public class TV_Activity extends AppCompatActivity {
 
     ImageView backtv;
     TextView tvtext;
+    LinearLayout tvdetailes;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class TV_Activity extends AppCompatActivity {
 
         backtv=findViewById(R.id.backtv);
         tvtext=findViewById(R.id.tvtext);
+        tvdetailes=findViewById(R.id.tvdetailes);
 
         tvtext.setPaintFlags(tvtext.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -32,6 +36,13 @@ public class TV_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        tvdetailes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(TV_Activity.this, tv_detailsActivity.class);
+                startActivity(i);
             }
         });
     }
