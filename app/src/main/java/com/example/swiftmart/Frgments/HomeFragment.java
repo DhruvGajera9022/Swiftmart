@@ -15,6 +15,7 @@ import com.example.swiftmart.EarbudsActivity;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.MobilesActivity;
 import com.example.swiftmart.R;
+import com.example.swiftmart.tv_brandActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -58,6 +59,15 @@ public class HomeFragment extends Fragment {
                 startActivity(gadgets);
             }
         });
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
+                startActivity(gadgets);
+            }
+        });
+
+
 
         return view;
     }

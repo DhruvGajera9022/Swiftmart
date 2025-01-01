@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Swiftmart"
         tools:targetApi="31">
         <activity
+            android:name=".TV_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".tv_brandActivity"
+            android:exported="false" />
+        <activity
             android:name=".ElectionicsActivity"
             android:exported="false" />
         <activity
