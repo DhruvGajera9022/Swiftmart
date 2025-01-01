@@ -1,5 +1,6 @@
 package com.example.swiftmart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,17 +11,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     private ScrollView forgotPasswordScrollView;
     private EditText forgotPasswordEmailInput;
     private MaterialButton forgotPasswordButton;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         forgotPasswordEmailInput = findViewById(R.id.forgotPasswordEmailInput);
         forgotPasswordScrollView = findViewById(R.id.forgotPasswordScrollView);
         forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
+
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         forgotPasswordScrollView.setVerticalScrollBarEnabled(false);
 
@@ -80,6 +91,24 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     forgotPasswordEmailInput.setError("Please provide your email");
                     forgotPasswordEmailInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
                     isValid = false;
+                }
+
+                if (isValid){
+                    mAuth.sendPasswordResetEmail(txtEmail)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(ForgotPasswordActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ForgotPasswordActivity.this, "Password reset email failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });

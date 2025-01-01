@@ -8,21 +8,30 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView signInSignUpTxt, signInForgotPassword;
     private ScrollView signInScrollView;
     private EditText signInEmailInput, signInPasswordInput;
     private MaterialButton signInButton;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         signInEmailInput = findViewById(R.id.signInEmailInput);
         signInPasswordInput = findViewById(R.id.signInPasswordInput);
         signInButton = findViewById(R.id.signInButton);
+
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         signInScrollView.setVerticalScrollBarEnabled(false);
 
@@ -123,8 +135,8 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtEmail = signInEmailInput.getText().toString();
-                String txtPassword = signInPasswordInput.getText().toString();
+                String txtEmail = signInEmailInput.getText().toString().trim();
+                String txtPassword = signInPasswordInput.getText().toString().trim();
                 boolean isValid = true;
 
                 if(txtEmail.isEmpty()){
@@ -136,6 +148,25 @@ public class LoginActivity extends AppCompatActivity {
                     signInPasswordInput.setError("Please provide your password");
                     signInPasswordInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
                     isValid = false;
+                }
+
+                if (isValid){
+                    mAuth.signInWithEmailAndPassword(txtEmail, txtPassword)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });

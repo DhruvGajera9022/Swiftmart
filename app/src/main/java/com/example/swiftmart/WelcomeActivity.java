@@ -14,11 +14,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class WelcomeActivity extends AppCompatActivity {
     private MaterialButton welcomeEmailBtn, welcomeGoogleBtn;
@@ -26,7 +33,9 @@ public class WelcomeActivity extends AppCompatActivity {
     private ScrollView welcomeScrollView;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
 
+    private String userID;
     private static final int RC_SIGN_IN = 1;
 
     @Override
@@ -49,6 +58,7 @@ public class WelcomeActivity extends AppCompatActivity {
         welcomeScrollView = findViewById(R.id.welcomeScrollView);
 
         mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         welcomeScrollView.setVerticalScrollBarEnabled(false);
     }
@@ -125,14 +135,30 @@ public class WelcomeActivity extends AppCompatActivity {
                         String userEmail = account.getEmail();
                         String userImage = account.getPhotoUrl().toString();
 
-                        // Sign-in successful
-                        Toast.makeText(this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-//                        intent.putExtra("USER_NAME", userName);
-//                        intent.putExtra("USER_EMAIL", userEmail);
-//                        intent.putExtra("USER_IMAGE", userImage);
-                        startActivity(intent);
-                        finish();
+                        userID = mAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = firestore.collection("Users").document(userID);
+
+                        Map<String, Object> userMap = new HashMap<>();
+                        userMap.put("Username", userName);
+                        userMap.put("Email", userEmail);
+                        userMap.put("Image", userImage);
+                        userMap.put("UserId", userID);
+
+                        documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                                // Sign-in successful
+                                Toast.makeText(WelcomeActivity.this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                                intent.putExtra("USER_NAME", userName);
+                                intent.putExtra("USER_EMAIL", userEmail);
+                                intent.putExtra("USER_IMAGE", userImage);
+                                startActivity(intent);
+                                finish();
+
+                            }
+                        });
                     } else {
                         // Sign-in failed
                         Toast.makeText(this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

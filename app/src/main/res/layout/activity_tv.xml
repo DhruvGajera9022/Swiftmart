@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".TV_Activity">
 
@@ -71,7 +72,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/iphonedetailes"
+        android:id="@+id/tvdetailes"
         android:background="@color/white"
         android:layout_marginTop="20sp"
         android:orientation="vertical">
@@ -222,31 +223,31 @@
             android:layout_marginTop="10sp"
             android:orientation="vertical">
             <TextView
-                android:layout_width="340sp"
+                android:layout_width="90sp"
                 android:background="@drawable/text_background"
                 android:layout_marginTop="15sp"
                 android:gravity="center"
                 android:layout_marginStart="10sp"
                 android:layout_height="wrap_content"
-                android:text="15.49 cm  (6.1 inches), Super Retina XDR Display"/>
+                android:text="OS: Tizen"/>
 
             <TextView
-                android:layout_width="260sp"
+                android:layout_width="240sp"
                 android:background="@drawable/text_background"
                 android:layout_marginTop="5sp"
                 android:gravity="center"
                 android:layout_marginStart="10sp"
                 android:layout_height="wrap_content"
-                android:text="48 MP + 12, 12MP Dual Rear Camera"/>
+                android:text="Ultra DD (4K) 3840 X 2160 Pixelsm"/>
 
             <TextView
-                android:layout_width="150sp"
+                android:layout_width="140sp"
                 android:background="@drawable/text_background"
                 android:layout_marginTop="5sp"
                 android:gravity="center"
                 android:layout_marginStart="10sp"
                 android:layout_height="wrap_content"
-                android:text="12 MP Front Camera"/>
+                android:text="Lanuch Year : 2023"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -10,21 +10,39 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     private TextView signUpSignInTxt;
     private ScrollView signUpScrollView;
     private EditText signUpUserNameInput, signUpEmailInput, signUpPasswordInput, signUpConfirmPasswordInput;
     private MaterialButton signUpButton;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
+
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +64,9 @@ public class SignupActivity extends AppCompatActivity {
         signUpPasswordInput = findViewById(R.id.signUpPasswordInput);
         signUpConfirmPasswordInput = findViewById(R.id.signUpConfirmPasswordInput);
         signUpButton = findViewById(R.id.signUpButton);
+
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         signUpScrollView.setVerticalScrollBarEnabled(false);
     }
@@ -141,34 +162,78 @@ public class SignupActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtUsername = signUpUserNameInput.getText().toString();
-                String txtEmail = signUpEmailInput.getText().toString();
-                String txtPassword = signUpPasswordInput.getText().toString();
-                String txtConfirmPassword = signUpConfirmPasswordInput.getText().toString();
+                String txtUsername = signUpUserNameInput.getText().toString().trim();
+                String txtEmail = signUpEmailInput.getText().toString().trim();
+                String txtPassword = signUpPasswordInput.getText().toString().trim();
+                String txtConfirmPassword = signUpConfirmPasswordInput.getText().toString().trim();
+                boolean isValid = true;
 
                 if(txtUsername.isEmpty()){
                     signUpUserNameInput.setError("Please provide your username");
                     signUpUserNameInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
+                    isValid = false;
                 }
 
                 if(txtEmail.isEmpty()){
                     signUpEmailInput.setError("Please provide your email");
                     signUpEmailInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
+                    isValid = false;
                 }
 
                 if(txtPassword.isEmpty()){
                     signUpPasswordInput.setError("Please provide your password");
                     signUpPasswordInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
+                    isValid = false;
                 }
 
                 if(txtConfirmPassword.isEmpty()){
                     signUpConfirmPasswordInput.setError("Please provide confirm password");
                     signUpConfirmPasswordInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
+                    isValid = false;
                 }
 
                 if(!txtPassword.equals(txtConfirmPassword)){
                     signUpConfirmPasswordInput.setError("Password not match");
                     signUpConfirmPasswordInput.setBackgroundResource(R.drawable.rounded_edit_text_error);
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser user = task.getResult().getUser();
+
+                                        if (user != null) {
+                                            String userID = user.getUid();
+                                            DocumentReference documentReference = firestore.collection("Users").document(userID);
+
+                                            Map<String, Object> userMap = new HashMap<>();
+                                            userMap.put("Username", txtUsername);
+                                            userMap.put("Email", txtEmail);
+                                            userMap.put("UserId", userID);
+
+                                            documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                                    Toast.makeText(SignupActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(SignupActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        Toast.makeText(SignupActivity.this, "Signup failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
 
             }
