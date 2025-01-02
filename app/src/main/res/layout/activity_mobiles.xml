@@ -97,6 +97,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="60dp"
                 android:src="@drawable/iphone"
+                android:layout_marginHorizontal="10sp"
                 android:layout_gravity="center"
                 android:layout_height="60dp"/>
 
@@ -139,6 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/oppo"
+                android:layout_marginHorizontal="10sp"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -210,6 +212,7 @@
                 android:id="@+id/samsung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView

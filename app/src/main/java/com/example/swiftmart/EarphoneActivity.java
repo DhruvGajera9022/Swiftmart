@@ -18,7 +18,7 @@ import java.util.List;
 
 public class EarphoneActivity extends AppCompatActivity {
 
-    LinearLayout boatlogo,boultlogo,realmelogo,onepluslogo,noiselogo,applelogo;
+    LinearLayout boatlogo,realmelogo,onepluslogo,nothinglogo,triggerlogo,trukelogo;
     private ViewPager2 viewPager1;
     private MobileSliderAdapter earphonesliderAdapter;
     private List<Integer> imageList1; // List of drawable images
@@ -31,11 +31,11 @@ public class EarphoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_earphone);
 
         boatlogo=findViewById(R.id.boatlogo);
-        boultlogo=findViewById(R.id.boultlogo);
+        nothinglogo=findViewById(R.id.nothinglogo);
         realmelogo=findViewById(R.id.realmelogo);
         onepluslogo=findViewById(R.id.onepluslogo);
-        noiselogo=findViewById(R.id.noiselogo);
-        applelogo=findViewById(R.id.applelogo);
+        triggerlogo=findViewById(R.id.triggerlogo);
+        trukelogo=findViewById(R.id.trukelogo);
         backearphone=findViewById(R.id.backearphone);
 
         boatlogo.setOnClickListener(new View.OnClickListener() {
