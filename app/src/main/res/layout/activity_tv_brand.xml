@@ -71,13 +71,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10sp"
             android:orientation="vertical">
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_marginStart="8sp"
-                android:layout_marginTop="10sp"
-                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,7 +134,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/acerlogo"
+                        android:id="@+id/tcllogo"
                         android:layout_marginHorizontal="10sp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -148,67 +144,34 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/acer" />
+                            android:src="@drawable/tcl" />
 
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/infinixlogo"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/round"
-                            android:src="@drawable/infinix" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/motorolalogo"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="61dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/round"
-                            android:src="@drawable/motorola" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/realmelogo"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="61dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/round"
-                            android:src="@drawable/realmetechlife" />
-
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
 
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="7dp"
+                android:layout_marginTop="10sp"
+                card_view:cardElevation="5dp"
+                card_view:cardCornerRadius="10dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPagertv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.cardview.widget.CardView>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tvRecyclerView"
                 android:layout_width="match_parent"

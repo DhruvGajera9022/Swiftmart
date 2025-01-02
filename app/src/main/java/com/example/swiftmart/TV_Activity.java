@@ -38,13 +38,7 @@ public class TV_Activity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        tvdetailes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(TV_Activity.this, tv_detailsActivity.class);
-                startActivity(i);
-            }
-        });
+
     }
 
     @Override
