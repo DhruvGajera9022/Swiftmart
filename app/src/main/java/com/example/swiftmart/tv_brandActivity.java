@@ -1,21 +1,15 @@
 package com.example.swiftmart;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.TvSliderAdapter;
 
 import java.util.Arrays;
@@ -23,30 +17,35 @@ import java.util.List;
 
 public class tv_brandActivity extends AppCompatActivity {
 
-
-    LinearLayout samsunglogo,lglogo,milogo,tcllogo;
+    LinearLayout samsunglogo, lglogo, milogo, tcllogo;
     ImageView backetvbrand;
     private ViewPager2 viewPagertv;
     private TvSliderAdapter tvSliderAdapter;
     private List<Integer> imageList; // List of drawable images
     private Handler sliderHandler = new Handler();
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_brand);
 
-        samsunglogo=findViewById(R.id.samsunglogo);
-        lglogo=findViewById(R.id.lglogo);
-        milogo=findViewById(R.id.milogo);
-        tcllogo=findViewById(R.id.tcllogo);
+        // Initialize views
+        samsunglogo = findViewById(R.id.samsunglogo);
+        lglogo = findViewById(R.id.lglogo);
+        milogo = findViewById(R.id.milogo);
+        tcllogo = findViewById(R.id.tcllogo);
+        backetvbrand = findViewById(R.id.backetvbrand); // Initialize the ImageView
 
+        // Set back button listener
         backetvbrand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
+        // Initialize ViewPager2
         viewPagertv = findViewById(R.id.viewPagertv);
 
         // Add drawable images to the list
@@ -58,6 +57,7 @@ public class tv_brandActivity extends AppCompatActivity {
                 R.drawable.tv5
         );
 
+        // Set up ViewPager2 adapter
         tvSliderAdapter = new TvSliderAdapter(this, imageList);
         viewPagertv.setAdapter(tvSliderAdapter);
 
@@ -70,10 +70,11 @@ public class tv_brandActivity extends AppCompatActivity {
                 sliderHandler.postDelayed(sliderRunnable, 3000); // Restart the auto-slider after swipe
             }
         });
+
         // Start auto-slide
         sliderHandler.postDelayed(sliderRunnable, 3000);
-
     }
+
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -95,7 +96,6 @@ public class tv_brandActivity extends AppCompatActivity {
         super.onResume();
         sliderHandler.postDelayed(sliderRunnable, 3000); // Resume slider when activity is resumed
     }
-
 
     @Override
     public void onBackPressed() {
