@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "892451060696",
+    "project_id": "digital-store-1f658",
+    "storage_bucket": "digital-store-1f658.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892451060696:android:a9e022ea83884dc93850ad",
+        "android_client_info": {
+          "package_name": "com.example.electrohub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCanSaYGwaj48ToSPTVOHAwqEnyD90oDn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892451060696:android:f2ab8b31c3fb7fff3850ad",
+        "android_client_info": {
+          "package_name": "com.example.swiftmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCanSaYGwaj48ToSPTVOHAwqEnyD90oDn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
