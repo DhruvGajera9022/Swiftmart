@@ -220,7 +220,7 @@
                 card_view:cardCornerRadius="10dp">
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPager1"
+                    android:id="@+id/viewPagerleptop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -231,7 +231,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/earphoneRecyclerView"
+                android:id="@+id/leptopRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20sp"
                 android:layout_height="wrap_content"/>
