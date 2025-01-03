@@ -18,9 +18,8 @@
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />
-        <activity
-            android:name=".Language_Screen"
-            android:exported="false" />
+
+        <activity android:name=".Language_Activity"></activity>
         <activity
             android:name=".Leptop_Activity"
             android:exported="false" />
@@ -32,9 +31,6 @@
             android:exported="true" />
         <activity
             android:name=".tv_detailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TV_Activity"
             android:exported="false" />
         <activity
             android:name=".tv_brandActivity"

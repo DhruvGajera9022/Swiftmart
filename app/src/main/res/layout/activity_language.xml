@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Language_Screen">
-
+    android:layout_height="match_parent"
+    tools:context=".Language_Activity">
 
     <RelativeLayout
         android:id="@+id/lytoolbar"
@@ -21,12 +20,12 @@
             android:layout_marginEnd="10sp"
             android:id="@+id/right"
             android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="15sp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/right"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="15sp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/right"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
         </RelativeLayout>
 
         <TextView
@@ -44,11 +43,11 @@
     </RelativeLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/recycle"
-            android:layout_marginTop="55dp"
-            android:layout_marginHorizontal="5sp"
-            android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recycle"
+        android:layout_marginTop="55dp"
+        android:layout_marginHorizontal="5sp"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
