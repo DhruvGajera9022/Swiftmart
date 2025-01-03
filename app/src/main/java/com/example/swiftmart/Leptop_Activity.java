@@ -35,7 +35,7 @@ public class Leptop_Activity extends AppCompatActivity {
         hplogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(Leptop_Activity.this,Language_Screen.class);
+                Intent i =new Intent(Leptop_Activity.this,Language_Activity.class);
                 startActivity(i);
             }
         });
