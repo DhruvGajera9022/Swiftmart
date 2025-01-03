@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -57,8 +58,16 @@ public class Language_Screen extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Language_Screen.this, MainActivity.class);
-                startActivity(i);
+
+                LanguageModel selectedLanguage = languageAdapter.getSelectedLanguage();
+                if (selectedLanguage != null){
+                    String selectedLanguageName = selectedLanguage.getName();
+                    Intent intent = new Intent(Language_Screen.this, MainActivity.class);
+                    intent.putExtra("selectedLanguage", selectedLanguageName);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 

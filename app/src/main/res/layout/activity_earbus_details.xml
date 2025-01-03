@@ -39,7 +39,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="boAt"
+                        android:text="@string/boat"
                         android:textStyle="bold"
                         android:textSize="15sp"
                         android:layout_marginStart="5sp"
@@ -49,7 +49,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Airdopes Alpha with 35 HRS Playback, 13mm Drivers, Duai Mics ENx And Beast Mode Blutooth Headset (Jet Black , In the Ear )"
+                        android:text="@string/airdopes_alpha_with_35_hrs_playback_13mm_drivers_duai_mics_enx_and_beast_mode_blutooth_headset_jet_black_in_the_ear"
                         android:layout_marginStart="5sp"
                         android:textSize="14sp"
                         android:textColor="@color/black"/>
@@ -71,7 +71,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3.9"
+                        android:text="@string/_3_9"
                         android:layout_marginStart="10sp"
                         android:layout_gravity="center"
                         android:textColor="@color/blue"
@@ -80,7 +80,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4,43,600  ratings"
+                        android:text="@string/_4_43_600_ratings"
                         android:layout_marginStart="10sp"
                         android:textColor="@color/blue"
                         android:layout_gravity="center"
@@ -288,7 +288,7 @@
                 android:id="@+id/productAddToCartButton"
                 android:layout_width="150sp"
                 android:layout_height="35sp"
-                android:text="Add to Cart"
+                android:text="@string/add_to_cart"
                 android:background="@drawable/btn1"
                 android:textAllCaps="false"
                 android:textSize="13sp"
@@ -300,7 +300,7 @@
                 android:id="@+id/productBuyNowButton"
                 android:layout_width="150sp"
                 android:textColor="@color/white"
-                android:text="Buy Now"
+                android:text="@string/buy_now"
                 android:layout_height="35sp"
                 android:background="@drawable/btn"
                 android:textAllCaps="false"

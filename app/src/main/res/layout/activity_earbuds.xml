@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Earbuds"
+            android:text="@string/earbuds"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -92,7 +92,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="boAt"
+                    android:text="@string/boat"
                     android:textStyle="bold"
                     android:layout_marginHorizontal="10sp"
                     android:textColor="@color/black"
@@ -107,7 +107,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Airdopes Alpha with 35..."
+                        android:text="@string/airdopes_alpha_with_35"
                         android:textColor="@color/black"
                         android:textSize="14sp"/>
 
@@ -127,7 +127,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="71%"
+                            android:text="@string/_71"
                             android:layout_gravity="center"
                             android:textColor="@color/green"
                             android:textSize="15sp"/>
@@ -136,7 +136,7 @@
                             android:id="@+id/earbudstext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3,490"
+                            android:text="@string/_3_490"
                             android:layout_marginStart="3sp"
                             android:textColor="@color/gray"
                             android:textSize="15sp"/>
@@ -144,7 +144,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₹999"
+                            android:text="@string/_999"
                             android:layout_marginStart="5sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
@@ -158,7 +158,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Save extra with vombo offers"
+                            android:text="@string/save_extra_with_vombo_offers"
                             android:textColor="@color/green"
                             android:textSize="13sp"/>
 
@@ -185,7 +185,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="EXPRESS "
+                            android:text="@string/express"
                             android:layout_marginStart="5sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
@@ -195,7 +195,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 day delivery "
+                            android:text="@string/_1_day_delivery"
                             android:layout_marginStart="2sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"
@@ -228,7 +228,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="boAt"
+                    android:text="@string/boat"
                     android:textStyle="bold"
                     android:layout_marginHorizontal="10sp"
                     android:textColor="@color/black"
@@ -244,7 +244,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Airdopes Supreme w/4..."
+                        android:text="@string/airdopes_supreme_w_4"
                         android:textColor="@color/black"
                         android:textSize="14sp"/>
 
@@ -264,7 +264,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="71%"
+                            android:text="@string/_71"
                             android:layout_gravity="center"
                             android:textColor="@color/green"
                             android:textSize="15sp"/>
@@ -273,14 +273,14 @@
                             android:id="@+id/earbudstext1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4,990"
+                            android:text="@string/_4_990"
                             android:textColor="@color/gray"
                             android:textSize="15sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₹1,399"
+                            android:text="@string/_1_399"
                             android:layout_marginStart="5sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
@@ -294,7 +294,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Save extra with vombo offers"
+                        android:text="@string/save_extra_with_vombo_offers"
                         android:textColor="@color/green"
                         android:textSize="13sp"/>
 
@@ -321,7 +321,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="EXPRESS "
+                            android:text="@string/express"
                             android:layout_marginStart="5sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
@@ -331,7 +331,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 day delivery "
+                            android:text="@string/_1_day_delivery"
                             android:layout_marginStart="2sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"

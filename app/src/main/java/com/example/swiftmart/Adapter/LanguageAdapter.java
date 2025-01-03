@@ -78,4 +78,12 @@ public class    LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.MyV
             relativeLayout = itemView.findViewById(R.id.language_item_layout); // ID for the outermost RelativeLayout
         }
     }
+
+    public LanguageModel getSelectedLanguage() {
+        if (selectedPosition != -1) {
+            return arrlanguage.get(selectedPosition);
+        }
+        return null; // No language selected
+    }
+
 }

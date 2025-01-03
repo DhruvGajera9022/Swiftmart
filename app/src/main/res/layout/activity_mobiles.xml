@@ -37,7 +37,7 @@
             android:layout_marginStart="40sp"
             android:textStyle="bold"
             android:id="@+id/text"
-            android:text="Mobiles"/>
+            android:text="@string/mobiles"/>
 
 
         <ImageView
@@ -108,7 +108,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="iPhone"/>
+                    android:text="@string/iphone"/>
 
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Vivo"/>
+                    android:text="@string/vivo"/>
 
             </LinearLayout>
 
@@ -156,7 +156,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Oppo"/>
+                    android:text="@string/oppo"/>
 
             </LinearLayout>
 
@@ -180,7 +180,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Redmi"/>
+                    android:text="@string/redmi"/>
 
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Realme"/>
+                    android:text="@string/realme"/>
 
             </LinearLayout>
 
@@ -228,7 +228,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Samsung"/>
+                    android:text="@string/samsung"/>
 
             </LinearLayout>
 
@@ -252,7 +252,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Motorola"/>
+                    android:text="@string/motorola"/>
 
             </LinearLayout>
 
@@ -276,7 +276,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Poco"/>
+                    android:text="@string/poco"/>
 
             </LinearLayout>
 
@@ -300,7 +300,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Goggle"/>
+                    android:text="@string/goggle"/>
 
             </LinearLayout>
 
@@ -324,7 +324,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Oneplus"/>
+                    android:text="@string/oneplus"/>
 
             </LinearLayout>
 
@@ -348,7 +348,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Iqoo"/>
+                    android:text="@string/iqoo"/>
 
             </LinearLayout>
 
@@ -372,7 +372,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="Nothing"/>
+                    android:text="@string/nothing"/>
 
             </LinearLayout>
 
