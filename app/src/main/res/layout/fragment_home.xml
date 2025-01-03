@@ -350,6 +350,11 @@
 
            </HorizontalScrollView>
 
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/homeFragmentRecyclerView"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
        </LinearLayout>
 
 

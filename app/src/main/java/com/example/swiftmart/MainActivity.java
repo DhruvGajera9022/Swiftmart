@@ -16,6 +16,7 @@ import com.example.swiftmart.Frgments.CategoryFragment;
 import com.example.swiftmart.Frgments.ExploreFragment;
 import com.example.swiftmart.Frgments.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Locale;
 
