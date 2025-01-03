@@ -4,23 +4,41 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarbudsActivity;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.Leptop_Activity;
 import com.example.swiftmart.MobilesActivity;
+import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.tv_brandActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout mobiles,earbuds,tv,leptop,headphone,speaker,keyword,mouse,camero,smartwatch,tablet;
+    LinearLayout mobiles, earbuds, tv, leptop, headphone, speaker, keyword, mouse, camero, smartwatch, tablet;
+    FirebaseFirestore db;
+    ArrayList<ProductModel> datalist = new ArrayList<>();
+    RecyclerView homeFragmentRecyclerView;
+    ProductAdapter adapter;
 
     public HomeFragment() {
 
@@ -33,6 +51,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        db = FirebaseFirestore.getInstance();
+
+        homeFragmentRecyclerView = view.findViewById(R.id.homeFragmentRecyclerView);
 
         mobiles = view.findViewById(R.id.mobiles);
         earbuds = view.findViewById(R.id.earbuds);
@@ -67,7 +89,6 @@ public class HomeFragment extends Fragment {
                 startActivity(gadgets);
             }
         });
-
         leptop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +97,33 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        getAllProducts();
 
         return view;
     }
+
+    private void getAllProducts(){
+        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        datalist.clear();
+
+        db.collection("Products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+                            datalist.addAll(data);
+
+                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                            homeFragmentRecyclerView.setLayoutManager(layoutManager);
+                            adapter = new ProductAdapter(getContext(), datalist);
+                            homeFragmentRecyclerView.setHasFixedSize(true);
+                            homeFragmentRecyclerView.setAdapter(adapter);
+                        }
+                    }
+                });
+    }
+
 }

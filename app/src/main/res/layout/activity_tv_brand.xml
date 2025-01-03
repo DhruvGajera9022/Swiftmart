@@ -34,7 +34,7 @@
             android:layout_marginStart="40sp"
             android:textStyle="bold"
             android:id="@+id/text"
-            android:text="Tv"/>
+            android:text="@string/television"/>
 
         <ImageView
             android:layout_width="wrap_content"

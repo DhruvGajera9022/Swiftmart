@@ -218,7 +218,7 @@ public class SignupActivity extends AppCompatActivity {
                                             documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
-                                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                                    startActivity(new Intent(SignupActivity.this, Language_Screen.class));
                                                     Toast.makeText(SignupActivity.this, "Account created", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                 }

@@ -1,7 +1,10 @@
+<!--English-->
+
 <resources>
     <string name="app_name">Swiftmart</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="earbuds">Earbuds</string>
     <string name="boat">boAt</string>
     <string name="airdopes_alpha_with_35">Airdopes Alpha with 35...</string>
@@ -20,7 +23,7 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="buy_now">Buy Now</string>
     <string name="earphones">Earphones</string>
-    <string name="leptops">Leptops</string>
+    <string name="leptops">Laptops</string>
     <string name="mobiles">Mobiles</string>
     <string name="iphone">iPhone</string>
     <string name="vivo">Vivo</string>
@@ -29,10 +32,10 @@
     <string name="realme">Realme</string>
     <string name="samsung">Samsung</string>
     <string name="motorola">Motorola</string>
-    <string name="poco">Poco</string>
+    <string name="poco">Bit</string>
     <string name="goggle">Goggle</string>
     <string name="oneplus">Oneplus</string>
-    <string name="iqoo">Iqoo</string>
+    <string name="iqoo">IQ</string>
     <string name="nothing">Nothing</string>
     <string name="iphones">iPhones</string>
     <string name="television">Television</string>
@@ -42,7 +45,7 @@
     <string name="headphones">Headphones</string>
     <string name="speakers">Speakers</string>
     <string name="keywords">Keywords</string>
-    <string name="mouses">Mouses</string>
+    <string name="mouses">Mice</string>
     <string name="camera">Camera</string>
     <string name="smartwatches">Smartwatches</string>
     <string name="tablets">Tablets</string>
@@ -51,5 +54,4 @@
     <string name="category">Category</string>
     <string name="account">Account</string>
     <string name="cart">Cart</string>
-    <string name="default_web_client_id">892451060696-7n9qvlnt2adqdis5t5ct16662e0ne66u.apps.googleusercontent.com</string>
 </resources>

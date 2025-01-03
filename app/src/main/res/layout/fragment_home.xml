@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobiles"
+                    android:text="@string/mobiles"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -110,7 +110,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Earbuds"
+                    android:text="@string/earbuds"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -135,7 +135,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tv"
+                        android:text="@string/tv"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -160,7 +160,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Leptops"
+                    android:text="@string/laptops"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -184,7 +184,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Headphones"
+                    android:text="@string/headphones"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -210,7 +210,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Speakers"
+                        android:text="@string/speakers"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -235,7 +235,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Keywords"
+                        android:text="@string/keywords"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -260,7 +260,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mouses"
+                        android:text="@string/mouses"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -285,7 +285,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Camera"
+                        android:text="@string/camera"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -311,7 +311,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Smartwatchs"
+                        android:text="@string/smartwatches"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -337,7 +337,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tablets"
+                        android:text="@string/tablets"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -349,6 +349,11 @@
             </LinearLayout>
 
            </HorizontalScrollView>
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/homeFragmentRecyclerView"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
 
        </LinearLayout>
 

@@ -56,4 +56,7 @@ dependencies {
 
     // Google Play for google authentication
     implementation(libs.play.services.auth)
+
+    // View pager for displaying slider image
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }
