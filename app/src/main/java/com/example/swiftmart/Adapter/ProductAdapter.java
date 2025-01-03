@@ -1,10 +1,12 @@
 package com.example.swiftmart.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
 
 import java.util.ArrayList;
@@ -39,7 +42,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .into(holder.cardProductImage);
         holder.cardProductName.setText(datalist.get(position).getName());
         holder.cardProductDescription.setText(datalist.get(position).getDescription());
-        holder.cardProductPrice.setText(datalist.get(position).getPrice());
+        holder.cardProductPrice.setText("₹"+datalist.get(position).getPrice());
+
+        holder.cardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra("productId", datalist.get(position).getPid());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -50,10 +63,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView cardProductImage;
         TextView cardProductName, cardProductDescription, cardProductPrice;
+        LinearLayout cardProductLinearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            cardProductLinearLayout = itemView.findViewById(R.id.cardProductLinearLayout);
             cardProductImage = itemView.findViewById(R.id.cardProductImage);
             cardProductName = itemView.findViewById(R.id.cardProductName);
             cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
