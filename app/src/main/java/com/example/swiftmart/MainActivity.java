@@ -1,11 +1,16 @@
 package com.example.swiftmart;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,15 +20,18 @@ import com.example.swiftmart.Frgments.CartFragment;
 import com.example.swiftmart.Frgments.CategoryFragment;
 import com.example.swiftmart.Frgments.ExploreFragment;
 import com.example.swiftmart.Frgments.HomeFragment;
+import com.example.swiftmart.Utils.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkChangeReceiver.NetworkChangeListener {
 
     BottomNavigationView bottomNavigationView;
     String selectedLanguage;
+    AlertDialog dialog;
+    NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +160,60 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("LANGUAGE_SETTINGS", MODE_PRIVATE);
         String language = sharedPreferences.getString("language", "en");
         selectLanguage(language, sharedPreferences.getInt("item", 0));
+    }
+
+
+    private void ShowDialog() {
+
+        dialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(R.layout.no_internet_dialog)
+                .setCancelable(false)
+                .create();
+        dialog.show();
+
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+//        TextView playButton = dialog.findViewById(R.id.playButton);
+//
+//        playButton.setOnClickListener(view->{
+//
+//            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show();
+//        });
+
+
+    }
+
+    @Override
+    public void onNetworkChanged(boolean isConnected) {
+        if (isConnected) {
+
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+                dialog = null;
+            }
+
+        } else {
+
+            if (dialog == null || !dialog.isShowing()) {
+
+                ShowDialog();
+            }
+
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(networkChangeReceiver);
     }
 
 }
