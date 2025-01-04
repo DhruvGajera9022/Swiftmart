@@ -6,6 +6,7 @@ public class ProductModel {
 
     String pid, name, description, price, company, category;
     private List<String> imgurls;
+    private boolean isWishlisted;
 
     public ProductModel(){
 
@@ -18,7 +19,8 @@ public class ProductModel {
             String price,
             String company,
             String category,
-            List<String> imgurls
+            List<String> imgurls,
+            boolean isWishlisted
     ){
         this.pid = pid;
         this.name = name;
@@ -27,6 +29,7 @@ public class ProductModel {
         this.company = company;
         this.category = category;
         this.imgurls = imgurls;
+        this.isWishlisted = isWishlisted;
     }
 
     public String getPid() {
@@ -83,5 +86,13 @@ public class ProductModel {
 
     public void setImgurls(List<String> imgurls) {
         this.imgurls = imgurls;
+    }
+
+    public boolean isWishlisted() {
+        return isWishlisted;
+    }
+
+    public void setWishlisted(boolean wishlisted) {
+        isWishlisted = wishlisted;
     }
 }

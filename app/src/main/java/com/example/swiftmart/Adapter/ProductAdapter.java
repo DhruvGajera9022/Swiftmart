@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +18,17 @@ import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     Context context;
     ArrayList<ProductModel> datalist;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    String uid = mAuth.getUid();
 
     public ProductAdapter(Context context, ArrayList<ProductModel> datalist) {
         this.context = context;
@@ -37,19 +44,80 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ProductModel product = datalist.get(position);
+
         Glide.with(holder.cardProductImage.getContext())
-                .load(datalist.get(position).getImgurls().get(0))
+                .load(product.getImgurls().get(0))
                 .into(holder.cardProductImage);
-        holder.cardProductName.setText(datalist.get(position).getName());
-        holder.cardProductDescription.setText(datalist.get(position).getDescription());
-        holder.cardProductPrice.setText("₹"+datalist.get(position).getPrice());
+        holder.cardProductName.setText(product.getName());
+        holder.cardProductDescription.setText(product.getDescription());
+        holder.cardProductPrice.setText("₹" + product.getPrice());
+
+        holder.wishlistButton.setImageResource(
+                product.isWishlisted() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+
+        // Check if the product is in the wishlist
+        db.collection("Users")
+                .document(uid)
+                .collection("wishlist")
+                .document(product.getPid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        product.setWishlisted(true);
+                        holder.wishlistButton.setImageResource(R.drawable.ic_heart_filled);
+                    } else {
+                        product.setWishlisted(false);
+                        holder.wishlistButton.setImageResource(R.drawable.ic_heart_outline);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to fetch wishlist data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
 
         holder.cardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.putExtra("productId", datalist.get(position).getPid());
+                intent.putExtra("productId", product.getPid());
                 context.startActivity(intent);
+            }
+        });
+
+        // Handle wishlist button clicks
+        holder.wishlistButton.setOnClickListener(v -> {
+            boolean isWishlisted = !product.isWishlisted();
+            product.setWishlisted(isWishlisted);
+
+            // Update UI
+            holder.wishlistButton.setImageResource(
+                    isWishlisted ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+
+            // Update Firestore
+            if (isWishlisted) {
+                db.collection("Users")
+                        .document(uid)
+                        .collection("wishlist")
+                        .document(product.getPid())
+                        .set(product)
+                        .addOnSuccessListener(aVoid ->
+                                Toast.makeText(context, "Added to wishlist!", Toast.LENGTH_SHORT).show()
+                        )
+                        .addOnFailureListener(e ->
+                                Toast.makeText(context, "Failed to add to wishlist: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                        );
+            } else {
+                db.collection("Users")
+                        .document(uid)
+                        .collection("wishlist")
+                        .document(product.getPid())
+                        .delete()
+                        .addOnSuccessListener(aVoid ->
+                                Toast.makeText(context, "Removed from wishlist!", Toast.LENGTH_SHORT).show()
+                        )
+                        .addOnFailureListener(e ->
+                                Toast.makeText(context, "Failed to remove from wishlist: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                        );
             }
         });
 
@@ -64,6 +132,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         ImageView cardProductImage;
         TextView cardProductName, cardProductDescription, cardProductPrice;
         LinearLayout cardProductLinearLayout;
+        ImageButton wishlistButton;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +143,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             cardProductName = itemView.findViewById(R.id.cardProductName);
             cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
             cardProductPrice = itemView.findViewById(R.id.cardProductPrice);
+            wishlistButton = itemView.findViewById(R.id.wishlistButton);
 
         }
     }
