@@ -401,7 +401,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/PhonesRecyclerView"
+            android:id="@+id/mobileRecyclerView"
             android:layout_width="match_parent"
             android:layout_marginTop="20sp"
             android:layout_height="wrap_content"
