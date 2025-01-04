@@ -64,6 +64,14 @@ public class Language_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(Language_Activity.this, MainActivity.class);
                 startActivity(i);
+                LanguageModel selectedLanguage = languageAdapter.getSelectedLanguage();
+                if (selectedLanguage != null){
+                    String selectedLanguageName = selectedLanguage.getName();
+                    Intent intent = new Intent(Language_Activity.this, MainActivity.class);
+                    intent.putExtra("selectedLanguage", selectedLanguageName);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

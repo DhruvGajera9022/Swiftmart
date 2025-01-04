@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
             changeLanguage(selectedLanguage);
         }
 
-        //TODO
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frameLayout, new HomeFragment())

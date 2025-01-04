@@ -23,7 +23,7 @@ public class Activity_splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Activity_splash.this, Language_Activity.class));
+                startActivity(new Intent(Activity_splash.this, WelcomeActivity.class));
                 finish();
             }
         },4700);
