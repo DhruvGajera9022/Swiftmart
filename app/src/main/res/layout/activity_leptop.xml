@@ -64,6 +64,7 @@
 
     </RelativeLayout>
     <ScrollView
+        android:id="@+id/laptopScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -72,6 +73,7 @@
             android:orientation="vertical">
 
             <HorizontalScrollView
+                android:id="@+id/laptopHorizontalScrollView"
                 android:layout_width="match_parent"
                 android:layout_marginStart="8sp"
                 android:layout_marginTop="10sp"

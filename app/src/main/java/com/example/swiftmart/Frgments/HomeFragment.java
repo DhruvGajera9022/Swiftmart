@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,8 @@ public class HomeFragment extends Fragment {
     TextView homeFragmentUserName;
     FirebaseAuth mAuth;
     String uid;
+    ScrollView homeFragmentScrollView;
+    HorizontalScrollView homeFragmentHorizontalScrollView;
 
     public HomeFragment() {
 
@@ -73,6 +77,8 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         homeFragmentRecyclerView = view.findViewById(R.id.homeFragmentRecyclerView);
+        homeFragmentScrollView = view.findViewById(R.id.homeFragmentScrollView);
+        homeFragmentHorizontalScrollView = view.findViewById(R.id.homeFragmentHorizontalScrollView);
 
         mobiles = view.findViewById(R.id.mobiles);
         earbuds = view.findViewById(R.id.earbuds);
@@ -87,6 +93,9 @@ public class HomeFragment extends Fragment {
         tablet = view.findViewById(R.id.tablet);
         homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
         homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
+
+        homeFragmentScrollView.setVerticalScrollBarEnabled(false);
+        homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
         mobiles.setOnClickListener(new View.OnClickListener() {
             @Override

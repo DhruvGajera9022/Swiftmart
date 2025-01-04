@@ -10,7 +10,6 @@
     android:orientation="vertical"
     tools:context=".EarphoneActivity">
 
-
     <RelativeLayout
         android:id="@+id/lytoolbar"
         android:layout_width="match_parent"
@@ -66,7 +65,9 @@
 
 
     </RelativeLayout>
+
     <ScrollView
+        android:id="@+id/earphoneScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -75,10 +76,11 @@
         android:orientation="vertical">
 
         <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_marginStart="8sp"
+            android:id="@+id/earphoneHorizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8sp"
             android:layout_marginTop="10sp"
-        android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"

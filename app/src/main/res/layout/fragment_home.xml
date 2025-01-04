@@ -54,6 +54,7 @@
     </LinearLayout>
 
         <ScrollView
+            android:id="@+id/homeFragmentScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
        <LinearLayout
@@ -62,6 +63,7 @@
            android:orientation="vertical">
 
            <HorizontalScrollView
+               android:id="@+id/homeFragmentHorizontalScrollView"
                android:layout_width="match_parent"
                android:layout_marginStart="8sp"
                android:layout_height="wrap_content">

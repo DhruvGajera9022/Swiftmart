@@ -3,8 +3,10 @@ package com.example.swiftmart;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,8 @@ public class MobilesActivity extends AppCompatActivity {
     private RecyclerView mobileRecyclerView;
     private FirebaseFirestore db;
     ProductAdapter adapter;
+    ScrollView mobileScrollView;
+    HorizontalScrollView mobileHorizontalScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class MobilesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mobiles);
 
         db = FirebaseFirestore.getInstance();
+
+        mobileScrollView=findViewById(R.id.mobileScrollView);
+        mobileHorizontalScrollView=findViewById(R.id.mobileHorizontalScrollView);
 
         iphone=findViewById(R.id.iphone);
         vivo=findViewById(R.id.vivo);
@@ -57,6 +64,9 @@ public class MobilesActivity extends AppCompatActivity {
         oneplues=findViewById(R.id.oneplues);
         backmobiles=findViewById(R.id.backmobiles);
         mobileRecyclerView=findViewById(R.id.mobileRecyclerView);
+
+        mobileScrollView.setVerticalScrollBarEnabled(false);
+        mobileHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
         getMobiles();
         getMobileCompany();

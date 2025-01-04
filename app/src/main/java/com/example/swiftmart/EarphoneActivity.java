@@ -5,14 +5,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
+import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Model.ProductModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,11 +37,25 @@ public class EarphoneActivity extends AppCompatActivity {
     private List<Integer> imageList1; // List of drawable images
     private Handler sliderHandler = new Handler();
     ImageView backearphone;
+    private RecyclerView earphoneRecyclerView;
+    ArrayList<ProductModel> datalist = new ArrayList<>();
+    private FirebaseFirestore db;
+    ProductAdapter adapter;
+    ScrollView earphoneScrollView;
+    HorizontalScrollView earphoneHorizontalScrollView;
+
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earphone);
+
+        db = FirebaseFirestore.getInstance();
+
+        earphoneScrollView = findViewById(R.id.earphoneScrollView);
+        earphoneHorizontalScrollView = findViewById(R.id.earphoneHorizontalScrollView);
 
         boatlogo=findViewById(R.id.boatlogo);
         nothinglogo=findViewById(R.id.nothinglogo);
@@ -37,18 +64,17 @@ public class EarphoneActivity extends AppCompatActivity {
         triggerlogo=findViewById(R.id.triggerlogo);
         trukelogo=findViewById(R.id.trukelogo);
         backearphone=findViewById(R.id.backearphone);
+        earphoneRecyclerView=findViewById(R.id.earphoneRecyclerView);
 
-        boatlogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(EarphoneActivity.this, EarbudsActivity.class);
-                startActivity(i);
-            }
-        });
+        earphoneScrollView.setVerticalScrollBarEnabled(false);
+        earphoneHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+
+        getEarbuds();
+        getEarbudsCompany();
+
         backearphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onBackPressed();
             }
         });
@@ -109,4 +135,72 @@ public class EarphoneActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    // Get all the earbuds
+    private void getEarbuds(){
+        earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
+
+        datalist.clear();
+
+        db.collection("Products")
+                .whereEqualTo("category", "AirBuds")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+                            datalist.addAll(data);
+
+                            GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
+                            earphoneRecyclerView.setLayoutManager(layoutManager);
+                            adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                            earphoneRecyclerView.setHasFixedSize(true);
+                            earphoneRecyclerView.setAdapter(adapter);
+                        }
+                    }
+                });
+
+
+    }
+
+    // Get single earbuds company data
+    private void getCompany(String company){
+        earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
+
+        datalist.clear();
+
+        db.collection("Products")
+                .whereEqualTo("category", "AirBuds")
+                .whereEqualTo("company", company)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+                            datalist.addAll(data);
+
+                            GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
+                            earphoneRecyclerView.setLayoutManager(layoutManager);
+                            adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                            earphoneRecyclerView.setHasFixedSize(true);
+                            earphoneRecyclerView.setAdapter(adapter);
+                        }
+                    }
+                });
+
+
+    }
+
+    // Get company wise earbuds data
+    private void getEarbudsCompany(){
+        boatlogo.setOnClickListener(v -> getCompany("Boat"));
+        realmelogo.setOnClickListener(v -> getCompany("Realme"));
+        onepluslogo.setOnClickListener(v -> getCompany("OnePlus"));
+        nothinglogo.setOnClickListener(v -> getCompany("Nothing"));
+        triggerlogo.setOnClickListener(v -> getCompany("Trigger"));
+        trukelogo.setOnClickListener(v -> getCompany("Truke"));
+    }
+
 }
