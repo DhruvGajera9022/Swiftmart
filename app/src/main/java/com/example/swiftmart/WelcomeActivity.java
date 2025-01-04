@@ -75,6 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -107,6 +108,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -161,7 +163,6 @@ public class WelcomeActivity extends AppCompatActivity {
                                 intent.putExtra("USER_IMAGE", userImage);
                                 startActivity(intent);
                                 finish();
-
                             }
                         });
                     } else {
