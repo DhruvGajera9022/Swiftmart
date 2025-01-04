@@ -59,4 +59,7 @@ dependencies {
 
     // View pager for displaying slider image
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    // To set the image
+    implementation ("com.squareup.picasso:picasso:2.8")
 }

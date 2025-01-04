@@ -158,9 +158,9 @@ public class WelcomeActivity extends AppCompatActivity {
                                 // Sign-in successful
                                 Toast.makeText(WelcomeActivity.this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(WelcomeActivity.this, Language_Activity.class);
-                                intent.putExtra("USER_NAME", userName);
-                                intent.putExtra("USER_EMAIL", userEmail);
-                                intent.putExtra("USER_IMAGE", userImage);
+//                                intent.putExtra("USER_NAME", userName);
+//                                intent.putExtra("USER_EMAIL", userEmail);
+//                                intent.putExtra("USER_IMAGE", userImage);
                                 startActivity(intent);
                                 finish();
                             }

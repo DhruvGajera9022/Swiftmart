@@ -1,10 +1,13 @@
 package com.example.swiftmart.Frgments;
 
+import static android.content.Intent.getIntent;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarbudsActivity;
@@ -26,11 +31,19 @@ import com.example.swiftmart.tv_brandActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 
@@ -39,6 +52,10 @@ public class HomeFragment extends Fragment {
     ArrayList<ProductModel> datalist = new ArrayList<>();
     RecyclerView homeFragmentRecyclerView;
     ProductAdapter adapter;
+    CircleImageView homeFragmentUserAvatar;
+    TextView homeFragmentUserName;
+    FirebaseAuth mAuth;
+    String uid;
 
     public HomeFragment() {
 
@@ -53,6 +70,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         homeFragmentRecyclerView = view.findViewById(R.id.homeFragmentRecyclerView);
 
@@ -67,6 +85,8 @@ public class HomeFragment extends Fragment {
         camero = view.findViewById(R.id.camero);
         smartwatch = view.findViewById(R.id.smartwatch);
         tablet = view.findViewById(R.id.tablet);
+        homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
+        homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
 
         mobiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +118,7 @@ public class HomeFragment extends Fragment {
         });
 
         getAllProducts();
+        getUserData();
 
         return view;
     }
@@ -124,6 +145,22 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void getUserData(){
+        uid = mAuth.getCurrentUser().getUid();
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    homeFragmentUserName.setText(value.getString("Username"));
+                    Picasso.get().load(value.getString("Image")).into(homeFragmentUserAvatar);
+                }
+            }
+        });
+
     }
 
 }
