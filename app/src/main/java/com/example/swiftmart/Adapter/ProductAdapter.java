@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +55,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.cardProductName.setText(product.getName());
         holder.cardProductDescription.setText(product.getDescription());
         holder.cardProductPrice.setText("₹" + product.getPrice());
+
+        // Set slide-in animation
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
+        holder.itemView.startAnimation(animation);
 
         holder.wishlistButton.setImageResource(
                 product.isWishlisted() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);

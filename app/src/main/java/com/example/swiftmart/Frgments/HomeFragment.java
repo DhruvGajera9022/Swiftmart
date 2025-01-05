@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,6 +152,7 @@ public class HomeFragment extends Fragment {
                             adapter = new ProductAdapter(getContext(), datalist);
                             homeFragmentRecyclerView.setHasFixedSize(true);
                             homeFragmentRecyclerView.setAdapter(adapter);
+                            homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
                         }
                     }
                 });

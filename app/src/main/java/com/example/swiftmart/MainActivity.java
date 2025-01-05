@@ -1,6 +1,5 @@
 package com.example.swiftmart;
 
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,6 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +25,7 @@ import com.example.swiftmart.Frgments.ExploreFragment;
 import com.example.swiftmart.Frgments.HomeFragment;
 import com.example.swiftmart.Utils.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Locale;
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
     String selectedLanguage;
     AlertDialog dialog;
     NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
+    BottomSheetDialog sheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,5 +219,36 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         super.onStop();
         unregisterReceiver(networkChangeReceiver);
     }
+
+    @Override
+    public void onBackPressed() {
+        sheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialog);
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_dialog,
+                (LinearLayout)findViewById(R.id.bottomSheetLinearLayout));
+
+        Button bottomSheetCancelButton = view.findViewById(R.id.bottomSheetCancelButton);
+        Button bottomSheetOkayButton = view.findViewById(R.id.bottomSheetOkayButton);
+
+        sheetDialog.setContentView(view);
+        sheetDialog.setCancelable(false);
+        sheetDialog.show();
+
+        bottomSheetCancelButton.setOnClickListener(v -> sheetDialog.dismiss());
+
+        bottomSheetOkayButton.setOnClickListener(v -> {
+            sheetDialog.dismiss();
+            super.onBackPressed();
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (sheetDialog != null && sheetDialog.isShowing()) {
+            sheetDialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
 
 }
