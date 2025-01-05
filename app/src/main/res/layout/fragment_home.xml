@@ -37,7 +37,8 @@
                 android:layout_marginStart="10dp"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppinsmedium"/>
         </LinearLayout>
 
 
@@ -92,7 +93,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppinsregular"/>
             </LinearLayout>
 
 
@@ -117,7 +119,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppinsregular"/>
             </LinearLayout>
 
 
@@ -142,7 +145,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
                 </LinearLayout>
 
 
@@ -167,7 +171,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppinsregular"/>
             </LinearLayout>
 
             <LinearLayout
@@ -191,7 +196,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -217,7 +223,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 
@@ -242,7 +249,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 
@@ -267,7 +275,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 
@@ -292,7 +301,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 
@@ -318,7 +328,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 
@@ -344,7 +355,8 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppinsregular"/>
 
                 </LinearLayout>
 

@@ -37,7 +37,8 @@
             android:layout_marginStart="40sp"
             android:textStyle="bold"
             android:id="@+id/text"
-            android:text="@string/mobiles"/>
+            android:text="@string/mobiles"
+            android:fontFamily="@font/poppinsbold"/>
 
 
         <ImageView
@@ -110,7 +111,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/iphone"/>
+                    android:text="@string/iphone"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -134,7 +136,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/vivo"/>
+                    android:text="@string/vivo"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -158,7 +161,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/oppo"/>
+                    android:text="@string/oppo"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -182,7 +186,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/redmi"/>
+                    android:text="@string/redmi"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -206,7 +211,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/realme"/>
+                    android:text="@string/realme"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -230,7 +236,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/samsung"/>
+                    android:text="@string/samsung"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -254,7 +261,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/motorola"/>
+                    android:text="@string/motorola"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -278,7 +286,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/poco"/>
+                    android:text="@string/poco"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -302,7 +311,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/goggle"/>
+                    android:text="@string/goggle"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -326,7 +336,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/oneplus"/>
+                    android:text="@string/oneplus"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -350,7 +361,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/iqoo"/>
+                    android:text="@string/iqoo"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -374,7 +386,8 @@
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:text="@string/nothing"/>
+                    android:text="@string/nothing"
+                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 

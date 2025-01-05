@@ -37,7 +37,8 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:id="@+id/language"
-            android:text="Language"/>
+            android:text="Language"
+            android:fontFamily="@font/poppinsbold"/>
 
 
     </RelativeLayout>

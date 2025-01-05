@@ -35,7 +35,8 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/primary_text_color"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/poppinsbold"/>
 
         <!-- Subtitle -->
         <TextView
@@ -44,7 +45,8 @@
             android:text="Please enter your details to sign in."
             android:textSize="16sp"
             android:textColor="@color/secondary_text_color"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/poppinsregular"/>
 
         <!-- Email Input -->
         <EditText
@@ -57,7 +59,8 @@
             android:padding="12dp"
             android:textColor="@color/black"
             android:background="@drawable/rounded_edit_text"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/poppinsregular"/>
 
         <!-- Password Input -->
         <EditText
@@ -70,7 +73,8 @@
             android:padding="12dp"
             android:textColor="@color/black"
             android:background="@drawable/rounded_edit_text"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/poppinsregular"/>
 
         <!-- Forgot Password -->
         <TextView
@@ -80,7 +84,8 @@
             android:text="Forgot password?"
             android:textSize="14sp"
             android:textColor="@color/link_color"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/poppinsregular"/>
 
         <!-- Sign In Button -->
         <com.google.android.material.button.MaterialButton
@@ -93,7 +98,8 @@
             android:padding="12dp"
             app:cornerRadius="15dp"
             android:elevation="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppinssemibold"/>
 
         <!-- Sign Up Link -->
         <LinearLayout
@@ -107,16 +113,18 @@
                 android:layout_height="wrap_content"
                 android:text="Don't have an account yet?"
                 android:textSize="14sp"
+                android:fontFamily="@font/poppinsregular"
                 android:textColor="@color/secondary_text_color" />
 
             <TextView
                 android:id="@+id/signInSignUpTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up"
+                android:text=" Sign up"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/link_color" />
+                android:textColor="@color/link_color"
+                android:fontFamily="@font/poppinsregular"/>
 
         </LinearLayout>
     </LinearLayout>

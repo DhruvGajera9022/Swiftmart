@@ -32,6 +32,7 @@
         android:background="@color/white"
         app:labelVisibilityMode="labeled"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+        android:fontFamily="@font/poppinsregular"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

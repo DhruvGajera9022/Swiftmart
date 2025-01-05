@@ -32,7 +32,8 @@
             android:text="english"
             android:layout_marginTop="20sp"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/poppinsregular"/>
         </LinearLayout>
 
 

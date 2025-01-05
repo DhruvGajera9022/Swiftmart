@@ -31,7 +31,8 @@
                 android:textStyle="bold"
                 android:layout_marginHorizontal="10sp"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/poppinssemibold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/airdopes_alpha_with_35"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,7 +67,8 @@
                         android:text="@string/_71"
                         android:layout_gravity="center"
                         android:textColor="@color/green"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:id="@+id/earbudstext"
@@ -74,7 +77,8 @@
                         android:text="@string/_3_490"
                         android:layout_marginStart="3sp"
                         android:textColor="@color/gray"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:id="@+id/cardProductPrice"
@@ -84,7 +88,8 @@
                         android:layout_marginStart="5sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinssemibold"/>
                 </LinearLayout>
 
                 <TextView
@@ -92,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/save_extra_with_vombo_offers"
                     android:textColor="@color/green"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <ImageView
                     android:layout_width="80sp"
@@ -118,7 +124,8 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:layout_gravity="center"
-                        android:textSize="11sp" />
+                        android:textSize="11sp"
+                        android:fontFamily="@font/poppinssemibold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -127,7 +134,8 @@
                         android:layout_marginStart="2sp"
                         android:textColor="@color/black"
                         android:layout_gravity="center"
-                        android:textSize="11sp" />
+                        android:textSize="11sp"
+                        android:fontFamily="@font/poppinsregular"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

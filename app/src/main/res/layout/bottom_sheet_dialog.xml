@@ -26,7 +26,8 @@
             android:textStyle="bold"
             android:textSize="22sp"
             android:gravity="center"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:fontFamily="@font/poppinsbold"/>
 
         <TextView
             android:id="@+id/subtitleTextView"
@@ -36,7 +37,8 @@
             android:textColor="@color/gray"
             android:textSize="16sp"
             android:gravity="center"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:fontFamily="@font/poppinsregular"/>
 
     </LinearLayout>
 
@@ -65,7 +67,8 @@
             android:textColor="@color/blue1"
             android:textAllCaps="true"
             android:textSize="16sp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppinsregular"/>
 
         <Button
             android:id="@+id/bottomSheetOkayButton"
@@ -77,7 +80,8 @@
             android:textColor="@color/white"
             android:textAllCaps="true"
             android:textSize="16sp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppinsregular"/>
 
     </LinearLayout>
 

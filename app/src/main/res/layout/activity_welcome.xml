@@ -39,7 +39,8 @@
                 android:text="Sign in"
                 android:textColor="#000000"
                 android:textSize="34sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
 
             <!-- Terms and Privacy Statement -->
             <TextView
@@ -49,7 +50,8 @@
                 android:gravity="center"
                 android:text="Please enter your details to sign in."
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/poppinsregular"/>
 
             <!-- Sign in with Email Button -->
             <com.google.android.material.button.MaterialButton
@@ -71,7 +73,8 @@
                 app:strokeColor="@color/border_color"
                 app:strokeWidth="1dp"
                 android:textAllCaps="false"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppinssemibold"/>
 
             <!-- Sign in with Google Button -->
             <com.google.android.material.button.MaterialButton
@@ -92,7 +95,8 @@
                 app:iconTint="@color/black"
                 android:textAllCaps="false"
                 app:strokeColor="@color/border_color"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:fontFamily="@font/poppinssemibold"/>
 
             <!-- Create Account Text -->
             <LinearLayout
@@ -107,7 +111,8 @@
                     android:layout_marginEnd="3dp"
                     android:text="New here?"
                     android:textColor="#757575"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:fontFamily="@font/poppinsregular"/>
 
                 <TextView
                     android:id="@+id/welcomeCreateAccountTxt"
@@ -119,7 +124,8 @@
                     android:text="Create Account"
                     android:textColor="@color/link_color"
                     android:textSize="19sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinssemibold"/>
             </LinearLayout>
 
         </LinearLayout>

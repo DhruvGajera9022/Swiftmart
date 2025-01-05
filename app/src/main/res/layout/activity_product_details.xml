@@ -42,7 +42,8 @@
                     android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_marginStart="5sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppinsbold"/>
 
 
                 <TextView
@@ -74,7 +75,8 @@
                         android:layout_marginStart="10sp"
                         android:layout_gravity="center"
                         android:textColor="@color/blue"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -83,7 +85,8 @@
                         android:layout_marginStart="10sp"
                         android:textColor="@color/blue"
                         android:layout_gravity="center"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
 
                 </LinearLayout>
@@ -108,7 +111,8 @@
                         android:text="71%"
                         android:layout_gravity="center"
                         android:textColor="@color/green"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:id="@+id/earbudstext"
@@ -117,7 +121,8 @@
                         android:text="3,490"
                         android:layout_marginStart="3sp"
                         android:textColor="@color/gray"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:id="@+id/productDetailsProductPrice"
@@ -153,7 +158,8 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:layout_gravity="center"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -162,7 +168,8 @@
                         android:layout_marginStart="2sp"
                         android:textColor="@color/green"
                         android:layout_gravity="center"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:id="@+id/free"
@@ -172,7 +179,8 @@
                         android:layout_marginStart="2sp"
                         android:textColor="@color/gray"
                         android:layout_gravity="center"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,7 +189,8 @@
                         android:layout_marginStart="5sp"
                         android:textColor="@color/black"
                         android:layout_gravity="center"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppinsregular"/>
 
 
 
@@ -227,7 +236,7 @@
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:text="1 year warranty form the Date of Purchase"
-                            />
+                            android:fontFamily="@font/poppinsregular"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -241,7 +250,7 @@
                                 android:textColor="@color/blue"
                                 android:textSize="14sp"
                                 android:text="Know More"
-                                />
+                                android:fontFamily="@font/poppinsregular"/>
 
                         </LinearLayout>
 
@@ -292,7 +301,8 @@
                 android:textAllCaps="false"
                 android:textSize="13sp"
                 android:textColor="@color/black"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -304,7 +314,8 @@
                 android:background="@drawable/btn"
                 android:textAllCaps="false"
                 android:textSize="13sp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/poppinsregular"/>
 
         </LinearLayout>
     </LinearLayout>

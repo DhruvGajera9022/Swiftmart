@@ -55,6 +55,7 @@
                 android:textColor="#1C1C1C"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppinsmedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -88,6 +89,7 @@
                 android:textColor="#292929"
                 android:textSize="22sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppinsmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
