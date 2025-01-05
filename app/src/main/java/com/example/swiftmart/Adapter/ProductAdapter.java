@@ -48,6 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         Glide.with(holder.cardProductImage.getContext())
                 .load(product.getImgurls().get(0))
+                .placeholder(R.drawable.img_animation)
                 .into(holder.cardProductImage);
         holder.cardProductName.setText(product.getName());
         holder.cardProductDescription.setText(product.getDescription());
