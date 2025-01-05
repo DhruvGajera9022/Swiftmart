@@ -69,9 +69,6 @@ public class Language_Activity extends AppCompatActivity {
                     String selectedLanguageName = selectedLanguage.getName();
                     Intent intent = new Intent(Language_Activity.this, MainActivity.class);
                     intent.putExtra("selectedLanguage", selectedLanguageName);
-//                    intent.putExtra("USER_NAME", getIntent().getStringExtra("USER_NAME"));
-//                    intent.putExtra("USER_EMAIL", getIntent().getStringExtra("USER_EMAIL"));
-//                    intent.putExtra("USER_IMAGE", getIntent().getStringExtra("USER_IMAGE"));
                     startActivity(intent);
                     finish();
                 }

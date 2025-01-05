@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         selectLanguage(language, sharedPreferences.getInt("item", 0));
     }
 
-
     private void ShowDialog() {
 
         dialog = new AlertDialog.Builder(MainActivity.this)
