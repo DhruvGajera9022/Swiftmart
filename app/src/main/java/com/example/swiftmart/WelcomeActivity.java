@@ -75,7 +75,6 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -108,7 +107,6 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -158,9 +156,6 @@ public class WelcomeActivity extends AppCompatActivity {
                                 // Sign-in successful
                                 Toast.makeText(WelcomeActivity.this, "Google Sign-In successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(WelcomeActivity.this, Language_Activity.class);
-//                                intent.putExtra("USER_NAME", userName);
-//                                intent.putExtra("USER_EMAIL", userEmail);
-//                                intent.putExtra("USER_IMAGE", userImage);
                                 startActivity(intent);
                                 finish();
                             }

@@ -62,7 +62,7 @@
                 android:backgroundTint="@color/white"
                 android:text="Sign in with email"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:cornerRadius="5dp"
                 app:icon="@drawable/img_mail"
@@ -85,7 +85,7 @@
                 android:backgroundTint="@color/white"
                 android:text="Sign in with google"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:cornerRadius="5dp"
                 app:icon="@drawable/img_google"
@@ -111,7 +111,7 @@
                     android:layout_marginEnd="3dp"
                     android:text="New here?"
                     android:textColor="#757575"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/poppinsregular"/>
 
                 <TextView
@@ -123,7 +123,7 @@
                     android:padding="5dp"
                     android:text="Create Account"
                     android:textColor="@color/link_color"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppinssemibold"/>
             </LinearLayout>
