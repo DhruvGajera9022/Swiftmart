@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
     String uid;
     ScrollView homeFragmentScrollView;
     HorizontalScrollView homeFragmentHorizontalScrollView;
+    SwipeRefreshLayout homeFragmentSwipeRefresh;
 
     public HomeFragment() {
 
@@ -94,6 +96,7 @@ public class HomeFragment extends Fragment {
         tablet = view.findViewById(R.id.tablet);
         homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
         homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
+        homeFragmentSwipeRefresh = view.findViewById(R.id.homeFragmentSwipeRefresh);
 
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
@@ -129,6 +132,7 @@ public class HomeFragment extends Fragment {
 
         getAllProducts();
         getUserData();
+        swipeRefresh();
 
         return view;
     }
@@ -175,4 +179,14 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void swipeRefresh(){
+        homeFragmentSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllProducts();
+
+                homeFragmentSwipeRefresh.setRefreshing(false);
+            }
+        });
+    }
 }

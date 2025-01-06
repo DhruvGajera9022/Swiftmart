@@ -365,10 +365,19 @@
 
            </HorizontalScrollView>
 
-           <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/homeFragmentRecyclerView"
+           <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+               android:id="@+id/homeFragmentSwipeRefresh"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"/>
+               android:layout_height="500dp">
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/homeFragmentRecyclerView"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent" />
+
+           </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
        </LinearLayout>
 
