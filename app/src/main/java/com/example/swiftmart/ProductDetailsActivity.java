@@ -1,6 +1,9 @@
 package com.example.swiftmart;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +83,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private void setupImageSlider(List<String> imageUrls) {
         ProductImageSliderAdapter adapter = new ProductImageSliderAdapter(this, imageUrls);
         productDetailsViewPager.setAdapter(adapter);
+
+        // Automatic slide logic
+        final int delay = 3000; // Delay time in milliseconds
+        final Handler handler = new Handler(Looper.getMainLooper());
+        final Runnable runnable = new Runnable() {
+            int currentPage = 0;
+
+            @Override
+            public void run() {
+                if (currentPage >= imageUrls.size()) {
+                    currentPage = 0; // Reset to the first page
+                }
+                productDetailsViewPager.setCurrentItem(currentPage++, true);
+                handler.postDelayed(this, delay);
+            }
+        };
+
+        // Start the automatic sliding
+        handler.postDelayed(runnable, delay);
+
+        productDetailsViewPager.setOnClickListener(v -> {
+            handler.removeCallbacks(runnable);
+        });
+
     }
 
 }
