@@ -151,7 +151,7 @@
 
 
                 <LinearLayout
-                android:id="@+id/leptop"
+                android:id="@+id/laptop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -281,7 +281,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/camero"
+                    android:id="@+id/camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -368,7 +368,7 @@
            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                android:id="@+id/homeFragmentSwipeRefresh"
                android:layout_width="match_parent"
-               android:layout_height="500dp">
+               android:layout_height="600dp">
 
                <androidx.recyclerview.widget.RecyclerView
                    android:id="@+id/homeFragmentRecyclerView"

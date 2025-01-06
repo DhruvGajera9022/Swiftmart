@@ -51,7 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout mobiles, earbuds, tv, leptop, headphone, speaker, keyword, mouse, camero, smartwatch, tablet;
+    LinearLayout mobiles, earbuds, tv, laptop, headphone, speaker, keyword, mouse, camera, smartwatch, tablet;
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     RecyclerView homeFragmentRecyclerView;
@@ -86,12 +86,12 @@ public class HomeFragment extends Fragment {
         mobiles = view.findViewById(R.id.mobiles);
         earbuds = view.findViewById(R.id.earbuds);
         tv = view.findViewById(R.id.tv);
-        leptop = view.findViewById(R.id.leptop);
+        laptop = view.findViewById(R.id.laptop);
         headphone = view.findViewById(R.id.headphone);
         speaker = view.findViewById(R.id.speaker);
         keyword = view.findViewById(R.id.keyword);
         mouse = view.findViewById(R.id.mouse);
-        camero = view.findViewById(R.id.camero);
+        camera = view.findViewById(R.id.camera);
         smartwatch = view.findViewById(R.id.smartwatch);
         tablet = view.findViewById(R.id.tablet);
         homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
@@ -101,42 +101,37 @@ public class HomeFragment extends Fragment {
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
-        mobiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mobiles = new Intent(getActivity(), MobilesActivity.class);
-                startActivity(mobiles);
-            }
-        });
-        earbuds.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
-                startActivity(gadgets);
-            }
-        });
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
-                startActivity(gadgets);
-            }
-        });
-        leptop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), Leptop_Activity.class);
-                startActivity(gadgets);
-            }
-        });
 
-        getAllProducts();
         getUserData();
+        getAllProducts();
         swipeRefresh();
+
+        handleMobileClick();
+        handleEarbudsClick();
+        handleTVClick();
+        handleLaptopClick();
 
         return view;
     }
 
+    // Get the user data from the database
+    private void getUserData(){
+        uid = mAuth.getCurrentUser().getUid();
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    homeFragmentUserName.setText(value.getString("Username"));
+                    Picasso.get().load(value.getString("Image")).into(homeFragmentUserAvatar);
+                }
+            }
+        });
+
+    }
+
+    // Get all the products from the database
     private void getAllProducts(){
         homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -163,22 +158,7 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void getUserData(){
-        uid = mAuth.getCurrentUser().getUid();
-        DocumentReference reference = db.collection("Users").document(uid);
-
-        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null && value.exists()){
-                    homeFragmentUserName.setText(value.getString("Username"));
-                    Picasso.get().load(value.getString("Image")).into(homeFragmentUserAvatar);
-                }
-            }
-        });
-
-    }
-
+    // Swipe refresh layout
     private void swipeRefresh(){
         homeFragmentSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -189,4 +169,119 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    // handle mobile click
+    private void handleMobileClick(){
+        mobiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mobiles = new Intent(getActivity(), MobilesActivity.class);
+                startActivity(mobiles);
+            }
+        });
+    }
+
+    // handle earbuds click
+    private void handleEarbudsClick(){
+        earbuds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
+                startActivity(gadgets);
+            }
+        });
+    }
+
+    // handle tv click
+    private void handleTVClick(){
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
+                startActivity(gadgets);
+            }
+        });
+    }
+
+    // handle laptop click
+    private void handleLaptopClick(){
+        laptop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gadgets = new Intent(getActivity(), Leptop_Activity.class);
+                startActivity(gadgets);
+            }
+        });
+    }
+
+    // TODO handle headphone click
+    private void handleHeadphoneClick(){
+        headphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle speaker click
+    private void handleSpeakerClick(){
+        speaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle keyword click
+    private void handleKeyboardClick(){
+        keyword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle mouse click
+    private void handleMouseClick(){
+        mouse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle camera click
+    private void handleCameraClick(){
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle smartwatch click
+    private void handleSmartwatchClick(){
+        headphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // TODO handle tablet click
+    private void handleTabletClick(){
+        tablet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 }
