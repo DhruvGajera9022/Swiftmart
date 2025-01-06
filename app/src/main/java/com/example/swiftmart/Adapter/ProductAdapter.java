@@ -20,10 +20,12 @@ import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     Context context;
@@ -106,12 +108,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(uid)
                         .collection("wishlist")
                         .document(product.getPid())
-                        .set(product)
+                        .set(Collections.singletonMap("pid", product.getPid()))
                         .addOnSuccessListener(aVoid ->
-                                Toast.makeText(context, "Added to wishlist!", Toast.LENGTH_SHORT).show()
+                                CustomToast.showToast(context, R.drawable.img_logo, "Added to wishlist!")
                         )
                         .addOnFailureListener(e ->
-                                Toast.makeText(context, "Failed to add to wishlist: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                                CustomToast.showToast(context, R.drawable.img_logo,"Failed to add to wishlist: ")
                         );
             } else {
                 db.collection("Users")
@@ -120,10 +122,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(product.getPid())
                         .delete()
                         .addOnSuccessListener(aVoid ->
-                                Toast.makeText(context, "Removed from wishlist!", Toast.LENGTH_SHORT).show()
+                                CustomToast.showToast(context, R.drawable.img_logo, "Removed from wishlist!")
                         )
                         .addOnFailureListener(e ->
-                                Toast.makeText(context, "Failed to remove from wishlist: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                                CustomToast.showToast(context, R.drawable.img_logo, "Failed to remove from wishlist")
                         );
             }
         });
