@@ -38,12 +38,11 @@ import java.util.concurrent.Executors;
 
 public class Edit_profile_Activity extends AppCompatActivity {
 
-    ImageView cart, backediteprofile;
-    String uid;
+    private String uid;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private TextInputEditText txtEditProfileName, txtEditProfileNumber, txtEditProfileEmail;
-    private ImageView editProfileSelectImage, userImage;
+    private ImageView editProfileSelectImage, userImage, cart, backediteprofile;
     private AppCompatButton editProfileBtn;
     private Uri imgUpdateUri;
     private boolean isImageSelected = false;
@@ -100,7 +99,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
                 txtEditProfileName.setText(value.getString("Username"));
                 txtEditProfileEmail.setText(value.getString("Email"));
                 txtEditProfileNumber.setText(value.getString("Number"));
-                String imageUrl = value.getString("imageUrl");
+                String imageUrl = value.getString("Image");
                 if (imageUrl != null && !imageUrl.isEmpty()) {
                     Picasso.get().load(imageUrl).into(userImage);
                 }
@@ -139,6 +138,12 @@ public class Edit_profile_Activity extends AppCompatActivity {
         config.put("api_secret", "C9mFzlUvIQCzbzumNK7C0hz1gHo");
         Cloudinary cloudinary = new Cloudinary(config);
 
+        // Show progress bar and disable button at the start
+        runOnUiThread(() -> {
+            editProfileProgressBar.setVisibility(View.VISIBLE);
+            editProfileBtn.setVisibility(View.GONE);
+        });
+
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             if (imgUpdateUri != null) {
@@ -149,14 +154,31 @@ public class Edit_profile_Activity extends AppCompatActivity {
                                 "public_id", "profile_image_" + System.currentTimeMillis()
                         ));
                         String imageUrl = (String) uploadResult.get("secure_url");
-                        saveUserData(imageUrl);
+                        // Save user data and reset progress
+                        runOnUiThread(() -> {
+                            saveUserData(imageUrl);
+                            editProfileProgressBar.setVisibility(View.GONE);
+                            editProfileBtn.setVisibility(View.VISIBLE);
+                        });
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    runOnUiThread(() -> CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "Error uploading image"));
+                    runOnUiThread(() -> {
+                        runOnUiThread(() -> {
+                            CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "Error uploading image");
+                            editProfileProgressBar.setVisibility(View.GONE);
+                            editProfileBtn.setVisibility(View.VISIBLE);
+                        });
+                    });
                 }
             } else {
-                runOnUiThread(() -> CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "No image selected"));
+                runOnUiThread(() -> {
+                    runOnUiThread(() -> {
+                        CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "No image selected");
+                        editProfileProgressBar.setVisibility(View.GONE);
+                        editProfileBtn.setVisibility(View.VISIBLE);
+                    });
+                });
             }
         });
     }
@@ -167,7 +189,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
         userData.put("Email", txtEditProfileEmail.getText().toString().trim());
         userData.put("Number", txtEditProfileNumber.getText().toString().trim());
         if (imageUrl != null) {
-            userData.put("imageUrl", imageUrl);
+            userData.put("Image", imageUrl);
         }
         progress();
         db.collection("Users").document(uid)
