@@ -98,8 +98,14 @@
             android:padding="12dp"
             app:cornerRadius="15dp"
             android:elevation="8dp"
-            android:layout_marginBottom="16dp"
             android:fontFamily="@font/poppinssemibold"/>
+
+        <ProgressBar
+            android:id="@+id/signInProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
 
         <!-- Sign Up Link -->
         <LinearLayout

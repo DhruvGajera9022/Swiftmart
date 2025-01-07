@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment {
         datalist.clear();
 
         db.collection("Products")
-                .limit(10)
+                .limit(30)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

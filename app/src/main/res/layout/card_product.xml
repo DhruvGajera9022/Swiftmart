@@ -7,7 +7,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
 
         <!-- Main LinearLayout -->
         <LinearLayout
@@ -146,7 +147,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="top|end"
-            android:layout_margin="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_heart_outline" />
     </FrameLayout>

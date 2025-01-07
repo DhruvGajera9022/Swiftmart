@@ -6,24 +6,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView signInSignUpTxt, signInForgotPassword;
@@ -31,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText signInEmailInput, signInPasswordInput;
     private MaterialButton signInButton;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firestore;
+    private ProgressBar signInProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         signInEmailInput = findViewById(R.id.signInEmailInput);
         signInPasswordInput = findViewById(R.id.signInPasswordInput);
         signInButton = findViewById(R.id.signInButton);
+        signInProgressBar = findViewById(R.id.signInProgressBar);
 
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
 
         signInScrollView.setVerticalScrollBarEnabled(false);
 
@@ -151,12 +146,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (isValid){
+                    progress();
                     mAuth.signInWithEmailAndPassword(txtEmail, txtPassword)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Intent intent = new Intent(LoginActivity.this, Language_Activity.class);
-                                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                    CustomToast.showToast(LoginActivity.this,R.drawable.img_logo, "Login successful");
                                     startActivity(intent);
                                     finish();
                                 }
@@ -164,12 +160,25 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    signInButton.setVisibility(View.VISIBLE);
+                                    signInProgressBar.setVisibility(View.GONE);
+                                    CustomToast.showToast(LoginActivity.this,R.drawable.img_logo, "Login failed");
                                 }
                             });
                 }
             }
         });
+    }
+
+    // handle progress bar
+    public void progress(){
+        if (signInButton.isPressed()){
+            signInButton.setVisibility(View.GONE);
+            signInProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            signInButton.setVisibility(View.VISIBLE);
+            signInProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }

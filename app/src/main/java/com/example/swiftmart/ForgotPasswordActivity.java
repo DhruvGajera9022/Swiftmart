@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -28,7 +30,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText forgotPasswordEmailInput;
     private MaterialButton forgotPasswordButton;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firestore;
+    private ProgressBar forgotPasswordProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         forgotPasswordEmailInput = findViewById(R.id.forgotPasswordEmailInput);
         forgotPasswordScrollView = findViewById(R.id.forgotPasswordScrollView);
         forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
+        forgotPasswordProgressBar = findViewById(R.id.forgotPasswordProgressBar);
 
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
 
         forgotPasswordScrollView.setVerticalScrollBarEnabled(false);
 
@@ -94,11 +97,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
 
                 if (isValid){
+                    progress();
                     mAuth.sendPasswordResetEmail(txtEmail)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(ForgotPasswordActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                                    CustomToast.showToast(ForgotPasswordActivity.this,R.drawable.img_logo, "Password reset email sent");
                                     Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                 }
@@ -106,12 +110,25 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(ForgotPasswordActivity.this, "Password reset email failed", Toast.LENGTH_SHORT).show();
+                                    forgotPasswordButton.setVisibility(View.VISIBLE);
+                                    forgotPasswordProgressBar.setVisibility(View.GONE);
+                                    CustomToast.showToast(ForgotPasswordActivity.this,R.drawable.img_logo, "Password reset email failed");
                                 }
                             });
                 }
             }
         });
+    }
+
+    // handle progress bar
+    public void progress(){
+        if (forgotPasswordButton.isPressed()){
+            forgotPasswordButton.setVisibility(View.GONE);
+            forgotPasswordProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            forgotPasswordButton.setVisibility(View.VISIBLE);
+            forgotPasswordProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -10,7 +10,7 @@
     android:orientation="vertical"
     tools:context=".MobilesActivity">
 
-
+<!--    Top bar-->
     <RelativeLayout
         android:id="@+id/lytoolbar"
         android:layout_width="match_parent"
@@ -86,11 +86,13 @@
             android:layout_width="match_parent"
             android:layout_marginStart="8sp"
             android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+<!--            iPhone-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,106 +118,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="10sp"
-                android:id="@+id/vivo"
-                android:orientation="vertical">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/vivo"
-                    android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/vivo"
-                    android:fontFamily="@font/poppinsregular"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/oppo"
-                android:layout_marginHorizontal="10sp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/oppo"
-                    android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/oppo"
-                    android:fontFamily="@font/poppinsregular"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/mi"
-                android:layout_marginHorizontal="10sp"
-                android:orientation="vertical">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/mi"
-                    android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/redmi"
-                    android:fontFamily="@font/poppinsregular"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:id="@+id/realme"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="10sp"
-                android:orientation="vertical">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:src="@drawable/realme"
-                    android:layout_gravity="center"
-                    android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/realme"
-                    android:fontFamily="@font/poppinsregular"/>
-
-            </LinearLayout>
-
+<!--            Samsung-->
             <LinearLayout
                 android:id="@+id/samsung"
                 android:layout_width="wrap_content"
@@ -241,6 +144,111 @@
 
             </LinearLayout>
 
+<!--            Vivo-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10sp"
+                android:id="@+id/vivo"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/vivo"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/vivo"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </LinearLayout>
+
+<!--            Oppo-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/oppo"
+                android:layout_marginHorizontal="10sp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/oppo"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/oppo"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </LinearLayout>
+
+<!--            MI-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/mi"
+                android:layout_marginHorizontal="10sp"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mi"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/redmi"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </LinearLayout>
+
+<!--            Realme-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/realme"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10sp"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:src="@drawable/realme"
+                    android:layout_gravity="center"
+                    android:layout_height="60dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:text="@string/realme"
+                    android:fontFamily="@font/poppinsregular"/>
+
+            </LinearLayout>
+
+<!--            Motorola-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:id="@+id/motorola"
@@ -266,6 +274,7 @@
 
             </LinearLayout>
 
+<!--            Poco-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:id="@+id/poco"
@@ -291,6 +300,7 @@
 
             </LinearLayout>
 
+<!--            Google-->
             <LinearLayout
                 android:id="@+id/goggle"
                 android:layout_width="wrap_content"
@@ -316,6 +326,7 @@
 
             </LinearLayout>
 
+<!--            OnePlus-->
             <LinearLayout
                 android:id="@+id/oneplues"
                 android:layout_width="wrap_content"
@@ -341,6 +352,7 @@
 
             </LinearLayout>
 
+<!--            IQOO-->
             <LinearLayout
                 android:id="@+id/iqoo"
                 android:layout_width="wrap_content"
@@ -366,6 +378,7 @@
 
             </LinearLayout>
 
+<!--            Nothing-->
             <LinearLayout
                 android:id="@+id/nothing"
                 android:layout_width="wrap_content"

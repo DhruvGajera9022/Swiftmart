@@ -116,6 +116,14 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/poppinssemibold"/>
 
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/signUpProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
         <!-- Sign Up Link -->
         <LinearLayout
             android:layout_width="match_parent"

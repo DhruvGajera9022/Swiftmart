@@ -84,28 +84,28 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ProductImageSliderAdapter adapter = new ProductImageSliderAdapter(this, imageUrls);
         productDetailsViewPager.setAdapter(adapter);
 
-        // Automatic slide logic
-        final int delay = 3000; // Delay time in milliseconds
-        final Handler handler = new Handler(Looper.getMainLooper());
-        final Runnable runnable = new Runnable() {
-            int currentPage = 0;
-
-            @Override
-            public void run() {
-                if (currentPage >= imageUrls.size()) {
-                    currentPage = 0; // Reset to the first page
-                }
-                productDetailsViewPager.setCurrentItem(currentPage++, true);
-                handler.postDelayed(this, delay);
-            }
-        };
-
-        // Start the automatic sliding
-        handler.postDelayed(runnable, delay);
-
-        productDetailsViewPager.setOnClickListener(v -> {
-            handler.removeCallbacks(runnable);
-        });
+//        // Automatic slide logic
+//        final int delay = 3000; // Delay time in milliseconds
+//        final Handler handler = new Handler(Looper.getMainLooper());
+//        final Runnable runnable = new Runnable() {
+//            int currentPage = 0;
+//
+//            @Override
+//            public void run() {
+//                if (currentPage >= imageUrls.size()) {
+//                    currentPage = 0; // Reset to the first page
+//                }
+//                productDetailsViewPager.setCurrentItem(currentPage++, true);
+//                handler.postDelayed(this, delay);
+//            }
+//        };
+//
+//        // Start the automatic sliding
+//        handler.postDelayed(runnable, delay);
+//
+//        productDetailsViewPager.setOnClickListener(v -> {
+//            handler.removeCallbacks(runnable);
+//        });
 
     }
 

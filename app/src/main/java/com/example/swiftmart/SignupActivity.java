@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     private MaterialButton signUpButton;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
+    private ProgressBar signUpProgressBar;
 
     private String userID;
 
@@ -64,6 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         signUpPasswordInput = findViewById(R.id.signUpPasswordInput);
         signUpConfirmPasswordInput = findViewById(R.id.signUpConfirmPasswordInput);
         signUpButton = findViewById(R.id.signUpButton);
+        signUpProgressBar = findViewById(R.id.signUpProgressBar);
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -199,6 +203,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 if (isValid) {
+                    progress();
                     mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -219,25 +224,44 @@ public class SignupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     startActivity(new Intent(SignupActivity.this, Language_Activity.class));
-                                                    Toast.makeText(SignupActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Account created");
                                                     finish();
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(SignupActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show();
+                                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Failed to save user data");
                                                 }
                                             });
                                         }
                                     } else {
-                                        Toast.makeText(SignupActivity.this, "Signup failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Signup failed");
                                     }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    signUpButton.setVisibility(View.VISIBLE);
+                                    signUpProgressBar.setVisibility(View.GONE);
+                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Signup failed");
                                 }
                             });
                 }
 
             }
         });
+    }
+
+    // handle progress bar
+    public void progress(){
+        if (signUpButton.isPressed()){
+            signUpButton.setVisibility(View.GONE);
+            signUpProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            signUpButton.setVisibility(View.VISIBLE);
+            signUpProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }
