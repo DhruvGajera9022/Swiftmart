@@ -82,17 +82,9 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
-        android:text="No saved Address"
-        android:textColor="@color/gray"
-        android:layout_marginTop="30sp"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/addressRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

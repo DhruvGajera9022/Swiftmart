@@ -191,6 +191,7 @@ public class Add_Address_Activity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
     private void navigateToCartFragment() {
         // Navigate to MainActivity and pass data to show CartFragment
         Intent intent = new Intent(this, MainActivity.class);
@@ -212,14 +213,14 @@ public class Add_Address_Activity extends AppCompatActivity {
 
         // Create a HashMap to store the address data
         HashMap<String, Object> addressData = new HashMap<>();
-        addressData.put("FullName", fullName);
-        addressData.put("PhoneNumber", phoneNumber);
-        addressData.put("HouseNo", houseNo);
-        addressData.put("RoadName", roadName);
-        addressData.put("City", city);
-        addressData.put("State", state);
-        addressData.put("PinCode", pincode);
-        addressData.put("AddressType", addressType);
+        addressData.put("fullName", fullName);
+        addressData.put("phoneNumber", phoneNumber);
+        addressData.put("houseNo", houseNo);
+        addressData.put("roadName", roadName);
+        addressData.put("city", city);
+        addressData.put("state", state);
+        addressData.put("pinCode", pincode);
+        addressData.put("addressType", addressType);
 
         db.collection("Users")
                 .document(uid)
@@ -228,7 +229,14 @@ public class Add_Address_Activity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Address added");
+                        String addressId = documentReference.getId();
+                        documentReference.update("AddressId", addressId)
+                                .addOnSuccessListener(aVoid -> {
+                                    CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Address added");
+                                })
+                                .addOnFailureListener(e -> {
+                                    CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Failed to update addressId");
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
