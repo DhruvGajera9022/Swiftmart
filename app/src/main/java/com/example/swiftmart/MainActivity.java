@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.swiftmart.Frgments.AccountFragment;
 import com.example.swiftmart.Frgments.CartFragment;
@@ -89,10 +90,15 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
             public void onClick(View v) {
                 if (selectedTab != 1){
 
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.frameLayout, HomeFragment.class, null)
-                            .commit();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    if (selectedTab > 1) {
+                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+                    } else {
+                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+                    }
+
+                    transaction.replace(R.id.frameLayout, HomeFragment.class, null).commit();
 
                     exploreText.setVisibility(View.GONE);
                     categoryText.setVisibility(View.GONE);
@@ -124,10 +130,15 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
             @Override
             public void onClick(View v) {
 
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.frameLayout, ExploreFragment.class, null)
-                        .commit();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                if (selectedTab > 2) {
+                    transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+                } else {
+                    transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+                }
+
+                transaction.replace(R.id.frameLayout, ExploreFragment.class, null).commit();
 
                 if (selectedTab != 2){
                     homeText.setVisibility(View.GONE);
@@ -161,10 +172,15 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
             public void onClick(View v) {
                 if (selectedTab != 3){
 
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.frameLayout, CategoryFragment.class, null)
-                            .commit();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    if (selectedTab > 3) {
+                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+                    } else {
+                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+                    }
+
+                    transaction.replace(R.id.frameLayout, CategoryFragment.class, null).commit();
 
                     homeText.setVisibility(View.GONE);
                     exploreText.setVisibility(View.GONE);
@@ -197,10 +213,15 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
             public void onClick(View v) {
                 if (selectedTab != 4){
 
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.frameLayout, AccountFragment.class, null)
-                            .commit();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    if (selectedTab > 4) {
+                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+                    } else {
+                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+                    }
+
+                    transaction.replace(R.id.frameLayout, AccountFragment.class, null).commit();
 
                     homeText.setVisibility(View.GONE);
                     exploreText.setVisibility(View.GONE);
