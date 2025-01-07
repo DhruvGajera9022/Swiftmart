@@ -21,11 +21,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +42,11 @@ public class Add_Address_Activity extends AppCompatActivity {
     private RadioGroup rgAddressType;
     private FusedLocationProviderClient fusedLocationClient;
     ImageView backaddnewaddress,cart3;
-    TextInputEditText etFullName, etPhoneNumber, etPincode, etState, etCity, etHouseNo, etRoadName;
+    private TextInputEditText addAddressFullName, addAddressPhoneNumber, addAddressPincode, addAddressState, addAddressCity, addAddressHouseNo, addAddressRoadName;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private String uid;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,13 +54,17 @@ public class Add_Address_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
 
-        etFullName = findViewById(R.id.etFullName);
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        etPincode = findViewById(R.id.etPincode);
-        etState = findViewById(R.id.etState);
-        etCity = findViewById(R.id.etCity);
-        etHouseNo = findViewById(R.id.etHouseNo);
-        etRoadName = findViewById(R.id.etRoadName);
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getCurrentUser().getUid();
+
+        addAddressFullName = findViewById(R.id.addAddressFullName);
+        addAddressPhoneNumber = findViewById(R.id.addAddressPhoneNumber);
+        addAddressPincode = findViewById(R.id.addAddressPincode);
+        addAddressState = findViewById(R.id.addAddressState);
+        addAddressCity = findViewById(R.id.addAddressCity);
+        addAddressHouseNo = findViewById(R.id.addAddressHouseNo);
+        addAddressRoadName = findViewById(R.id.addAddressRoadName);
         rgAddressType = findViewById(R.id.rgAddressType);
         backaddnewaddress = findViewById(R.id.backaddnewaddress);
         cart3 = findViewById(R.id.cart3);
@@ -66,8 +81,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         // Handle "Save Address" button
         btnSaveAddress.setOnClickListener(v -> {
             if (validateInputs()) {
-                String addressType = ((RadioButton) findViewById(rgAddressType.getCheckedRadioButtonId())).getText().toString();
-                Toast.makeText(this, "Address saved successfully as " + addressType, Toast.LENGTH_SHORT).show();
+                storeAddress();
             }
         });
 
@@ -96,13 +110,6 @@ public class Add_Address_Activity extends AppCompatActivity {
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
@@ -122,10 +129,10 @@ public class Add_Address_Activity extends AppCompatActivity {
                 Address address = addresses.get(0);
 
                 // Update UI with fetched address details
-                etPincode.setText(address.getPostalCode());
-                etState.setText(address.getAdminArea());
-                etCity.setText(address.getLocality());
-                etRoadName.setText(address.getThoroughfare());
+                addAddressPincode.setText(address.getPostalCode());
+                addAddressState.setText(address.getAdminArea());
+                addAddressCity.setText(address.getLocality());
+                addAddressRoadName.setText(address.getThoroughfare());
 
                 Toast.makeText(this, "Location fetched successfully!", Toast.LENGTH_SHORT).show();
             } else {
@@ -137,32 +144,32 @@ public class Add_Address_Activity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
-        if (etFullName.getText().toString().isEmpty()) {
-            etFullName.setError("Full Name is required");
+        if (addAddressFullName.getText().toString().isEmpty()) {
+            addAddressFullName.setError("Full Name is required");
             return false;
         }
-        if (etPhoneNumber.getText().toString().isEmpty()) {
-            etPhoneNumber.setError("Phone Number is required");
+        if (addAddressPhoneNumber.getText().toString().isEmpty()) {
+            addAddressPhoneNumber.setError("Phone Number is required");
             return false;
         }
-        if (etPincode.getText().toString().isEmpty()) {
-            etPincode.setError("Pincode is required");
+        if (addAddressPincode.getText().toString().isEmpty()) {
+            addAddressPincode.setError("Pincode is required");
             return false;
         }
-        if (etState.getText().toString().isEmpty()) {
-            etState.setError("State is required");
+        if (addAddressState.getText().toString().isEmpty()) {
+            addAddressState.setError("State is required");
             return false;
         }
-        if (etCity.getText().toString().isEmpty()) {
-            etCity.setError("City is required");
+        if (addAddressCity.getText().toString().isEmpty()) {
+            addAddressCity.setError("City is required");
             return false;
         }
-        if (etHouseNo.getText().toString().isEmpty()) {
-            etHouseNo.setError("House No. is required");
+        if (addAddressHouseNo.getText().toString().isEmpty()) {
+            addAddressHouseNo.setError("House No. is required");
             return false;
         }
-        if (etRoadName.getText().toString().isEmpty()) {
-            etRoadName.setError("Road name is required");
+        if (addAddressRoadName.getText().toString().isEmpty()) {
+            addAddressRoadName.setError("Road name is required");
             return false;
         }
         return true;
@@ -191,4 +198,46 @@ public class Add_Address_Activity extends AppCompatActivity {
         startActivity(intent);
         finish(); // Close the current activity if necessary
     }
+
+    private void storeAddress(){
+        String fullName = addAddressFullName.getText().toString();
+        String phoneNumber = addAddressPhoneNumber.getText().toString();
+        String pincode = addAddressPincode.getText().toString();
+        String state = addAddressState.getText().toString();
+        String city = addAddressCity.getText().toString();
+        String houseNo = addAddressHouseNo.getText().toString();
+        String roadName = addAddressRoadName.getText().toString();
+
+        String addressType = ((RadioButton) findViewById(rgAddressType.getCheckedRadioButtonId())).getText().toString();
+
+        // Create a HashMap to store the address data
+        HashMap<String, Object> addressData = new HashMap<>();
+        addressData.put("FullName", fullName);
+        addressData.put("PhoneNumber", phoneNumber);
+        addressData.put("HouseNo", houseNo);
+        addressData.put("RoadName", roadName);
+        addressData.put("City", city);
+        addressData.put("State", state);
+        addressData.put("PinCode", pincode);
+        addressData.put("AddressType", addressType);
+
+        db.collection("Users")
+                .document(uid)
+                .collection("Addresses")
+                .add(addressData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Address added");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Failed to add address");
+                    }
+                });
+
+    }
+
 }
