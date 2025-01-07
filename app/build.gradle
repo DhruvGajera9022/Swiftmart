@@ -70,4 +70,7 @@ dependencies {
 
     // To get location
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // Cloudnary to store images
+    implementation ("com.cloudinary:cloudinary-android:2.1.0")
 }

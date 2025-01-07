@@ -24,10 +24,6 @@
             android:background="@drawable/baseline_arrow_back_24"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-
-
-
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -68,30 +64,31 @@
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/man"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/man"
-                    android:layout_marginTop="40dp"/>
 
-                <TextView
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10sp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/poppinsbold"
-                    android:text="or"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                    android:layout_gravity="center">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/userImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/man"
+                        android:layout_gravity="center" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/women"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/human"
-                    android:layout_marginTop="40dp"/>
+                    <ImageView
+                        android:id="@+id/editProfileSelectImage"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/icon_edit"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/circle_background"
+                        android:padding="4dp" />
+
+                </FrameLayout>
+
             </LinearLayout>
 
         </RelativeLayout>
@@ -104,8 +101,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:hint="First Name"
+            android:hint="Username"
+            app:hintTextColor="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#2C4AFB"
+            android:inputType="text"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundMode="outline"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="50dp">
 
@@ -113,26 +116,11 @@
                 android:id="@+id/txtEditProfileName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                app:boxBackgroundColor="#F2F2F2"
+                android:inputType="text"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppinsregular"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:hint="Last Name"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtEditProfileLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:fontFamily="@font/poppinsregular"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -148,25 +136,39 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:hint="Mobile Number"
+            android:hint="Phone"
+            app:hintTextColor="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#2C4AFB"
+            android:inputType="number"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundMode="outline"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="50dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtEditProfileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxBackgroundColor="#F2F2F2"
                 android:inputType="number"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppinsregular"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:hint="Email Id"
+            android:hint="Email"
+            app:hintTextColor="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#2C4AFB"
+            android:inputType="textEmailAddress"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundMode="outline"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp">
 
@@ -174,11 +176,12 @@
                 android:id="@+id/txtEditProfileEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxBackgroundColor="#F2F2F2"
                 android:inputType="textEmailAddress"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppinsregular"/>
-
         </com.google.android.material.textfield.TextInputLayout>
-
 
     </LinearLayout>
 
@@ -194,6 +197,13 @@
         android:textSize="18sp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/poppinssemibold"/>
+
+    <ProgressBar
+        android:id="@+id/editProfileProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
 
 
