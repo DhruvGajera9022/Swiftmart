@@ -9,8 +9,12 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,10 +35,15 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NetworkChangeReceiver.NetworkChangeListener {
 
-    BottomNavigationView bottomNavigationView;
     String selectedLanguage;
     AlertDialog dialog;
     NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
+
+    private LinearLayout homeLayout, exploreLayout, categoryLayout, profileLayout;
+    private ImageView homeImage, exploreImage, categoryImage, profileImage;
+    private TextView homeText, exploreText, categoryText, profileText;
+    private int selectedTab = 1;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,53 +51,182 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         loadLanguage();
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         selectedLanguage = getIntent().getStringExtra("selectedLanguage");
+
+        frameLayout = findViewById(R.id.frameLayout);
+
+        homeLayout = findViewById(R.id.homeLayout);
+        exploreLayout = findViewById(R.id.exploreLayout);
+        categoryLayout = findViewById(R.id.categoryLayout);
+        profileLayout = findViewById(R.id.profileLayout);
+
+        homeImage = findViewById(R.id.homeImage);
+        exploreImage = findViewById(R.id.exploreImage);
+        categoryImage = findViewById(R.id.categoryImage);
+        profileImage = findViewById(R.id.profileImage);
+
+        homeText = findViewById(R.id.homeText);
+        exploreText = findViewById(R.id.exploreText);
+        categoryText = findViewById(R.id.categoryText);
+        profileText = findViewById(R.id.profileText);
 
         if (selectedLanguage != null) {
             changeLanguage(selectedLanguage);
         }
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, new HomeFragment())
-                    .commit();
-            bottomNavigationView.setSelectedItemId(R.id.home);
-        }
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.frameLayout, HomeFragment.class, null)
+                .commit();
 
+        changeBottomTabs();
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-
-
-            int itemId = item.getItemId();
-            if (itemId == R.id.home) {
-                selectedFragment = new HomeFragment();
-            } else if (itemId == R.id.explore) {
-                selectedFragment = new ExploreFragment();
-            } else if (itemId == R.id.category) {
-                selectedFragment = new CategoryFragment();
-            } else if (itemId == R.id.account) {
-                selectedFragment = new AccountFragment();
-            } else if (itemId == R.id.cart) {
-                selectedFragment = new CartFragment();
-            }
-
-            // Replace the fragment
-            if (selectedFragment != null) {
-                replaceFragment(selectedFragment);
-            }
-
-            return true;
-        });
     }
 
+    private void changeBottomTabs(){
+        homeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedTab != 1){
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, fragment)
-                .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.frameLayout, HomeFragment.class, null)
+                            .commit();
+
+                    exploreText.setVisibility(View.GONE);
+                    categoryText.setVisibility(View.GONE);
+                    profileText.setVisibility(View.GONE);
+
+                    exploreImage.setImageResource(R.drawable.icon_explore);
+                    categoryImage.setImageResource(R.drawable.icon_category);
+                    profileImage.setImageResource(R.drawable.icon_person);
+
+                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    homeText.setVisibility(View.VISIBLE);
+                    homeImage.setImageResource(R.drawable.icon_home_selected);
+                    homeLayout.setBackgroundResource(R.drawable.rounded_back_home_200);
+
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
+                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setFillAfter(true);
+                    homeLayout.startAnimation(scaleAnimation);
+
+                    selectedTab = 1;
+                }
+            }
+        });
+
+        exploreLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.frameLayout, ExploreFragment.class, null)
+                        .commit();
+
+                if (selectedTab != 2){
+                    homeText.setVisibility(View.GONE);
+                    categoryText.setVisibility(View.GONE);
+                    profileText.setVisibility(View.GONE);
+
+                    homeImage.setImageResource(R.drawable.icon_home);
+                    categoryImage.setImageResource(R.drawable.icon_category);
+                    profileImage.setImageResource(R.drawable.icon_person);
+
+                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    exploreText.setVisibility(View.VISIBLE);
+                    exploreImage.setImageResource(R.drawable.icon_explore_selected);
+                    exploreLayout.setBackgroundResource(R.drawable.rounded_back_explore_200);
+
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
+                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setFillAfter(true);
+                    exploreLayout.startAnimation(scaleAnimation);
+
+                    selectedTab = 2;
+                }
+            }
+        });
+
+        categoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedTab != 3){
+
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.frameLayout, CategoryFragment.class, null)
+                            .commit();
+
+                    homeText.setVisibility(View.GONE);
+                    exploreText.setVisibility(View.GONE);
+                    profileText.setVisibility(View.GONE);
+
+                    homeImage.setImageResource(R.drawable.icon_home);
+                    exploreImage.setImageResource(R.drawable.icon_explore);
+                    profileImage.setImageResource(R.drawable.icon_person);
+
+                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    categoryText.setVisibility(View.VISIBLE);
+                    categoryImage.setImageResource(R.drawable.icon_category_selected);
+                    categoryLayout.setBackgroundResource(R.drawable.rounded_back_category_200);
+
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
+                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setFillAfter(true);
+                    categoryLayout.startAnimation(scaleAnimation);
+
+                    selectedTab = 3;
+                }
+            }
+        });
+
+        profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedTab != 4){
+
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.frameLayout, AccountFragment.class, null)
+                            .commit();
+
+                    homeText.setVisibility(View.GONE);
+                    exploreText.setVisibility(View.GONE);
+                    categoryText.setVisibility(View.GONE);
+
+                    homeImage.setImageResource(R.drawable.icon_home);
+                    exploreImage.setImageResource(R.drawable.icon_explore);
+                    categoryImage.setImageResource(R.drawable.icon_category);
+
+                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    profileText.setVisibility(View.VISIBLE);
+                    profileImage.setImageResource(R.drawable.icon_person_selected);
+                    profileLayout.setBackgroundResource(R.drawable.rounded_back_profile_200);
+
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
+                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setFillAfter(true);
+                    profileLayout.startAnimation(scaleAnimation);
+
+                    selectedTab = 4;
+                }
+            }
+        });
     }
 
     private void changeLanguage(String newLanguage) {

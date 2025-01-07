@@ -30,4 +30,14 @@
     <color name="secondary_text_color">#757575</color>
     <color name="yellow">#EBC20C</color>
 
+    <color name="home">#1194AA</color>
+    <color name="like">#C9379D</color>
+    <color name="notification">#AE7E0F</color>
+    <color name="profile">#583787</color>
+
+    <color name="home_20">#331194AA</color>
+    <color name="like_20">#33093790</color>
+    <color name="notification_20">#33AE7E0F</color>
+    <color name="profile_20">#33583787</color>
+
 </resources>

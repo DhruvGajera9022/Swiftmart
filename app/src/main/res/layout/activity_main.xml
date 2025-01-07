@@ -16,23 +16,152 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
-        android:layout_above="@id/bottomNavigationView"/>
+        android:layout_above="@id/bottomBar"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="55sp"
-        android:layout_height="2dp"
-        android:labelFor="@+id/frameLayout"
-        android:background="#090909" />
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+    <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:labelVisibilityMode="labeled"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:elevation="10dp"
+        android:gravity="center"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_menu"
-        android:fontFamily="@font/poppinsregular"/>
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        tools:targetApi="lollipop">
+
+        <!--Home-->
+        <LinearLayout
+            android:id="@+id/homeLayout"
+            android:background="@drawable/rounded_back_home_200"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/homeImage"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_home_selected"/>
+
+            <TextView
+                android:id="@+id/homeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textStyle="bold"
+                android:textColor="@color/home"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <!--Like-->
+        <LinearLayout
+            android:id="@+id/exploreLayout"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/exploreImage"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_explore"/>
+
+            <TextView
+                android:id="@+id/exploreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore"
+                android:textStyle="bold"
+                android:textColor="@color/like"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <!--Notification-->
+        <LinearLayout
+            android:id="@+id/categoryLayout"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/categoryImage"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_category"/>
+
+            <TextView
+                android:id="@+id/categoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textStyle="bold"
+                android:textColor="@color/notification"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <!--Profile-->
+        <LinearLayout
+            android:id="@+id/profileLayout"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_person"/>
+
+            <TextView
+                android:id="@+id/profileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textStyle="bold"
+                android:textColor="@color/profile"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

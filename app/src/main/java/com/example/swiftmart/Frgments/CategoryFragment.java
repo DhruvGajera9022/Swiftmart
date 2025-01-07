@@ -43,8 +43,8 @@ public class CategoryFragment extends Fragment {
                         .replace(R.id.frameLayout, new HomeFragment())
                         .commit();
 
-                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-                bottomNavigationView.setSelectedItemId(R.id.home);
+//                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+//                bottomNavigationView.setSelectedItemId(R.id.home);
             }
         });
     }
