@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -28,6 +30,7 @@ import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarbudsActivity;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.Leptop_Activity;
+import com.example.swiftmart.MainActivity;
 import com.example.swiftmart.MobilesActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
@@ -35,6 +38,7 @@ import com.example.swiftmart.tv_brandActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,6 +67,7 @@ public class HomeFragment extends Fragment {
     ScrollView homeFragmentScrollView;
     HorizontalScrollView homeFragmentHorizontalScrollView;
     SwipeRefreshLayout homeFragmentSwipeRefresh;
+    BottomSheetDialog sheetDialog;
 
     public HomeFragment() {
 
@@ -110,6 +115,13 @@ public class HomeFragment extends Fragment {
         handleEarbudsClick();
         handleTVClick();
         handleLaptopClick();
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showBottomSheetDialog();
+            }
+        });
 
         return view;
     }
@@ -281,6 +293,27 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
             }
+        });
+    }
+
+
+    private void showBottomSheetDialog() {
+        sheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialog);
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_sheet_dialog,
+                (LinearLayout) getView().findViewById(R.id.bottomSheetLinearLayout));
+
+        Button bottomSheetCancelButton = dialogView.findViewById(R.id.bottomSheetCancelButton);
+        Button bottomSheetOkayButton = dialogView.findViewById(R.id.bottomSheetOkayButton);
+
+        sheetDialog.setContentView(dialogView);
+        sheetDialog.setCancelable(false);
+        sheetDialog.show();
+
+        bottomSheetCancelButton.setOnClickListener(v -> sheetDialog.dismiss());
+
+        bottomSheetOkayButton.setOnClickListener(v -> {
+            sheetDialog.dismiss();
+            requireActivity().finish(); // Close the activity
         });
     }
 

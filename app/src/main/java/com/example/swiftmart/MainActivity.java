@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
     String selectedLanguage;
     AlertDialog dialog;
     NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
-    BottomSheetDialog sheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,36 +217,5 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         super.onStop();
         unregisterReceiver(networkChangeReceiver);
     }
-
-    @Override
-    public void onBackPressed() {
-        sheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialog);
-        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_dialog,
-                (LinearLayout)findViewById(R.id.bottomSheetLinearLayout));
-
-        Button bottomSheetCancelButton = view.findViewById(R.id.bottomSheetCancelButton);
-        Button bottomSheetOkayButton = view.findViewById(R.id.bottomSheetOkayButton);
-
-        sheetDialog.setContentView(view);
-        sheetDialog.setCancelable(false);
-        sheetDialog.show();
-
-        bottomSheetCancelButton.setOnClickListener(v -> sheetDialog.dismiss());
-
-        bottomSheetOkayButton.setOnClickListener(v -> {
-            sheetDialog.dismiss();
-            super.onBackPressed();
-        });
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (sheetDialog != null && sheetDialog.isShowing()) {
-            sheetDialog.dismiss();
-        }
-        super.onDestroy();
-    }
-
 
 }
