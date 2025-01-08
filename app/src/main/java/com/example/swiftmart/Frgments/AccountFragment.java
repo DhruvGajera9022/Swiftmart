@@ -13,30 +13,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.swiftmart.Address_Activity;
-import com.example.swiftmart.Edit_profile_Activity;
-import com.example.swiftmart.Language_Activity;
+import com.example.swiftmart.Account.Address_Activity;
+import com.example.swiftmart.Account.Edit_profile_Activity;
+import com.example.swiftmart.Account.Language_Activity;
+import com.example.swiftmart.LoginActivity;
 import com.example.swiftmart.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.squareup.picasso.Picasso;
 
 
 public class AccountFragment extends Fragment {
-    private ImageButton btnEditProfile, btnLanguage, btnOrderHistory, wishlist, btnAboutUs, btnPrivacyPolicy, btnDeleteUser, profileRateUsBtn,addressBtn;
+    private ImageButton btnEditProfile, btnLanguage, btnOrderHistory, btnWishlist, btnAboutUs, btnPrivacyPolicy, btnDeleteUser, profileRateUsBtn, btnAddress;
     private AppCompatButton btnLogout;
-    private LinearLayout llwishlist, llEditProfile, llOrderHistory, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser, llRateUs,llsavedaddress;
+    private LinearLayout llWishlist, llEditProfile, llOrderHistory, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser, llRateUs,llsavedaddress;
     private TextView accountFragmentUserName;
     private String uid;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private ProgressBar accountFragmentProgressBar;
 
     public AccountFragment() {
 
@@ -56,7 +57,7 @@ public class AccountFragment extends Fragment {
 
         accountFragmentUserName = view.findViewById(R.id.accountFragmentUserName);
 
-        llwishlist = view.findViewById(R.id.llwishlist);
+        llWishlist = view.findViewById(R.id.llwishlist);
         llEditProfile = view.findViewById(R.id.llEditProfile);
         llOrderHistory = view.findViewById(R.id.llOrderHistory);
         llAboutUs = view.findViewById(R.id.llAboutUs);
@@ -69,66 +70,31 @@ public class AccountFragment extends Fragment {
         btnEditProfile = view.findViewById(R.id.profileEditProfileBtn);
         btnLanguage = view.findViewById(R.id.profileSelectLanguageBtn);
         btnOrderHistory = view.findViewById(R.id.profileOrderHistoryBtn);
-        wishlist = view.findViewById(R.id.wishlist);
+        btnWishlist = view.findViewById(R.id.wishlist);
         btnAboutUs = view.findViewById(R.id.profileAboutUsBtn);
         btnPrivacyPolicy = view.findViewById(R.id.profilePrivacyPolicyBtn);
         btnDeleteUser = view.findViewById(R.id.profileDeleteUserBtn);
         profileRateUsBtn = view.findViewById(R.id.profileRateUsBtn);
-        addressBtn = view.findViewById(R.id.addressBtn);
+        btnAddress = view.findViewById(R.id.addressBtn);
 
         btnLogout = view.findViewById(R.id.userLogout);
+        accountFragmentProgressBar = view.findViewById(R.id.accountFragmentProgressBar);
 
         getUserData();
 
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Edit_profile_Activity.class);
-                startActivity(intent);
-            }
-        });
+        handleEditProfileClick();
+        handleOrderHistoryClick();
+        handleSelectLanguageClick();
+        handleWishlistClick();
+        handleSavedAddressClick();
+        handleDeleteAccountClick();
 
-        llEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Edit_profile_Activity.class);
-                startActivity(intent);
-            }
-        });
-
-        llsavedaddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Address_Activity.class);
-                startActivity(intent);
-            }
-        });
-
-        addressBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Address_Activity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Language_Activity.class);
-                startActivity(intent);
-            }
-        });
-
-        llLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Language_Activity.class);
-                startActivity(intent);
-            }
-        });
+        handleAboutUsClick();
+        handlePrivacyPolicyClick();
+        handleRateUsClick();
 
         handleOnBackPress();
+        handleUserLogout();
 
         return view;
     }
@@ -149,6 +115,117 @@ public class AccountFragment extends Fragment {
 
     }
 
+    // handle edit profile click
+    private void handleEditProfileClick(){
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Edit_profile_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        llEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Edit_profile_Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle order history click
+    private void handleOrderHistoryClick(){
+        btnOrderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        llOrderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // handle select language click
+    private void handleSelectLanguageClick(){
+        btnLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Language_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        llLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Language_Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle wishlist click
+    private void handleWishlistClick(){
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        llWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // handle saved address click
+    private void handleSavedAddressClick(){
+        llsavedaddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Address_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Address_Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // TODO handle delete account click
+    private void handleDeleteAccountClick(){
+
+    }
+
+    // TODO handle about us click
+    private void handleAboutUsClick(){
+
+    }
+
+    // TODO handle privacy policy click
+    private void handlePrivacyPolicyClick(){
+
+    }
+
+    // TODO handle rate us click
+    private void handleRateUsClick(){
+
+    }
+
     // handle onBack press
     private void handleOnBackPress(){
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -162,6 +239,32 @@ public class AccountFragment extends Fragment {
 //                bottomNavigationView.setSelectedItemId(R.id.home);
             }
         });
+    }
+
+    // handle user logout
+    private void handleUserLogout(){
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                if (getContext() != null){
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    progress();
+                }
+            }
+        });
+    }
+
+    // handle progress bar
+    public void progress(){
+        if (btnLogout.isPressed()){
+            btnLogout.setVisibility(View.GONE);
+            accountFragmentProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            btnLogout.setVisibility(View.VISIBLE);
+            accountFragmentProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }

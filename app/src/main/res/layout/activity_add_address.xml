@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Add_Address_Activity">
+    tools:context=".Account.Add_Address_Activity">
 
     <RelativeLayout
         android:id="@+id/lytoolbar"

@@ -1,4 +1,4 @@
-package com.example.swiftmart;
+package com.example.swiftmart.Account;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,15 +15,14 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.swiftmart.MainActivity;
+import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.example.swiftmart;
+package com.example.swiftmart.Account;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,7 +10,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 
+import com.example.swiftmart.MainActivity;
+import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

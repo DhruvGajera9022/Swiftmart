@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Edit_profile_Activity">
+    tools:context=".Account.Edit_profile_Activity">
 
     <RelativeLayout
         android:id="@+id/lytoolbar"
@@ -205,7 +205,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_marginTop="50dp"/>
 
 
 

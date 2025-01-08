@@ -1,4 +1,4 @@
-package com.example.swiftmart;
+package com.example.swiftmart.Account;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,16 +6,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toolbar;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.swiftmart.Adapter.LanguageAdapter;
 import com.example.swiftmart.Adapter.LanguageModel;
+import com.example.swiftmart.MainActivity;
+import com.example.swiftmart.R;
 
 import java.util.ArrayList;
 

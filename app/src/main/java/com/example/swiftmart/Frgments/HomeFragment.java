@@ -1,7 +1,5 @@
 package com.example.swiftmart.Frgments;
 
-import static android.content.Intent.getIntent;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,22 +21,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.ProductAdapter;
-import com.example.swiftmart.EarbudsActivity;
 import com.example.swiftmart.EarphoneActivity;
-import com.example.swiftmart.Edit_profile_Activity;
+import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.Leptop_Activity;
-import com.example.swiftmart.MainActivity;
 import com.example.swiftmart.MobilesActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.tv_brandActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;

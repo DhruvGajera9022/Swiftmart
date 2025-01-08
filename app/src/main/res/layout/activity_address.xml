@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#DEDBDB"
     android:orientation="vertical"
-    tools:context=".Address_Activity">
+    tools:context=".Account.Address_Activity">
 
     <RelativeLayout
         android:id="@+id/lytoolbar"
