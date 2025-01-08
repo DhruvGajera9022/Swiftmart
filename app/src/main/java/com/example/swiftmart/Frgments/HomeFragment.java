@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -65,7 +66,7 @@ public class HomeFragment extends Fragment {
     TextView homeFragmentUserName;
     FirebaseAuth mAuth;
     String uid;
-    ScrollView homeFragmentScrollView;
+    NestedScrollView homeFragmentScrollView;
     HorizontalScrollView homeFragmentHorizontalScrollView;
     SwipeRefreshLayout homeFragmentSwipeRefresh;
     BottomSheetDialog sheetDialog;
