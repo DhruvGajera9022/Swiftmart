@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +23,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -43,6 +50,7 @@ public class EarphoneActivity extends AppCompatActivity {
     ProductAdapter adapter;
     ScrollView earphoneScrollView;
     HorizontalScrollView earphoneHorizontalScrollView;
+    ProgressBar earphoneActivityProgressBar;
 
 
 
@@ -65,6 +73,7 @@ public class EarphoneActivity extends AppCompatActivity {
         trukelogo=findViewById(R.id.trukelogo);
         backearphone=findViewById(R.id.backearphone);
         earphoneRecyclerView=findViewById(R.id.earphoneRecyclerView);
+        earphoneActivityProgressBar=findViewById(R.id.earphoneActivityProgressBar);
 
         earphoneScrollView.setVerticalScrollBarEnabled(false);
         earphoneHorizontalScrollView.setHorizontalScrollBarEnabled(false);
@@ -139,24 +148,34 @@ public class EarphoneActivity extends AppCompatActivity {
     // Get all the earbuds
     private void getEarbuds(){
         earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
-
+        earphoneActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
                 .whereEqualTo("category", "AirBuds")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(EarphoneActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            return;
+                        }
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
-                            earphoneRecyclerView.setLayoutManager(layoutManager);
-                            adapter = new ProductAdapter(EarphoneActivity.this, datalist);
-                            earphoneRecyclerView.setHasFixedSize(true);
-                            earphoneRecyclerView.setAdapter(adapter);
+
+                        if (value != null && !value.isEmpty()){
+                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
+                                earphoneRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                                earphoneRecyclerView.setHasFixedSize(true);
+                                earphoneRecyclerView.setAdapter(adapter);
+                                earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
                         }
                     }
                 });
@@ -167,25 +186,35 @@ public class EarphoneActivity extends AppCompatActivity {
     // Get single earbuds company data
     private void getCompany(String company){
         earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
-
+        earphoneActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
                 .whereEqualTo("category", "AirBuds")
                 .whereEqualTo("company", company)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(EarphoneActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            return;
+                        }
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
-                            earphoneRecyclerView.setLayoutManager(layoutManager);
-                            adapter = new ProductAdapter(EarphoneActivity.this, datalist);
-                            earphoneRecyclerView.setHasFixedSize(true);
-                            earphoneRecyclerView.setAdapter(adapter);
+
+                        if (value != null && !value.isEmpty()){
+                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
+                                earphoneRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                                earphoneRecyclerView.setHasFixedSize(true);
+                                earphoneRecyclerView.setAdapter(adapter);
+                                earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
                         }
                     }
                 });
