@@ -32,7 +32,7 @@
     <string name="realme">Realme</string>
     <string name="samsung">Samsung</string>
     <string name="motorola">Motorola</string>
-    <string name="poco">Bit</string>
+    <string name="poco">Poco</string>
     <string name="goggle">Goggle</string>
     <string name="oneplus">Oneplus</string>
     <string name="iqoo">IQ</string>
@@ -45,7 +45,7 @@
     <string name="headphones">Headphones</string>
     <string name="speakers">Speakers</string>
     <string name="keywords">Keywords</string>
-    <string name="mouses">Mice</string>
+    <string name="mouses">Mouse</string>
     <string name="camera">Camera</string>
     <string name="smartwatches">Smartwatches</string>
     <string name="tablets">Tablets</string>
