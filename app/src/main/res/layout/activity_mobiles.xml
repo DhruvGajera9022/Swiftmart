@@ -105,17 +105,6 @@
                 android:layout_marginHorizontal="10sp"
                 android:layout_gravity="center"
                 android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/iphone"
-                    android:fontFamily="@font/poppinsregular"/>
-
             </LinearLayout>
 
 <!--            Samsung-->
@@ -131,16 +120,6 @@
                     android:src="@drawable/samsung"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/samsung"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -158,15 +137,6 @@
                     android:src="@drawable/vivo"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/vivo"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -184,16 +154,6 @@
                     android:src="@drawable/oppo"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/oppo"
-                    android:fontFamily="@font/poppinsregular"/>
-
             </LinearLayout>
 
 <!--            MI-->
@@ -209,16 +169,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/mi"
                     android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/redmi"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -236,16 +186,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/realme"
-                    android:fontFamily="@font/poppinsregular"/>
-
             </LinearLayout>
 
 <!--            Motorola-->
@@ -262,15 +202,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/motorola"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -288,15 +219,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/poco"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -314,15 +236,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/goggle"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -340,15 +253,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/oneplus"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
@@ -366,16 +270,6 @@
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/iqoo"
-                    android:fontFamily="@font/poppinsregular"/>
-
             </LinearLayout>
 
 <!--            Nothing-->
@@ -391,16 +285,6 @@
                     android:src="@drawable/nothing"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:text="@string/nothing"
-                    android:fontFamily="@font/poppinsregular"/>
 
             </LinearLayout>
 
