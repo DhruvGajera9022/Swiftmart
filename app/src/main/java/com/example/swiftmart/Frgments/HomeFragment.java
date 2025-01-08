@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.swiftmart.Adapter.ProductAdapter;
@@ -63,6 +64,7 @@ public class HomeFragment extends Fragment {
     HorizontalScrollView homeFragmentHorizontalScrollView;
     SwipeRefreshLayout homeFragmentSwipeRefresh;
     BottomSheetDialog sheetDialog;
+    ProgressBar homeFragmentProgressBar;
 
     public HomeFragment() {
 
@@ -97,6 +99,7 @@ public class HomeFragment extends Fragment {
         homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
         homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
         homeFragmentSwipeRefresh = view.findViewById(R.id.homeFragmentSwipeRefresh);
+        homeFragmentProgressBar = view.findViewById(R.id.homeFragmentProgressBar);
 
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
@@ -142,7 +145,7 @@ public class HomeFragment extends Fragment {
     // Get all the products from the database
     private void getAllProducts(){
         homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        homeFragmentProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
@@ -152,6 +155,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
+                            homeFragmentProgressBar.setVisibility(View.GONE);
                             List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
                             datalist.addAll(data);
 

@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
     AlertDialog dialog;
     NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
 
-    private LinearLayout homeLayout, exploreLayout, categoryLayout, profileLayout;
-    private ImageView homeImage, exploreImage, categoryImage, profileImage;
-    private TextView homeText, exploreText, categoryText, profileText;
+    private LinearLayout homeLayout, exploreLayout, categoryLayout, profileLayout, cartLayout;
+    private ImageView homeImage, exploreImage, categoryImage, profileImage, cartImage;
+    private TextView homeText, exploreText, categoryText, profileText, cartText;
     private int selectedTab = 1;
     private FrameLayout frameLayout;
 
@@ -60,16 +60,19 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         exploreLayout = findViewById(R.id.exploreLayout);
         categoryLayout = findViewById(R.id.categoryLayout);
         profileLayout = findViewById(R.id.profileLayout);
+        cartLayout = findViewById(R.id.cartLayout);
 
         homeImage = findViewById(R.id.homeImage);
         exploreImage = findViewById(R.id.exploreImage);
         categoryImage = findViewById(R.id.categoryImage);
         profileImage = findViewById(R.id.profileImage);
+        cartImage = findViewById(R.id.cartImage);
 
         homeText = findViewById(R.id.homeText);
         exploreText = findViewById(R.id.exploreText);
         categoryText = findViewById(R.id.categoryText);
         profileText = findViewById(R.id.profileText);
+        cartText = findViewById(R.id.cartText);
 
         if (selectedLanguage != null) {
             changeLanguage(selectedLanguage);
@@ -103,14 +106,17 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     exploreText.setVisibility(View.GONE);
                     categoryText.setVisibility(View.GONE);
                     profileText.setVisibility(View.GONE);
+                    cartText.setVisibility(View.GONE);
 
                     exploreImage.setImageResource(R.drawable.icon_explore);
                     categoryImage.setImageResource(R.drawable.icon_category);
                     profileImage.setImageResource(R.drawable.icon_person);
+                    cartImage.setImageResource(R.drawable.icon_cart);
 
                     exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                     homeText.setVisibility(View.VISIBLE);
                     homeImage.setImageResource(R.drawable.icon_home_selected);
@@ -144,14 +150,17 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     homeText.setVisibility(View.GONE);
                     categoryText.setVisibility(View.GONE);
                     profileText.setVisibility(View.GONE);
+                    cartText.setVisibility(View.GONE);
 
                     homeImage.setImageResource(R.drawable.icon_home);
                     categoryImage.setImageResource(R.drawable.icon_category);
                     profileImage.setImageResource(R.drawable.icon_person);
+                    cartImage.setImageResource(R.drawable.icon_cart);
 
                     homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                     exploreText.setVisibility(View.VISIBLE);
                     exploreImage.setImageResource(R.drawable.icon_explore_selected);
@@ -185,14 +194,17 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     homeText.setVisibility(View.GONE);
                     exploreText.setVisibility(View.GONE);
                     profileText.setVisibility(View.GONE);
+                    cartText.setVisibility(View.GONE);
 
                     homeImage.setImageResource(R.drawable.icon_home);
                     exploreImage.setImageResource(R.drawable.icon_explore);
                     profileImage.setImageResource(R.drawable.icon_person);
+                    cartImage.setImageResource(R.drawable.icon_cart);
 
                     homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                     categoryText.setVisibility(View.VISIBLE);
                     categoryImage.setImageResource(R.drawable.icon_category_selected);
@@ -226,14 +238,17 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     homeText.setVisibility(View.GONE);
                     exploreText.setVisibility(View.GONE);
                     categoryText.setVisibility(View.GONE);
+                    cartText.setVisibility(View.GONE);
 
                     homeImage.setImageResource(R.drawable.icon_home);
                     exploreImage.setImageResource(R.drawable.icon_explore);
                     categoryImage.setImageResource(R.drawable.icon_category);
+                    cartImage.setImageResource(R.drawable.icon_cart);
 
                     homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                     profileText.setVisibility(View.VISIBLE);
                     profileImage.setImageResource(R.drawable.icon_person_selected);
@@ -245,6 +260,50 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     profileLayout.startAnimation(scaleAnimation);
 
                     selectedTab = 4;
+                }
+            }
+        });
+
+        cartLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedTab != 5){
+
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    if (selectedTab > 5) {
+                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+                    } else {
+                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+                    }
+
+                    transaction.replace(R.id.frameLayout, CartFragment.class, null).commit();
+
+                    homeText.setVisibility(View.GONE);
+                    exploreText.setVisibility(View.GONE);
+                    categoryText.setVisibility(View.GONE);
+                    profileText.setVisibility(View.GONE);
+
+                    homeImage.setImageResource(R.drawable.icon_home);
+                    exploreImage.setImageResource(R.drawable.icon_explore);
+                    categoryImage.setImageResource(R.drawable.icon_category);
+                    profileImage.setImageResource(R.drawable.icon_person);
+
+                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+                    cartText.setVisibility(View.VISIBLE);
+                    cartImage.setImageResource(R.drawable.icon_cart_selected);
+                    cartLayout.setBackgroundResource(R.drawable.rounded_back_cart_200);
+
+                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
+                    scaleAnimation.setDuration(200);
+                    scaleAnimation.setFillAfter(true);
+                    cartLayout.startAnimation(scaleAnimation);
+
+                    selectedTab = 5;
                 }
             }
         });

@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="4"
+        android:weightSum="5"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="15dp"
@@ -156,6 +156,38 @@
                 android:text="Profile"
                 android:textStyle="bold"
                 android:textColor="@color/profile"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <!--Cart-->
+        <LinearLayout
+            android:id="@+id/cartLayout"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/cartImage"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icon_cart"/>
+
+            <TextView
+                android:id="@+id/cartText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cart"
+                android:textStyle="bold"
+                android:textColor="@color/cart"
                 android:layout_marginStart="10dp"
                 android:textSize="16sp"
                 android:visibility="gone"/>
