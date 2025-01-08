@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +21,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -41,6 +48,7 @@ public class MobilesActivity extends AppCompatActivity {
     ProductAdapter adapter;
     ScrollView mobileScrollView;
     HorizontalScrollView mobileHorizontalScrollView;
+    private ProgressBar mobileActivityProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class MobilesActivity extends AppCompatActivity {
         oneplues=findViewById(R.id.oneplues);
         backmobiles=findViewById(R.id.backmobiles);
         mobileRecyclerView=findViewById(R.id.mobileRecyclerView);
+        mobileActivityProgressBar=findViewById(R.id.mobileActivityProgressBar);
 
         mobileScrollView.setVerticalScrollBarEnabled(false);
         mobileHorizontalScrollView.setHorizontalScrollBarEnabled(false);
@@ -147,24 +156,34 @@ public class MobilesActivity extends AppCompatActivity {
     // Get all the mobiles
     private void getMobiles(){
         mobileRecyclerView.setLayoutManager(new LinearLayoutManager(MobilesActivity.this));
-
+        mobileActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
                 .whereEqualTo("category", "Mobile")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(MobilesActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            mobileActivityProgressBar.setVisibility(View.GONE);
+                            return;
+                        }
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
-                            mobileRecyclerView.setLayoutManager(layoutManager);
-                            adapter = new ProductAdapter(MobilesActivity.this, datalist);
-                            mobileRecyclerView.setHasFixedSize(true);
-                            mobileRecyclerView.setAdapter(adapter);
+
+                        if (value != null && !value.isEmpty()){
+                            mobileActivityProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
+                                mobileRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(MobilesActivity.this, datalist);
+                                mobileRecyclerView.setHasFixedSize(true);
+                                mobileRecyclerView.setAdapter(adapter);
+                                mobileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
                         }
                     }
                 });
@@ -175,30 +194,37 @@ public class MobilesActivity extends AppCompatActivity {
     // Get single mobile company data
     private void getCompany(String company){
         mobileRecyclerView.setLayoutManager(new LinearLayoutManager(MobilesActivity.this));
-
+        mobileActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
                 .whereEqualTo("category", "Mobile")
                 .whereEqualTo("company", company)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(MobilesActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            mobileActivityProgressBar.setVisibility(View.GONE);
+                            return;
+                        }
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
-                            mobileRecyclerView.setLayoutManager(layoutManager);
-                            adapter = new ProductAdapter(MobilesActivity.this, datalist);
-                            mobileRecyclerView.setHasFixedSize(true);
-                            mobileRecyclerView.setAdapter(adapter);
+                        if (value != null && !value.isEmpty()){
+                            mobileActivityProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
+                                mobileRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(MobilesActivity.this, datalist);
+                                mobileRecyclerView.setHasFixedSize(true);
+                                mobileRecyclerView.setAdapter(adapter);
+                                mobileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
                         }
                     }
                 });
-
-
     }
 
     // Get company wise mobile data

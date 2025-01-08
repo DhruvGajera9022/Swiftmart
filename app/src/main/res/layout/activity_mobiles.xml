@@ -428,6 +428,13 @@
 
         </androidx.cardview.widget.CardView>
 
+        <ProgressBar
+            android:id="@+id/mobileActivityProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mobileRecyclerView"
             android:layout_width="match_parent"

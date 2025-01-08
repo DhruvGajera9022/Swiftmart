@@ -31,6 +31,7 @@ import com.example.swiftmart.Leptop_Activity;
 import com.example.swiftmart.MobilesActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
+import com.example.swiftmart.Utils.CustomToast;
 import com.example.swiftmart.tv_brandActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +42,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -148,23 +150,52 @@ public class HomeFragment extends Fragment {
         homeFragmentProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
+//        db.collection("Products")
+//                .limit(30)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()){
+//                            homeFragmentProgressBar.setVisibility(View.GONE);
+//                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+//                            datalist.addAll(data);
+//
+//                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+//                            homeFragmentRecyclerView.setLayoutManager(layoutManager);
+//                            adapter = new ProductAdapter(getContext(), datalist);
+//                            homeFragmentRecyclerView.setHasFixedSize(true);
+//                            homeFragmentRecyclerView.setAdapter(adapter);
+//                            homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//                        }
+//                    }
+//                });
+
         db.collection("Products")
                 .limit(30)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(getContext(), R.drawable.img_logo, "Error in data fetching");
                             homeFragmentProgressBar.setVisibility(View.GONE);
-                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-                            datalist.addAll(data);
+                            return;
+                        }
 
-                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                            homeFragmentRecyclerView.setLayoutManager(layoutManager);
-                            adapter = new ProductAdapter(getContext(), datalist);
-                            homeFragmentRecyclerView.setHasFixedSize(true);
-                            homeFragmentRecyclerView.setAdapter(adapter);
-                            homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                        if (value != null && !value.isEmpty()){
+                            homeFragmentProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(getContext(), datalist);
+                                homeFragmentRecyclerView.setHasFixedSize(true);
+                                homeFragmentRecyclerView.setAdapter(adapter);
+                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
                         }
                     }
                 });
