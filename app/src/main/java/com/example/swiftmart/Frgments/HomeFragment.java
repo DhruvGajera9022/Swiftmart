@@ -150,27 +150,6 @@ public class HomeFragment extends Fragment {
         homeFragmentProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
-//        db.collection("Products")
-//                .limit(30)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()){
-//                            homeFragmentProgressBar.setVisibility(View.GONE);
-//                            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
-//                            datalist.addAll(data);
-//
-//                            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-//                            homeFragmentRecyclerView.setLayoutManager(layoutManager);
-//                            adapter = new ProductAdapter(getContext(), datalist);
-//                            homeFragmentRecyclerView.setHasFixedSize(true);
-//                            homeFragmentRecyclerView.setAdapter(adapter);
-//                            homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//                        }
-//                    }
-//                });
-
         db.collection("Products")
                 .limit(30)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

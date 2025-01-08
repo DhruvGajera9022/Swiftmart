@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +23,10 @@ import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,24 +69,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.wishlistButton.setImageResource(
                 product.isWishlisted() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
 
-        // Check if the product is in the wishlist
+        // Check if the product is in the wishlist using QuerySnapshot
         db.collection("Users")
-                .document(uid)
-                .collection("wishlist")
-                .document(product.getPid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        product.setWishlisted(true);
-                        holder.wishlistButton.setImageResource(R.drawable.ic_heart_filled);
-                    } else {
-                        product.setWishlisted(false);
-                        holder.wishlistButton.setImageResource(R.drawable.ic_heart_outline);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(context, "Failed to fetch wishlist data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                        .document(uid)
+                                .collection("wishlist")
+                                        .whereEqualTo("pid", product.getPid())
+                                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                        if (value != null && !value.isEmpty()){
+                                                            product.setWishlisted(true);
+                                                            holder.wishlistButton.setImageResource(R.drawable.ic_heart_filled);
+                                                        }else {
+                                                            product.setWishlisted(false);
+                                                            holder.wishlistButton.setImageResource(R.drawable.ic_heart_outline);
+                                                        }
+                                                    }
+                                                });
+
 
         holder.cardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +112,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(uid)
                         .collection("wishlist")
                         .document(product.getPid())
-                        .set(Collections.singletonMap("pid", product.getPid()))
+                        .set(product)
                         .addOnSuccessListener(aVoid ->
                                 CustomToast.showToast(context, R.drawable.img_logo, "Added to wishlist!")
                         )

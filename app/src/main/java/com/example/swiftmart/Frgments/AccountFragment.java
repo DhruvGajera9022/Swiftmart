@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.swiftmart.Account.Address_Activity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.Account.Language_Activity;
+import com.example.swiftmart.Account.WishlistActivity;
 import com.example.swiftmart.LoginActivity;
 import com.example.swiftmart.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -175,14 +176,16 @@ public class AccountFragment extends Fragment {
         btnWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                startActivity(intent);
             }
         });
 
         llWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                startActivity(intent);
             }
         });
     }
