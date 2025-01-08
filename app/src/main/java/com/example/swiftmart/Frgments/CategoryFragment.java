@@ -37,7 +37,9 @@ import java.util.List;
 public class CategoryFragment extends Fragment {
     private LinearLayout mobiles, earbuds, tv, laptop, headphone, speaker, keyword, mouse, camera, smartwatch, tablet; // All category
     private LinearLayout iphone, samsung, vivo, oppo, mi, realme, motorola, poco, goggle, oneplus, iqoo, nothing; // All mobiles company
-    private LinearLayout boatlogo, realmelogo, onepluslogo, nothinglogo, triggerlogo, trukelogo;
+    private LinearLayout boatlogo, realmelogo, onepluslogo, nothinglogo, triggerlogo, trukelogo; // all earbuds company
+    private LinearLayout samsunglogo, lglogo, milogo, tcllogo; // all tv company
+    private LinearLayout hplogo, dellogo, lenovologo, acerlogo, asusogo, applelogo, msilogo; // all laptops company
     private HorizontalScrollView mobileScrollView, earphoneHorizontalScrollView, tvHorizontalScrollView, laptopHorizontalScrollView;
     private ScrollView homeFragmentScrollView;
     private View mobileIndicator, earbudsIndicator, tvIndicator, laptopsIndicator, headphonesIndicator, speakersIndicator, keyboardIndicator, mouseIndicator, cameraIndicator, smartwatchesIndicator, tabletsIndicator;
@@ -62,6 +64,8 @@ public class CategoryFragment extends Fragment {
         setCategoryClickListeners();
         setMobileCompanyClickListeners();
         setEarbudsCompanyClickListeners();
+        setTVCompanyClickListeners();
+        setLaptopCompanyClickListeners();
 
         handleOnBackPress();
 
@@ -120,6 +124,21 @@ public class CategoryFragment extends Fragment {
         nothinglogo = view.findViewById(R.id.nothinglogo);
         triggerlogo = view.findViewById(R.id.triggerlogo);
         trukelogo = view.findViewById(R.id.trukelogo);
+
+        // tv company
+        samsunglogo = view.findViewById(R.id.samsunglogo);
+        lglogo = view.findViewById(R.id.lglogo);
+        milogo = view.findViewById(R.id.milogo);
+        tcllogo = view.findViewById(R.id.tcllogo);
+
+        // laptops company
+        hplogo = view.findViewById(R.id.hplogo);
+        dellogo = view.findViewById(R.id.dellogo);
+        lenovologo = view.findViewById(R.id.lenovologo);
+        acerlogo = view.findViewById(R.id.acerlogo);
+        asusogo = view.findViewById(R.id.asusogo);
+        applelogo = view.findViewById(R.id.applelogo);
+        msilogo = view.findViewById(R.id.msilogo);
 
         homeFragmentScrollView = view.findViewById(R.id.homeFragmentScrollView);
         mobileScrollView = view.findViewById(R.id.mobileHorizontalScrollView);
@@ -228,6 +247,23 @@ public class CategoryFragment extends Fragment {
         nothinglogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Nothing"));
         triggerlogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Trigger"));
         trukelogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Truke"));
+    }
+
+    private void setTVCompanyClickListeners() {
+        samsunglogo.setOnClickListener(v -> fetchFilteredData("TV", "Samsung"));
+        lglogo.setOnClickListener(v -> fetchFilteredData("TV", "LG"));
+        milogo.setOnClickListener(v -> fetchFilteredData("TV", "Xiaomi"));
+        tcllogo.setOnClickListener(v -> fetchFilteredData("TV", "TCL"));
+    }
+
+    private void setLaptopCompanyClickListeners() {
+        hplogo.setOnClickListener(v -> fetchFilteredData("Laptop", "HP"));
+        dellogo.setOnClickListener(v -> fetchFilteredData("Laptop", "Dell"));
+        lenovologo.setOnClickListener(v -> fetchFilteredData("Laptop", "Lenovo"));
+        acerlogo.setOnClickListener(v -> fetchFilteredData("Laptop", "Acer"));
+        asusogo.setOnClickListener(v -> fetchFilteredData("Laptop", "Asus"));
+        applelogo.setOnClickListener(v -> fetchFilteredData("Laptop", "Apple"));
+        msilogo.setOnClickListener(v -> fetchFilteredData("Laptop", "MSI"));
     }
 
     private void handleCategoryClick(String category, HorizontalScrollView visibleScrollView) {

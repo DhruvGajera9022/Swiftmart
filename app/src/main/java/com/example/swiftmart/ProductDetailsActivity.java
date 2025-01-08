@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.ProductImageSliderAdapter;
@@ -29,6 +31,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String productId;
     private ViewPager2 productDetailsViewPager;
+    private AppCompatButton productAddToCartButton, productBuyNowButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsProductDescription = findViewById(R.id.productDetailsProductDescription);
         productDetailsProductPrice = findViewById(R.id.productDetailsProductPrice);
         productDetailsViewPager = findViewById(R.id.productDetailsViewPager);
+
+        productAddToCartButton = findViewById(R.id.productAddToCartButton);
 
         db = FirebaseFirestore.getInstance();
 
@@ -107,4 +112,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void handleAddToCartClick(){
+        productAddToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    private void handleBuyClick(){
+        productBuyNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 }

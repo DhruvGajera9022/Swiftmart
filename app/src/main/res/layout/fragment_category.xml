@@ -1059,15 +1059,12 @@
                             android:background="@drawable/round"
                             android:src="@drawable/hp" />
 
-
                     </LinearLayout>
-
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/delllogo"
+                        android:id="@+id/dellogo"
                         android:layout_marginHorizontal="10sp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -1177,7 +1174,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/adminCategoryRecyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
