@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarbudsActivity;
 import com.example.swiftmart.EarphoneActivity;
+import com.example.swiftmart.Edit_profile_Activity;
 import com.example.swiftmart.Leptop_Activity;
 import com.example.swiftmart.MainActivity;
 import com.example.swiftmart.MobilesActivity;
@@ -108,6 +109,7 @@ public class HomeFragment extends Fragment {
 
 
         getUserData();
+        handleHomeFragmentUserAvtarClick();
         getAllProducts();
         swipeRefresh();
 
@@ -135,7 +137,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
-                    homeFragmentUserName.setText(value.getString("Username"));
+                    homeFragmentUserName.append(value.getString("Username").split(" ")[0]);
                     Picasso.get().load(value.getString("Image")).into(homeFragmentUserAvatar);
                 }
             }
@@ -168,6 +170,22 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    // handle homeFragmentUserAvatar click
+    private void handleHomeFragmentUserAvtarClick(){
+        homeFragmentUserAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeFragmentUserAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), Edit_profile_Activity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 
     // Swipe refresh layout

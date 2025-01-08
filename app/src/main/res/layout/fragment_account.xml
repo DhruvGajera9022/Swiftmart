@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="20sp"
             android:fontFamily="@font/poppinsbold"
-            android:text="Hey! "
+            android:text="Hey, "
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_marginStart="2sp"
             android:textColor="@color/black"
             android:layout_gravity="center_vertical"
-            android:fontFamily="@font/poppinsmedium"/>
+            android:fontFamily="@font/poppinsbold"/>
 
 
     </LinearLayout>

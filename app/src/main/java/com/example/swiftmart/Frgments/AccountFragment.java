@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -12,18 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.swiftmart.Address_Activity;
 import com.example.swiftmart.Edit_profile_Activity;
 import com.example.swiftmart.Language_Activity;
 import com.example.swiftmart.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 
 public class AccountFragment extends Fragment {
-    ImageButton btnEditProfile, btnLanguage, btnOrderHistory, wishlist, btnAboutUs, btnPrivacyPolicy, btnDeleteUser, profileRateUsBtn,addressBtn;
-    AppCompatButton btnLogout;
-    LinearLayout llwishlist, llEditProfile, llOrderHistory, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser, llRateUs,llsavedaddress;
+    private ImageButton btnEditProfile, btnLanguage, btnOrderHistory, wishlist, btnAboutUs, btnPrivacyPolicy, btnDeleteUser, profileRateUsBtn,addressBtn;
+    private AppCompatButton btnLogout;
+    private LinearLayout llwishlist, llEditProfile, llOrderHistory, llAboutUs, llPrivacyPolicy,llLanguage, llDeleteUser, llRateUs,llsavedaddress;
+    private TextView accountFragmentUserName;
+    private String uid;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     public AccountFragment() {
 
@@ -36,6 +49,12 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getCurrentUser().getUid();
+
+        accountFragmentUserName = view.findViewById(R.id.accountFragmentUserName);
 
         llwishlist = view.findViewById(R.id.llwishlist);
         llEditProfile = view.findViewById(R.id.llEditProfile);
@@ -58,6 +77,8 @@ public class AccountFragment extends Fragment {
         addressBtn = view.findViewById(R.id.addressBtn);
 
         btnLogout = view.findViewById(R.id.userLogout);
+
+        getUserData();
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +120,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-
         llLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +133,21 @@ public class AccountFragment extends Fragment {
         return view;
     }
 
+    // Get the user data from the database
+    private void getUserData(){
+        uid = mAuth.getCurrentUser().getUid();
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    accountFragmentUserName.append(value.getString("Username").split(" ")[0]);
+                }
+            }
+        });
+
+    }
 
     // handle onBack press
     private void handleOnBackPress(){
