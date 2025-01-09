@@ -96,7 +96,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private void displayProductDetails(ProductModel product) {
         productDetailsProductName.setText(product.getName());
-        productDetailsProductPrice.setText("₹"+product.getPrice());
+        productDetailsProductPrice.setText(product.getPrice());
         productDetailsProductDescription.setText(product.getDescription());
     }
 
@@ -160,13 +160,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
         String saveCurrentTime = currentTime.format(calForDate.getTime());
 
         Map<String, Object> cartMap = new HashMap<>();
-        cartMap.put("productImage", currentImageUrls);
-        cartMap.put("productName", productName);
-        cartMap.put("productPrice", productPrice);
-        cartMap.put("productDescription", productDescription);
+        cartMap.put("imgurls", currentImageUrls);
+        cartMap.put("name", productName);
+        cartMap.put("price", productPrice);
+        cartMap.put("description", productDescription);
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);
-        cartMap.put("uid", uid);
 
         // Add to cart
         db.collection("Users")
