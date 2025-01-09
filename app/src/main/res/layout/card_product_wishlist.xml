@@ -72,7 +72,7 @@
                         android:fontFamily="@font/poppinsregular"/>
 
                     <TextView
-                        android:id="@+id/earbudstext"
+                        android:id="@+id/cardMaxPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_3_490"

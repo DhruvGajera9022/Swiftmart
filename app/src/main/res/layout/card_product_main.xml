@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <!-- Main LinearLayout -->
+        <LinearLayout
+            android:id="@+id/mainCardProductLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/mainCardProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="147dp"
+                android:src="@drawable/boatearbuds" />
+
+            <TextView
+                android:id="@+id/mainCardProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/boat"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="10sp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppinssemibold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mainCardProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_999"
+                        android:layout_marginStart="5sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinssemibold"/>
+
+                    <TextView
+                        android:id="@+id/mainCardMaxPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_3_490"
+                        android:layout_marginStart="3sp"
+                        android:textColor="@color/gray"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/poppinsregular"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Wishlist Heart Button -->
+        <ImageButton
+            android:id="@+id/mainCardWishlistButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_heart_outline" />
+    </FrameLayout>
+</LinearLayout>

@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.swiftmart.Adapter.MainProductAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     RecyclerView homeFragmentRecyclerView;
-    ProductAdapter adapter;
+    MainProductAdapter adapter;
     CircleImageView homeFragmentUserAvatar;
     TextView homeFragmentUserName;
     FirebaseAuth mAuth;
@@ -170,7 +171,7 @@ public class HomeFragment extends Fragment {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                                 homeFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                adapter = new MainProductAdapter(getContext(), datalist);
                                 homeFragmentRecyclerView.setHasFixedSize(true);
                                 homeFragmentRecyclerView.setAdapter(adapter);
                                 homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -2,6 +2,7 @@ package com.example.swiftmart.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
         holder.cardProductDescription.setText(product.getDescription());
         holder.cardProductPrice.setText("₹" + product.getPrice());
 
+        holder.cardMaxPrice.setPaintFlags(holder.cardMaxPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         // Set slide-in animation
         Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
         holder.itemView.startAnimation(animation);
@@ -71,7 +74,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
 
     public class WishlistViewHolder extends RecyclerView.ViewHolder{
         ImageView cardProductImage;
-        TextView cardProductName, cardProductDescription, cardProductPrice;
+        TextView cardProductName, cardProductDescription, cardProductPrice, cardMaxPrice;
         LinearLayout wishlistCardProductLinearLayout;
 
         public WishlistViewHolder(@NonNull View itemView) {
@@ -82,6 +85,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
             cardProductName = itemView.findViewById(R.id.cardProductName);
             cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
             cardProductPrice = itemView.findViewById(R.id.cardProductPrice);
+            cardMaxPrice = itemView.findViewById(R.id.cardMaxPrice);
 
         }
     }

@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,16 +29,16 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class MainProductAdapter extends RecyclerView.Adapter<MainProductAdapter.ViewHolder>{
+
     Context context;
     ArrayList<ProductModel> datalist;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     String uid = mAuth.getUid();
 
-    public ProductAdapter(Context context, ArrayList<ProductModel> datalist) {
+    public MainProductAdapter(Context context, ArrayList<ProductModel> datalist) {
         this.context = context;
         this.datalist = datalist;
     }
@@ -47,51 +46,50 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_product, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_product_main, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainProductAdapter.ViewHolder holder, int position) {
         ProductModel product = datalist.get(position);
 
-        Glide.with(holder.cardProductImage.getContext())
+        Glide.with(holder.mainCardProductImage.getContext())
                 .load(product.getImgurls().get(0))
                 .placeholder(R.drawable.img_animation)
-                .into(holder.cardProductImage);
-        holder.cardProductName.setText(product.getName());
-        holder.cardProductDescription.setText(product.getDescription());
-        holder.cardProductPrice.setText("₹" + product.getPrice());
+                .into(holder.mainCardProductImage);
+        holder.mainCardProductName.setText(product.getName());
+        holder.mainCardProductPrice.setText("₹" + product.getPrice());
 
-        holder.cardMaxPrice.setPaintFlags(holder.cardMaxPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.mainCardMaxPrice.setPaintFlags(holder.mainCardMaxPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         // Set slide-in animation
         Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
         holder.itemView.startAnimation(animation);
 
-        holder.wishlistButton.setImageResource(
+        holder.mainCardWishlistButton.setImageResource(
                 product.isWishlisted() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
 
         // Check if the product is in the wishlist using QuerySnapshot
         db.collection("Users")
-                        .document(uid)
-                                .collection("wishlist")
-                                        .whereEqualTo("pid", product.getPid())
-                                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                                        if (value != null && !value.isEmpty()){
-                                                            product.setWishlisted(true);
-                                                            holder.wishlistButton.setImageResource(R.drawable.ic_heart_filled);
-                                                        }else {
-                                                            product.setWishlisted(false);
-                                                            holder.wishlistButton.setImageResource(R.drawable.ic_heart_outline);
-                                                        }
-                                                    }
-                                                });
+                .document(uid)
+                .collection("wishlist")
+                .whereEqualTo("pid", product.getPid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && !value.isEmpty()){
+                            product.setWishlisted(true);
+                            holder.mainCardWishlistButton.setImageResource(R.drawable.ic_heart_filled);
+                        }else {
+                            product.setWishlisted(false);
+                            holder.mainCardWishlistButton.setImageResource(R.drawable.ic_heart_outline);
+                        }
+                    }
+                });
 
 
-        holder.cardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mainCardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
@@ -101,12 +99,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         });
 
         // Handle wishlist button clicks
-        holder.wishlistButton.setOnClickListener(v -> {
+        holder.mainCardWishlistButton.setOnClickListener(v -> {
             boolean isWishlisted = !product.isWishlisted();
             product.setWishlisted(isWishlisted);
 
             // Update UI
-            holder.wishlistButton.setImageResource(
+            holder.mainCardWishlistButton.setImageResource(
                     isWishlisted ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
 
             // Update Firestore
@@ -145,22 +143,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView cardProductImage;
-        TextView cardProductName, cardProductDescription, cardProductPrice, cardMaxPrice;
-        LinearLayout cardProductLinearLayout;
-        ImageButton wishlistButton;
+        ImageView mainCardProductImage;
+        TextView mainCardProductName,  mainCardProductPrice, mainCardMaxPrice;
+        LinearLayout mainCardProductLinearLayout;
+        ImageButton mainCardWishlistButton;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cardProductLinearLayout = itemView.findViewById(R.id.cardProductLinearLayout);
-            cardProductImage = itemView.findViewById(R.id.cardProductImage);
-            cardProductName = itemView.findViewById(R.id.cardProductName);
-            cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
-            cardProductPrice = itemView.findViewById(R.id.cardProductPrice);
-            cardMaxPrice = itemView.findViewById(R.id.cardMaxPrice);
-            wishlistButton = itemView.findViewById(R.id.wishlistButton);
+            mainCardProductLinearLayout = itemView.findViewById(R.id.mainCardProductLinearLayout);
+            mainCardProductImage = itemView.findViewById(R.id.mainCardProductImage);
+            mainCardProductName = itemView.findViewById(R.id.mainCardProductName);
+            mainCardProductPrice = itemView.findViewById(R.id.mainCardProductPrice);
+            mainCardMaxPrice = itemView.findViewById(R.id.mainCardMaxPrice);
+            mainCardWishlistButton = itemView.findViewById(R.id.mainCardWishlistButton);
 
         }
     }
