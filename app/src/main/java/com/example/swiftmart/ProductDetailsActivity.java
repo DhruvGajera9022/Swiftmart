@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,24 +15,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.swiftmart.Account.Add_Address_Activity;
 import com.example.swiftmart.Adapter.ProductImageSliderAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     private TextView productDetailsProductName, productDetailsProductDescription, productDetailsProductPrice;
-    private FirebaseFirestore db;
     private String productId;
     private ViewPager2 productDetailsViewPager;
     private AppCompatButton productAddToCartButton, productBuyNowButton;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private String uid;
+    private List<String> currentImageUrls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         initialization();
         loadProductData(productId);
+        handleAddToCartClick();
 
     }
 
@@ -52,6 +66,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productAddToCartButton = findViewById(R.id.productAddToCartButton);
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getCurrentUser().getUid();
 
         productId = getIntent().getStringExtra("productId");
 
@@ -71,6 +87,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             if (product != null) {
                                 displayProductDetails(product);
                                 setupImageSlider(product.getImgurls());
+                                currentImageUrls = product.getImgurls();
                             }
                         }
                     }
@@ -116,7 +133,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productAddToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addToCart();
             }
         });
     }
@@ -129,4 +146,52 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    // handle add to cart
+    private void addToCart() {
+        String productName = productDetailsProductName.getText().toString();
+        String productPrice = productDetailsProductPrice.getText().toString();
+        String productDescription = productDetailsProductDescription.getText().toString();
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        String saveCurrentDate = currentDate.format(calForDate.getTime());
+        String saveCurrentTime = currentTime.format(calForDate.getTime());
+
+        Map<String, Object> cartMap = new HashMap<>();
+        cartMap.put("productImage", currentImageUrls);
+        cartMap.put("productName", productName);
+        cartMap.put("productPrice", productPrice);
+        cartMap.put("productDescription", productDescription);
+        cartMap.put("currentDate", saveCurrentDate);
+        cartMap.put("currentTime", saveCurrentTime);
+        cartMap.put("uid", uid);
+
+        // Add to cart
+        db.collection("Users")
+                .document(uid)
+                .collection("Cart")
+                .add(cartMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String oid = documentReference.getId();
+                        documentReference.update("oid", oid)
+                                .addOnSuccessListener(aVoid -> {
+                                    CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Added to cart");
+                                })
+                                .addOnFailureListener(e -> {
+                                    CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Failed to add to cart");
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Error adding to cart");
+                    }
+                });
+    }
+
 }
