@@ -1,6 +1,7 @@
 package com.example.swiftmart.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -35,11 +37,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public CartAdapter(Context context, ArrayList<ProductModel> datalist) {
         this.context = context;
         this.datalist = (datalist != null) ? datalist : new ArrayList<>();
-
-        // Initialize FirebaseAuth and Firestore
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        uid = mAuth.getCurrentUser().getUid();
     }
 
 
@@ -107,6 +104,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.cartTrashButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    db = FirebaseFirestore.getInstance();
+                    mAuth = FirebaseAuth.getInstance();
+                    uid = mAuth.getCurrentUser().getUid();
+
+                    db.collection("Users")
+                            .document(uid)
+                            .collection("Cart")
+                            .document(datalist.get(position).getOid())
+                            .get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                if (documentSnapshot.exists()) {
+                                    documentSnapshot.getReference().delete();
+                                } else {
+                                    Log.d("Firestore", "Document does not exist.");
+                                }
+                            });
+
                 }
             });
         }

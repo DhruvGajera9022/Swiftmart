@@ -71,38 +71,45 @@ public class CartFragment extends Fragment{
 
         cartProductTotal = view.findViewById(R.id.cartProductTotal);
 
+
+        // Initialize adapter with an empty list
+        adapter = new CartAdapter(getContext(), datalist);
+        cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        cartRecyclerView.setAdapter(adapter);
+
     }
 
     // fetch cart data
-    private void getCartData(){
-        datalist.clear();
-
+    private void getCartData() {
         db.collection("Users")
                 .document(uid)
                 .collection("Cart")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null){
-                            CustomToast.showToast(getContext(),  "Error in fetching cart data");
+                        if (error != null) {
+                            CustomToast.showToast(getContext(), "Error in fetching cart data");
+                            return;
                         }
 
-                        if (value != null && !value.isEmpty()){
-                            for (QueryDocumentSnapshot documentSnapshot : value){
+                        if (value != null) {
+                            datalist.clear();
+                            for (QueryDocumentSnapshot documentSnapshot : value) {
                                 ProductModel product = documentSnapshot.toObject(ProductModel.class);
                                 datalist.add(product);
                             }
-                            adapter = new CartAdapter(getContext(), datalist);
-                            cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                            cartRecyclerView.setAdapter(adapter);
+
                             adapter.notifyDataSetChanged();
-
+                        } else {
+                            CustomToast.showToast(getContext(), "Cart is empty");
+                            datalist.clear();
+                            adapter.notifyDataSetChanged();
                         }
-
                     }
                 });
     }
+
 
     // handle onBack press
     private void handleOnBackPress(){
