@@ -28,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -48,6 +49,9 @@ public class CategoryFragment extends Fragment {
     private RecyclerView adminCategoryRecyclerview;
     private FirebaseFirestore db;
     private ProductAdapter adapter;
+
+    private ListenerRegistration categoryListener;
+    private ListenerRegistration filteredDataListener;
 
     public CategoryFragment() {
     }
@@ -273,23 +277,34 @@ public class CategoryFragment extends Fragment {
     }
 
     private void fetchCategoryData(String category) {
-        db.collection("Products")
+        if (categoryListener != null) {
+            categoryListener.remove(); // Remove previous listener if any
+        }
+
+        categoryListener = db.collection("Products")
                 .whereEqualTo("category", category)
-                .get()
-                .addOnCompleteListener(this::handleFetchResult);
+                .addSnapshotListener((value, error) -> handleSnapshotResult(value, error));
     }
 
     private void fetchFilteredData(String category, String company) {
-        db.collection("Products")
+        if (filteredDataListener != null) {
+            filteredDataListener.remove(); // Remove previous listener if any
+        }
+
+        filteredDataListener = db.collection("Products")
                 .whereEqualTo("category", category)
                 .whereEqualTo("company", company)
-                .get()
-                .addOnCompleteListener(this::handleFetchResult);
+                .addSnapshotListener((value, error) -> handleSnapshotResult(value, error));
     }
 
-    private void handleFetchResult(@NonNull Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
-            List<ProductModel> data = task.getResult().toObjects(ProductModel.class);
+    private void handleSnapshotResult(QuerySnapshot value, FirebaseFirestoreException error) {
+        if (error != null) {
+            Toast.makeText(getContext(), "Failed to load products", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (value != null) {
+            List<ProductModel> data = value.toObjects(ProductModel.class);
             datalist.clear();
             datalist.addAll(data);
 
@@ -302,8 +317,6 @@ public class CategoryFragment extends Fragment {
             } else {
                 adapter.notifyDataSetChanged();
             }
-        } else {
-            Toast.makeText(getContext(), "Failed to load products", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -359,5 +372,17 @@ public class CategoryFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (categoryListener != null) {
+            categoryListener.remove();
+        }
+        if (filteredDataListener != null) {
+            filteredDataListener.remove();
+        }
+    }
+
 
 }
