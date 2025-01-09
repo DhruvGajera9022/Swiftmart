@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ProductModel {
 
-    String pid, name, description, price, company, category;
+    String pid, name, description, price, company, category, oid;
     private List<String> imgurls;
     private boolean isWishlisted;
 
@@ -20,7 +20,8 @@ public class ProductModel {
             String company,
             String category,
             List<String> imgurls,
-            boolean isWishlisted
+            boolean isWishlisted,
+            String oid
     ){
         this.pid = pid;
         this.name = name;
@@ -30,6 +31,7 @@ public class ProductModel {
         this.category = category;
         this.imgurls = imgurls;
         this.isWishlisted = isWishlisted;
+        this.oid = oid;
     }
 
     public String getPid() {
@@ -94,5 +96,13 @@ public class ProductModel {
 
     public void setWishlisted(boolean wishlisted) {
         isWishlisted = wishlisted;
+    }
+
+    public String getOid() {
+        return oid;
+    }
+
+    public void setOid(String oid) {
+        this.oid = oid;
     }
 }

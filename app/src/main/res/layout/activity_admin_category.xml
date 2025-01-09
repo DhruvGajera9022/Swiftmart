@@ -1,316 +1,476 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".AdminCategory"
-    android:orientation="vertical">
+    tools:context=".Frgments.CategoryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="5dp">
+        android:orientation="horizontal">
 
         <ScrollView
-            android:id="@+id/homeFragmentHorizontalScrollView"
+            android:id="@+id/homeFragmentScrollView"
             android:layout_width="wrap_content"
-            android:layout_marginStart="8sp"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <!--Mobiles-->
                 <LinearLayout
-                    android:id="@+id/mobiles"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/phone" />
+                    <View
+                        android:id="@+id/mobileIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/mobiles"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mobiles"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/phone"
+                            android:backgroundTint="#D4E3EF"
+                            android:scaleType="centerInside"/>
 
-                <LinearLayout
-                    android:id="@+id/earbuds"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mobiles"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/earbuds" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/earbuds"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
-
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/tv" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/laptop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
-
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/leptop"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/laptops"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/headphone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
-
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/headphone"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/headphones"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
-
+                <!--Earbuds-->
                 <LinearLayout
-                    android:id="@+id/speaker"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/speaker"/>
+                    <View
+                        android:id="@+id/earbudsIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/earbuds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/speakers"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/earbuds" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/earbuds"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <!--TV-->
                 <LinearLayout
-                    android:id="@+id/keyword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/keyboard"/>
+                    <View
+                        android:id="@+id/tvIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/keywords"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/tv" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tv"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+                    </LinearLayout>
                 </LinearLayout>
 
+                <!--Laptops-->
                 <LinearLayout
-                    android:id="@+id/mouse"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/mouse"/>
+                    <View
+                        android:id="@+id/laptopsIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/laptop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mouses"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/leptop"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/laptops"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+                    </LinearLayout>
                 </LinearLayout>
 
+                <!--Headphones-->
                 <LinearLayout
-                    android:id="@+id/camera"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/camero"/>
+                    <View
+                        android:id="@+id/headphonesIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/headphone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/camera"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/headphone"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/headphones"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
-
+                <!--Speakers-->
                 <LinearLayout
-                    android:id="@+id/smartwatch"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/watch"/>
+                    <View
+                        android:id="@+id/speakersIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/speaker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/smartwatches"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/speaker"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/speakers"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
-
+                <!--Keyboards-->
                 <LinearLayout
-                    android:id="@+id/tablet"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_margin="10sp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="80sp"
-                        android:layout_height="80sp"
-                        android:src="@drawable/tablet"/>
+                    <View
+                        android:id="@+id/keyboardIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/keyword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tablets"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppinsregular"/>
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
 
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/keyboard"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/keywords"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Mouses-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/mouseIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/mouse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/mouse"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mouses"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Camera-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/cameraIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/camero"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/camera"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Smartwatches-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/smartwatchesIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/smartwatch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/watch"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/smartwatches"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Tablets-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/tabletsIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/category_background"
+                        android:layout_marginTop="30dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/tablet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="10sp">
+
+                        <ImageView
+                            android:layout_width="80sp"
+                            android:layout_height="80sp"
+                            android:src="@drawable/tablet"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tablets"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
 
@@ -318,6 +478,7 @@
 
         </ScrollView>
 
+        <!--Company layout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -328,6 +489,7 @@
                 android:id="@+id/mobileHorizontalScrollView"
                 android:layout_width="match_parent"
                 android:layout_marginStart="8sp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
@@ -336,7 +498,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!--            iPhone-->
+                    <!--iPhone-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -362,7 +524,7 @@
 
                     </LinearLayout>
 
-                    <!--            Samsung-->
+                    <!--Samsung-->
                     <LinearLayout
                         android:id="@+id/samsung"
                         android:layout_width="wrap_content"
@@ -388,7 +550,7 @@
 
                     </LinearLayout>
 
-                    <!--            Vivo-->
+                    <!--Vivo-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -414,7 +576,7 @@
 
                     </LinearLayout>
 
-                    <!--            Oppo-->
+                    <!--Oppo-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -440,7 +602,7 @@
 
                     </LinearLayout>
 
-                    <!--            MI-->
+                    <!--MI-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -466,7 +628,7 @@
 
                     </LinearLayout>
 
-                    <!--            Realme-->
+                    <!--Realme-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:id="@+id/realme"
@@ -491,6 +653,164 @@
                             android:fontFamily="@font/poppinsregular"/>
 
                     </LinearLayout>
+
+                    <!--Motorola-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:id="@+id/motorola"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="10sp"
+                        android:orientation="vertical">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/motorola"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/motorola"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
+                    <!--Poco-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:id="@+id/poco"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="10sp"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/poco"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/poco"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
+                    <!--Google-->
+                    <LinearLayout
+                        android:id="@+id/goggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="10sp"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/goggle"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/goggle"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
+                    <!--OnePlus-->
+                    <LinearLayout
+                        android:id="@+id/oneplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="10sp"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/oneplue"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/oneplus"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
+                    <!--IQOO-->
+                    <LinearLayout
+                        android:id="@+id/iqoo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="10sp"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/iqoo"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/iqoo"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
+                    <!--Nothing-->
+                    <LinearLayout
+                        android:id="@+id/nothing"
+                        android:layout_width="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="60dp"
+                            android:src="@drawable/nothing"
+                            android:layout_gravity="center"
+                            android:layout_height="60dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:text="@string/nothing"
+                            android:fontFamily="@font/poppinsregular"/>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -739,15 +1059,12 @@
                             android:background="@drawable/round"
                             android:src="@drawable/hp" />
 
-
                     </LinearLayout>
-
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/delllogo"
+                        android:id="@+id/dellogo"
                         android:layout_marginHorizontal="10sp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -857,10 +1174,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/adminCategoryRecyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

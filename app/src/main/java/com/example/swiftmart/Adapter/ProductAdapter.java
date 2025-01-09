@@ -117,10 +117,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(product.getPid())
                         .set(product)
                         .addOnSuccessListener(aVoid ->
-                                CustomToast.showToast(context, R.drawable.img_logo, "Added to wishlist!")
+                                CustomToast.showToast(context,  "Added to wishlist!")
                         )
                         .addOnFailureListener(e ->
-                                CustomToast.showToast(context, R.drawable.img_logo,"Failed to add to wishlist: ")
+                                CustomToast.showToast(context,"Failed to add to wishlist: ")
                         );
             } else {
                 db.collection("Users")
@@ -129,10 +129,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(product.getPid())
                         .delete()
                         .addOnSuccessListener(aVoid ->
-                                CustomToast.showToast(context, R.drawable.img_logo, "Removed from wishlist!")
+                                CustomToast.showToast(context,  "Removed from wishlist!")
                         )
                         .addOnFailureListener(e ->
-                                CustomToast.showToast(context, R.drawable.img_logo, "Failed to remove from wishlist")
+                                CustomToast.showToast(context, "Failed to remove from wishlist")
                         );
             }
         });

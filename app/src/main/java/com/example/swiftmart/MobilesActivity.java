@@ -165,7 +165,7 @@ public class MobilesActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(MobilesActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(MobilesActivity.this,  "Error in data fetching");
                             mobileActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }
@@ -204,7 +204,7 @@ public class MobilesActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(MobilesActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(MobilesActivity.this, "Error in data fetching");
                             mobileActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }

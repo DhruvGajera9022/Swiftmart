@@ -233,17 +233,17 @@ public class Add_Address_Activity extends AppCompatActivity {
                         String addressId = documentReference.getId();
                         documentReference.update("AddressId", addressId)
                                 .addOnSuccessListener(aVoid -> {
-                                    CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Address added");
+                                    CustomToast.showToast(Add_Address_Activity.this, "Address added");
                                 })
                                 .addOnFailureListener(e -> {
-                                    CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Failed to update addressId");
+                                    CustomToast.showToast(Add_Address_Activity.this, "Failed to update addressId");
                                 });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        CustomToast.showToast(Add_Address_Activity.this, R.drawable.img_logo, "Failed to add address");
+                        CustomToast.showToast(Add_Address_Activity.this, "Failed to add address");
                     }
                 });
 

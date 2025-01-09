@@ -164,7 +164,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
                     e.printStackTrace();
                     runOnUiThread(() -> {
                         runOnUiThread(() -> {
-                            CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "Error uploading image");
+                            CustomToast.showToast(Edit_profile_Activity.this, "Error uploading image");
                             editProfileProgressBar.setVisibility(View.GONE);
                             editProfileBtn.setVisibility(View.VISIBLE);
                         });
@@ -173,7 +173,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
             } else {
                 runOnUiThread(() -> {
                     runOnUiThread(() -> {
-                        CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "No image selected");
+                        CustomToast.showToast(Edit_profile_Activity.this,"No image selected");
                         editProfileProgressBar.setVisibility(View.GONE);
                         editProfileBtn.setVisibility(View.VISIBLE);
                     });
@@ -194,7 +194,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
         db.collection("Users").document(uid)
                 .update(userData)
                 .addOnSuccessListener(unused -> {
-                    CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "Profile updated successfully");
+                    CustomToast.showToast(Edit_profile_Activity.this,"Profile updated successfully");
                     editProfileBtn.setVisibility(View.VISIBLE);
                     editProfileProgressBar.setVisibility(View.GONE);
                 })
@@ -203,7 +203,7 @@ public class Edit_profile_Activity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         editProfileBtn.setVisibility(View.VISIBLE);
                         editProfileProgressBar.setVisibility(View.GONE);
-                        CustomToast.showToast(Edit_profile_Activity.this, R.drawable.img_logo, "Error updating profile");
+                        CustomToast.showToast(Edit_profile_Activity.this, "Error updating profile");
                     }
                 });
     }

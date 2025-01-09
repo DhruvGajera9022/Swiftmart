@@ -217,18 +217,18 @@ public class SignupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     startActivity(new Intent(SignupActivity.this, Language_Activity.class));
-                                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Account created");
+                                                    CustomToast.showToast(SignupActivity.this, "Account created");
                                                     finish();
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Failed to save user data");
+                                                    CustomToast.showToast(SignupActivity.this, "Failed to save user data");
                                                 }
                                             });
                                         }
                                     } else {
-                                        CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Signup failed");
+                                        CustomToast.showToast(SignupActivity.this, "Signup failed");
                                     }
                                 }
                             })
@@ -237,7 +237,7 @@ public class SignupActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     signUpButton.setVisibility(View.VISIBLE);
                                     signUpProgressBar.setVisibility(View.GONE);
-                                    CustomToast.showToast(SignupActivity.this,R.drawable.img_logo, "Signup failed");
+                                    CustomToast.showToast(SignupActivity.this, "Signup failed");
                                 }
                             });
                 }

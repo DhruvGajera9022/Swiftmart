@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.CartAdapter;
@@ -32,7 +33,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment{
     private RecyclerView cartRecyclerView;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
@@ -41,6 +42,8 @@ public class CartFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+
+    private TextView cartProductTotal;
 
     public CartFragment() {
 
@@ -64,8 +67,10 @@ public class CartFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
 
-
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
+
+        cartProductTotal = view.findViewById(R.id.cartProductTotal);
+
     }
 
     // fetch cart data
@@ -79,7 +84,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(getContext(), R.drawable.img_logo, "Error in fetching cart data");
+                            CustomToast.showToast(getContext(),  "Error in fetching cart data");
                         }
 
                         if (value != null && !value.isEmpty()){
@@ -92,6 +97,7 @@ public class CartFragment extends Fragment {
                             cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             cartRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
+
                         }
 
                     }

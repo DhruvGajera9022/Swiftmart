@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Intent intent = new Intent(LoginActivity.this, Language_Activity.class);
-                                    CustomToast.showToast(LoginActivity.this,R.drawable.img_logo, "Login successful");
+                                    CustomToast.showToast(LoginActivity.this, "Login successful");
                                     startActivity(intent);
                                     finish();
                                 }
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     signInButton.setVisibility(View.VISIBLE);
                                     signInProgressBar.setVisibility(View.GONE);
-                                    CustomToast.showToast(LoginActivity.this,R.drawable.img_logo, "Login failed");
+                                    CustomToast.showToast(LoginActivity.this, "Login failed");
                                 }
                             });
                 }

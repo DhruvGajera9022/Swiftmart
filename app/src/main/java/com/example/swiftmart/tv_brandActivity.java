@@ -93,7 +93,7 @@ public class tv_brandActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(tv_brandActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(tv_brandActivity.this,  "Error in data fetching");
                             tvActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }
@@ -132,7 +132,7 @@ public class tv_brandActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(tv_brandActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(tv_brandActivity.this, "Error in data fetching");
                             tvActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }

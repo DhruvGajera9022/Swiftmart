@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(getContext(), R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(getContext(), "Error in data fetching");
                             homeFragmentProgressBar.setVisibility(View.GONE);
                             return;
                         }

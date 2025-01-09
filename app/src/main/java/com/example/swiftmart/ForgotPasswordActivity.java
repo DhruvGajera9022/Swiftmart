@@ -102,7 +102,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    CustomToast.showToast(ForgotPasswordActivity.this,R.drawable.img_logo, "Password reset email sent");
+                                    CustomToast.showToast(ForgotPasswordActivity.this, "Password reset email sent");
                                     Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                 }
@@ -112,7 +112,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     forgotPasswordButton.setVisibility(View.VISIBLE);
                                     forgotPasswordProgressBar.setVisibility(View.GONE);
-                                    CustomToast.showToast(ForgotPasswordActivity.this,R.drawable.img_logo, "Password reset email failed");
+                                    CustomToast.showToast(ForgotPasswordActivity.this, "Password reset email failed");
                                 }
                             });
                 }

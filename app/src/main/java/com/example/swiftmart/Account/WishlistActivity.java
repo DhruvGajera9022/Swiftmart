@@ -79,7 +79,7 @@ public class WishlistActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
-                            CustomToast.showToast(WishlistActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(WishlistActivity.this,  "Error in data fetching");
                             wishlistProgressBar.setVisibility(View.GONE);
                             return;
                         }

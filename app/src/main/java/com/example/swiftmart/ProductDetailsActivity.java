@@ -79,7 +79,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
-                            CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Error in fetching details");
+                            CustomToast.showToast(ProductDetailsActivity.this,  "Error in fetching details");
                         }
 
                         if (value != null && value.exists()){
@@ -178,17 +178,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         String oid = documentReference.getId();
                         documentReference.update("oid", oid)
                                 .addOnSuccessListener(aVoid -> {
-                                    CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Added to cart");
+                                    CustomToast.showToast(ProductDetailsActivity.this, "Added to cart");
                                 })
                                 .addOnFailureListener(e -> {
-                                    CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Failed to add to cart");
+                                    CustomToast.showToast(ProductDetailsActivity.this,  "Failed to add to cart");
                                 });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        CustomToast.showToast(ProductDetailsActivity.this, R.drawable.img_logo, "Error adding to cart");
+                        CustomToast.showToast(ProductDetailsActivity.this,  "Error adding to cart");
                     }
                 });
     }

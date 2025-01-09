@@ -157,7 +157,7 @@ public class EarphoneActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(EarphoneActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(EarphoneActivity.this, "Error in data fetching");
                             earphoneActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }
@@ -196,7 +196,7 @@ public class EarphoneActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(EarphoneActivity.this, R.drawable.img_logo, "Error in data fetching");
+                            CustomToast.showToast(EarphoneActivity.this,  "Error in data fetching");
                             earphoneActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }

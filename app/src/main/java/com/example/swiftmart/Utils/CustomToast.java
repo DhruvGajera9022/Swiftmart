@@ -14,7 +14,7 @@ import com.example.swiftmart.R;
 
 public class CustomToast {
 
-    public static void showToast(Context context, int imageResource, String message) {
+    public static void showToast(Context context, String message) {
         // Inflate the custom toast layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View customView = inflater.inflate(R.layout.custom_toast, null);
@@ -23,7 +23,7 @@ public class CustomToast {
         ImageView toastImage = customView.findViewById(R.id.toast_image);
         TextView toastMessage = customView.findViewById(R.id.toast_text);
 
-        toastImage.setImageResource(imageResource);
+        toastImage.setImageResource(R.drawable.img_logo);
         toastMessage.setText(message);
 
         // Apply entry animation
