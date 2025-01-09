@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.swiftmart.Adapter.MainProductAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
@@ -34,8 +32,6 @@ import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
 import com.example.swiftmart.tv_brandActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -48,7 +44,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,7 +53,7 @@ public class HomeFragment extends Fragment {
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     RecyclerView homeFragmentRecyclerView;
-    MainProductAdapter adapter;
+    ProductAdapter adapter;
     CircleImageView homeFragmentUserAvatar;
     TextView homeFragmentUserName;
     FirebaseAuth mAuth;
@@ -171,7 +166,7 @@ public class HomeFragment extends Fragment {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                                 homeFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new MainProductAdapter(getContext(), datalist);
+                                adapter = new ProductAdapter(getContext(), datalist);
                                 homeFragmentRecyclerView.setHasFixedSize(true);
                                 homeFragmentRecyclerView.setAdapter(adapter);
                                 homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
