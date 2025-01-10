@@ -17,7 +17,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,16 +28,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private int maxQuantity = 10;
     private int minQuantity = 1;
     private int currentQuantity = 1;
-
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+    private CartTotalUpdateListener cartTotalUpdateListener;
 
-    public CartAdapter(Context context, ArrayList<ProductModel> datalist) {
+    public CartAdapter(Context context, ArrayList<ProductModel> datalist, CartTotalUpdateListener listener) {
         this.context = context;
         this.datalist = (datalist != null) ? datalist : new ArrayList<>();
+        this.cartTotalUpdateListener = listener;
     }
 
+    public void setCartTotalUpdateListener(CartTotalUpdateListener listener) {
+        this.cartTotalUpdateListener = listener;
+    }
 
     @NonNull
     @Override
@@ -75,6 +78,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                         holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
 
+                        // Notify CartFragment to update the total
+                        if (cartTotalUpdateListener != null) {
+                            cartTotalUpdateListener.onCartItemUpdated();
+                        }
                     } else {
                         CustomToast.showToast(context, "Maximum quantity is 10");
                     }
@@ -94,13 +101,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                         holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
 
+                        // Notify CartFragment to update the total
+                        if (cartTotalUpdateListener != null) {
+                            cartTotalUpdateListener.onCartItemUpdated();
+                        }
                     } else {
                         CustomToast.showToast(context, "Minimum quantity is 1");
                     }
                 }
             });
 
-            // Handle delete button click
             holder.cartTrashButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +130,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                     Log.d("Firestore", "Document does not exist.");
                                 }
                             });
-
                 }
             });
         }
@@ -131,11 +140,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return datalist.size();
     }
 
+    public interface CartTotalUpdateListener {
+        void onCartItemUpdated();
+    }
+
     public class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView cartImage;
         TextView cartProductName, cartProductPrice, cartProductQuantity;
         ImageButton cartPlusButton, cartMinusButton, cartTrashButton;
-        RecyclerView cartRecyclerView;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -147,8 +159,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             cartPlusButton = itemView.findViewById(R.id.cartPlusButton);
             cartMinusButton = itemView.findViewById(R.id.cartMinusButton);
             cartTrashButton = itemView.findViewById(R.id.cartTrashButton);
-
-            cartRecyclerView = itemView.findViewById(R.id.cartRecyclerView);
         }
     }
 }
+

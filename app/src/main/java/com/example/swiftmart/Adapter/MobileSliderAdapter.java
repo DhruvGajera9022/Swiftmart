@@ -1,5 +1,6 @@
 package com.example.swiftmart.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +32,13 @@ public class MobileSliderAdapter extends RecyclerView.Adapter<MobileSliderAdapte
         return new SliderViewHolder(view);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
         String imageUrl = imageUrls.get(position);
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.img_animation)
+                .placeholder(R.raw.loading)
                 .into(holder.imageView);
     }
 

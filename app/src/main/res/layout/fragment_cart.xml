@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:weightSum="3"
+                        android:weightSum="2"
                         android:layout_marginTop="20dp">
 
                         <TextView
@@ -68,17 +68,35 @@
                             android:layout_weight="2"
                             android:fontFamily="@font/poppinsregular"/>
 
-                        <TextView
-                            android:id="@+id/cartProductTotal"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:layout_gravity="end"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:fontFamily="@font/poppinsregular"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                            <TextView
+                                android:id="@+id/cartProductTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -87,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:weightSum="3">
+                        android:weightSum="2">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -98,17 +116,35 @@
                             android:layout_weight="2"
                             android:fontFamily="@font/poppinsregular"/>
 
-                        <TextView
-                            android:id="@+id/cartProductDeliveryTotal"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="- ₹0"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:layout_gravity="end"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:fontFamily="@font/poppinsregular"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                            <TextView
+                                android:id="@+id/cartProductDeliveryTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -117,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:weightSum="3">
+                        android:weightSum="2">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -128,17 +164,35 @@
                             android:layout_weight="2"
                             android:fontFamily="@font/poppinsregular"/>
 
-                        <TextView
-                            android:id="@+id/cartProductVoucherTotal"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+ ₹0"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:layout_gravity="end"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:fontFamily="@font/poppinsregular"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                            <TextView
+                                android:id="@+id/cartProductVoucherTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:fontFamily="@font/poppinsregular"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -165,6 +219,17 @@
                             android:layout_weight="2"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppinssemibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹"
+                            android:textSize="12sp"
+                            android:textColor="@color/black"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:fontFamily="@font/poppinsregular"/>
 
                         <TextView
                             android:id="@+id/cartProductFinalTotal"

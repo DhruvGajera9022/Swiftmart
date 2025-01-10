@@ -7,6 +7,7 @@ public class ProductModel {
     String pid, name, description, price, company, category, oid;
     private List<String> imgurls;
     private boolean isWishlisted;
+    private long qty;
 
     public ProductModel(){
 
@@ -21,7 +22,8 @@ public class ProductModel {
             String category,
             List<String> imgurls,
             boolean isWishlisted,
-            String oid
+            String oid,
+            long qty
     ){
         this.pid = pid;
         this.name = name;
@@ -32,6 +34,7 @@ public class ProductModel {
         this.imgurls = imgurls;
         this.isWishlisted = isWishlisted;
         this.oid = oid;
+        this.qty = qty;
     }
 
     public String getPid() {
@@ -104,5 +107,13 @@ public class ProductModel {
 
     public void setOid(String oid) {
         this.oid = oid;
+    }
+
+    public long getQty() {
+        return qty;
+    }
+
+    public void setQty(long qty) {
+        this.qty = qty;
     }
 }

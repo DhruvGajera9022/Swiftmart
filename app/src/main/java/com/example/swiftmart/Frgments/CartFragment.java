@@ -33,25 +33,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
-public class CartFragment extends Fragment{
+public class CartFragment extends Fragment implements CartAdapter.CartTotalUpdateListener {
     private RecyclerView cartRecyclerView;
-
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    CartAdapter adapter;
-
+    private CartAdapter adapter;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+    private TextView cartProductTotal, cartProductDeliveryTotal, cartProductVoucherTotal, cartProductFinalTotal;
+    private int totalPrice = 0;
+    private int deliveryCharges = 50;
 
-    private TextView cartProductTotal;
-
-    public CartFragment() {
-
-    }
+    public CartFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         initialization(view);
@@ -61,70 +57,82 @@ public class CartFragment extends Fragment{
         return view;
     }
 
-    private void initialization(View view){
-
+    private void initialization(View view) {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
-
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
-
         cartProductTotal = view.findViewById(R.id.cartProductTotal);
+        cartProductDeliveryTotal = view.findViewById(R.id.cartProductDeliveryTotal);
+        cartProductVoucherTotal = view.findViewById(R.id.cartProductVoucherTotal);
+        cartProductFinalTotal = view.findViewById(R.id.cartProductFinalTotal);
 
-
-        // Initialize adapter with an empty list
-        adapter = new CartAdapter(getContext(), datalist);
+        adapter = new CartAdapter(getContext(), datalist, this);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
         cartRecyclerView.setAdapter(adapter);
-
     }
 
-    // fetch cart data
     private void getCartData() {
-        db.collection("Users")
-                .document(uid)
-                .collection("Cart")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            CustomToast.showToast(getContext(), "Error in fetching cart data");
-                            return;
-                        }
+        db.collection("Users").document(uid).collection("Cart").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    CustomToast.showToast(getContext(), "Error in fetching cart data");
+                    return;
+                }
 
-                        if (value != null) {
-                            datalist.clear();
-                            for (QueryDocumentSnapshot documentSnapshot : value) {
-                                ProductModel product = documentSnapshot.toObject(ProductModel.class);
-                                datalist.add(product);
+                if (value != null && !value.isEmpty()) {
+                    datalist.clear();
+                    totalPrice = 0;
+
+                    for (QueryDocumentSnapshot documentSnapshot : value) {
+                        ProductModel product = documentSnapshot.toObject(ProductModel.class);
+                        String priceString = product.getPrice();
+                        if (priceString != null) {
+                            try {
+                                int price = Integer.parseInt(priceString);
+                                totalPrice += price;
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                CustomToast.showToast(getContext(), "Invalid price format detected");
                             }
-
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            CustomToast.showToast(getContext(), "Cart is empty");
-                            datalist.clear();
-                            adapter.notifyDataSetChanged();
                         }
+                        datalist.add(product);
                     }
-                });
+
+                    // Update UI
+                    adapter.notifyDataSetChanged();
+                    updateTotal();
+                } else {
+                    CustomToast.showToast(getContext(), "Cart is empty");
+                    datalist.clear();
+                    adapter.notifyDataSetChanged();
+                    updateTotal();
+                }
+            }
+        });
     }
 
+    private void updateTotal() {
+        cartProductTotal.setText(String.valueOf(totalPrice));
+        cartProductVoucherTotal.setText(String.valueOf(totalPrice));
+        cartProductFinalTotal.setText(String.valueOf(totalPrice + deliveryCharges));
+    }
 
-    // handle onBack press
-    private void handleOnBackPress(){
+    @Override
+    public void onCartItemUpdated() {
+        updateTotal();
+    }
+
+    private void handleOnBackPress() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameLayout, new HomeFragment())
                         .commit();
-
-//                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-//                bottomNavigationView.setSelectedItemId(R.id.home);
             }
         });
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.example.swiftmart;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,11 +23,11 @@ import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -34,7 +35,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class tv_brandActivity extends AppCompatActivity {
@@ -177,11 +177,12 @@ public class tv_brandActivity extends AppCompatActivity {
     }
 
     private void getImageUrls() {
-        databaseReference.child("TV").child("imgurls").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
+        databaseReference.child("TV").child("imgurls").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     imageUrls.clear();
-                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         String imageUrl = dataSnapshot.getValue(String.class);
                         if (imageUrl != null) {
                             imageUrls.add(imageUrl);
@@ -193,6 +194,11 @@ public class tv_brandActivity extends AppCompatActivity {
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Database error: " + error.getMessage());
             }
         });
     }

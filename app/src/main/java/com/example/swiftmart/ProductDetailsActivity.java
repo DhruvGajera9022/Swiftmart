@@ -1,11 +1,17 @@
 package com.example.swiftmart;
 
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,14 +19,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Account.Add_Address_Activity;
 import com.example.swiftmart.Adapter.ProductImageSliderAdapter;
+import com.example.swiftmart.Frgments.CartFragment;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,6 +37,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,6 +59,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private Handler sliderHandler = new Handler(Looper.getMainLooper());
     private Runnable sliderRunnable;
+
+    private RelativeLayout productDetailsRelativeLayout;
 
     @Override
     protected void onPause() {
@@ -76,6 +89,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void initialization(){
+
+        productDetailsRelativeLayout = findViewById(R.id.productDetailsRelativeLayout);
+
         productDetailsProductName = findViewById(R.id.productDetailsProductName);
         productDetailsProductDescription = findViewById(R.id.productDetailsProductDescription);
         productDetailsProductPrice = findViewById(R.id.productDetailsProductPrice);
@@ -190,31 +206,63 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("description", productDescription);
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);
+        cartMap.put("pid", productId);
+        cartMap.put("qty", 1);
 
-        // Add to cart
         db.collection("Users")
                 .document(uid)
                 .collection("Cart")
-                .add(cartMap)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        String oid = documentReference.getId();
-                        documentReference.update("oid", oid)
-                                .addOnSuccessListener(aVoid -> {
-                                    CustomToast.showToast(ProductDetailsActivity.this, "Added to cart");
+                .whereEqualTo("pid", productId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        CustomToast.showToast(ProductDetailsActivity.this, "Item is already in your cart");
+                    } else {
+                        db.collection("Users")
+                                .document(uid)
+                                .collection("Cart")
+                                .add(cartMap)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        String oid = documentReference.getId();
+                                        documentReference.update("oid", oid)
+                                                .addOnSuccessListener(aVoid -> {
+                                                    CustomToast.showToast(ProductDetailsActivity.this, "Added to Cart");
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    CustomToast.showToast(ProductDetailsActivity.this, "Failed to add to cart");
+                                                });
+                                    }
                                 })
-                                .addOnFailureListener(e -> {
-                                    CustomToast.showToast(ProductDetailsActivity.this,  "Failed to add to cart");
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        CustomToast.showToast(ProductDetailsActivity.this, "Error adding to cart");
+                                    }
                                 });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        CustomToast.showToast(ProductDetailsActivity.this,  "Error adding to cart");
                     }
                 });
     }
+
+
+//    private void snackBar(String msg) {
+//        Snackbar productDetailsActivitySnackBar = Snackbar.make(
+//                        productDetailsRelativeLayout, msg, Snackbar.LENGTH_INDEFINITE
+//                )
+//                .setAction("Go to Cart", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                        CartFragment cartFragment = new CartFragment();
+//                        transaction.replace(R.id.frameLayout, cartFragment);
+//                        transaction.addToBackStack(null);
+//                        transaction.commit();
+//                    }
+//                })
+//                .setActionTextColor(Color.YELLOW);
+//
+//        productDetailsActivitySnackBar.show();
+//    }
 
 }

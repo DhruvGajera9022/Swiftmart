@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -27,8 +28,10 @@ import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -191,11 +194,12 @@ public class EarphoneActivity extends AppCompatActivity {
     }
 
     private void getImageUrls() {
-        databaseReference.child("AirBuds").child("imgurls").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
+        databaseReference.child("AirBuds").child("imgurls").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     imageUrls.clear();
-                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         String imageUrl = dataSnapshot.getValue(String.class);
                         if (imageUrl != null) {
                             imageUrls.add(imageUrl);
@@ -207,6 +211,11 @@ public class EarphoneActivity extends AppCompatActivity {
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Database error: " + error.getMessage());
             }
         });
     }

@@ -197,11 +197,12 @@ public class MobilesActivity extends AppCompatActivity {
     }
 
     private void getImageUrls() {
-        databaseReference.child("Mobile").child("imgurls").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
+        databaseReference.child("Mobile").child("imgurls").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     imageUrls.clear();
-                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         String imageUrl = dataSnapshot.getValue(String.class);
                         if (imageUrl != null) {
                             imageUrls.add(imageUrl);
@@ -214,8 +215,14 @@ public class MobilesActivity extends AppCompatActivity {
                     sliderHandler.postDelayed(slideRunnable, 3000);
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Database error: " + error.getMessage());
+            }
         });
     }
+
 
     private final Runnable slideRunnable = new Runnable() {
         @Override

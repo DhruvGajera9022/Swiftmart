@@ -1,5 +1,6 @@
 package com.example.swiftmart.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -51,13 +52,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductModel product = datalist.get(position);
 
         Glide.with(holder.cardProductImage.getContext())
                 .load(product.getImgurls().get(0))
-                .placeholder(R.drawable.img_animation)
+                .placeholder(R.raw.loading)
                 .into(holder.cardProductImage);
         holder.cardProductName.setText(product.getName());
         holder.cardProductDescription.setText(product.getDescription());
