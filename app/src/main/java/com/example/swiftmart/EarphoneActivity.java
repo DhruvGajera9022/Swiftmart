@@ -26,6 +26,9 @@ import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,9 +42,8 @@ import java.util.List;
 public class EarphoneActivity extends AppCompatActivity {
 
     LinearLayout boatlogo,realmelogo,onepluslogo,nothinglogo,triggerlogo,trukelogo;
-    private ViewPager2 viewPager1;
-    private MobileSliderAdapter earphonesliderAdapter;
-    private List<Integer> imageList1; // List of drawable images
+    private ViewPager2 earbudsViewPager;
+    private MobileSliderAdapter earphoneSliderAdapter;
     private Handler sliderHandler = new Handler();
     ImageView backearphone;
     private RecyclerView earphoneRecyclerView;
@@ -52,7 +54,8 @@ public class EarphoneActivity extends AppCompatActivity {
     HorizontalScrollView earphoneHorizontalScrollView;
     ProgressBar earphoneActivityProgressBar;
 
-
+    private DatabaseReference databaseReference;
+    private List<String> imageUrls;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,6 +64,8 @@ public class EarphoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_earphone);
 
         db = FirebaseFirestore.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("root");
+        imageUrls = new ArrayList<>();
 
         earphoneScrollView = findViewById(R.id.earphoneScrollView);
         earphoneHorizontalScrollView = findViewById(R.id.earphoneHorizontalScrollView);
@@ -88,53 +93,9 @@ public class EarphoneActivity extends AppCompatActivity {
             }
         });
 
+        getImageUrls();
+        earbudsViewPager = findViewById(R.id.earbudsViewPager);
 
-        viewPager1 = findViewById(R.id.viewPager1);
-
-        // Add drawable images to the list
-        imageList1 = Arrays.asList(
-                R.drawable.boat1,
-                R.drawable.boult1,
-                R.drawable.realme2,
-                R.drawable.noise1,
-                R.drawable.samsung2,
-                R.drawable.mi2,
-                R.drawable.oneplus2
-        );
-
-        // Add swipe listener for manual changes
-        viewPager1.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable, 3000); // Restart the auto-slider after swipe
-            }
-        });
-        // Start auto-slide
-        sliderHandler.postDelayed(sliderRunnable, 3000);
-
-    }
-    private Runnable sliderRunnable = new Runnable() {
-        @Override
-        public void run() {
-            int currentItem = viewPager1.getCurrentItem();
-            int nextItem = (currentItem + 1) % imageList1.size(); // Loop back to the first item
-            viewPager1.setCurrentItem(nextItem, true); // Smooth scroll
-            sliderHandler.postDelayed(this, 3000); // Slide every 3 seconds
-        }
-    };
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        sliderHandler.removeCallbacks(sliderRunnable); // Stop slider when activity is paused
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sliderHandler.postDelayed(sliderRunnable, 3000); // Resume slider when activity is resumed
     }
 
     @Override
@@ -227,6 +188,50 @@ public class EarphoneActivity extends AppCompatActivity {
         nothinglogo.setOnClickListener(v -> getCompany("Nothing"));
         triggerlogo.setOnClickListener(v -> getCompany("Trigger"));
         trukelogo.setOnClickListener(v -> getCompany("Truke"));
+    }
+
+    private void getImageUrls() {
+        databaseReference.child("AirBuds").child("imgurls").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult().exists()) {
+                    imageUrls.clear();
+                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null) {
+                            imageUrls.add(imageUrl);
+                        }
+                    }
+
+                    earphoneSliderAdapter = new MobileSliderAdapter(EarphoneActivity.this, imageUrls);
+                    earbudsViewPager.setAdapter(earphoneSliderAdapter);
+
+                    sliderHandler.postDelayed(slideRunnable, 3000);
+                }
+            }
+        });
+    }
+
+    private final Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (earbudsViewPager != null && earbudsViewPager != null) {
+                int nextItem = (earbudsViewPager.getCurrentItem() + 1) % earphoneSliderAdapter.getItemCount();
+                earbudsViewPager.setCurrentItem(nextItem);
+                sliderHandler.postDelayed(this, 3000);
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(slideRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sliderHandler.postDelayed(slideRunnable, 3000);
     }
 
 }

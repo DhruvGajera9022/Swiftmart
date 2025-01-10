@@ -18,11 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,7 +41,9 @@ public class tv_brandActivity extends AppCompatActivity {
 
     LinearLayout samsunglogo, lglogo, milogo, tcllogo;
     ImageView backetvbrand;
-    private ViewPager2 viewPagertv;
+    private ViewPager2 tvViewPager;
+    private MobileSliderAdapter tvSliderAdapter;
+    private Handler sliderHandler = new Handler();
     private RecyclerView tvRecyclerView;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private FirebaseFirestore db;
@@ -45,6 +51,8 @@ public class tv_brandActivity extends AppCompatActivity {
     ScrollView tvActivityScrollView;
     ProgressBar tvActivityProgressBar;
 
+    private DatabaseReference databaseReference;
+    private List<String> imageUrls;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -55,6 +63,8 @@ public class tv_brandActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         tvActivityScrollView = findViewById(R.id.tvActivityScrollView);
+        databaseReference = FirebaseDatabase.getInstance().getReference("root");
+        imageUrls = new ArrayList<>();
 
         // Initialize views
         samsunglogo = findViewById(R.id.samsunglogo);
@@ -70,8 +80,8 @@ public class tv_brandActivity extends AppCompatActivity {
         getTVs();
         getTVsCompany();
 
-        // Initialize ViewPager2
-        viewPagertv = findViewById(R.id.viewPagertv);
+        getImageUrls();
+        tvViewPager = findViewById(R.id.tvViewPager);
 
      
     }
@@ -164,6 +174,50 @@ public class tv_brandActivity extends AppCompatActivity {
         lglogo.setOnClickListener(v -> getCompany("LG"));
         milogo.setOnClickListener(v -> getCompany("Xiaomi"));
         tcllogo.setOnClickListener(v -> getCompany("TCL"));
+    }
+
+    private void getImageUrls() {
+        databaseReference.child("TV").child("imgurls").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult().exists()) {
+                    imageUrls.clear();
+                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null) {
+                            imageUrls.add(imageUrl);
+                        }
+                    }
+
+                    tvSliderAdapter = new MobileSliderAdapter(tv_brandActivity.this, imageUrls);
+                    tvViewPager.setAdapter(tvSliderAdapter);
+
+                    sliderHandler.postDelayed(slideRunnable, 3000);
+                }
+            }
+        });
+    }
+
+    private final Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (tvViewPager != null && tvViewPager != null) {
+                int nextItem = (tvViewPager.getCurrentItem() + 1) % tvSliderAdapter.getItemCount();
+                tvViewPager.setCurrentItem(nextItem);
+                sliderHandler.postDelayed(this, 3000);
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(slideRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sliderHandler.postDelayed(slideRunnable, 3000);
     }
 
 }

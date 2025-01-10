@@ -43,9 +43,8 @@ import java.util.List;
 public class MobilesActivity extends AppCompatActivity {
 
     LinearLayout iphone,vivo,oppo,mi,realme,samsung,motorola,poco,goggle,oneplues;
-    private ViewPager2 viewPager;
+    private ViewPager2 mobileViewPager;
     private MobileSliderAdapter mobilesliderAdapter;
-    private List<Integer> imageList; // List of drawable images
     private Handler sliderHandler = new Handler();
     ImageView backmobiles;
     ArrayList<ProductModel> datalist = new ArrayList<>();
@@ -100,9 +99,7 @@ public class MobilesActivity extends AppCompatActivity {
         });
 
         getImageUrls();
-
-
-        viewPager = findViewById(R.id.viewPager);
+        mobileViewPager = findViewById(R.id.mobileViewPager);
 
     }
 
@@ -212,7 +209,7 @@ public class MobilesActivity extends AppCompatActivity {
                     }
 
                     mobilesliderAdapter = new MobileSliderAdapter(MobilesActivity.this, imageUrls);
-                    viewPager.setAdapter(mobilesliderAdapter);
+                    mobileViewPager.setAdapter(mobilesliderAdapter);
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
                 }
@@ -223,9 +220,9 @@ public class MobilesActivity extends AppCompatActivity {
     private final Runnable slideRunnable = new Runnable() {
         @Override
         public void run() {
-            if (viewPager != null && mobilesliderAdapter != null) {
-                int nextItem = (viewPager.getCurrentItem() + 1) % mobilesliderAdapter.getItemCount();
-                viewPager.setCurrentItem(nextItem);
+            if (mobileViewPager != null && mobilesliderAdapter != null) {
+                int nextItem = (mobileViewPager.getCurrentItem() + 1) % mobilesliderAdapter.getItemCount();
+                mobileViewPager.setCurrentItem(nextItem);
                 sliderHandler.postDelayed(this, 3000);
             }
         }
