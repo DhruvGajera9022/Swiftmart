@@ -102,9 +102,6 @@ public class EarphoneActivity extends AppCompatActivity {
                 R.drawable.oneplus2
         );
 
-        earphonesliderAdapter = new MobileSliderAdapter(this, imageList1);
-        viewPager1.setAdapter(earphonesliderAdapter);
-
         // Add swipe listener for manual changes
         viewPager1.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

@@ -73,4 +73,7 @@ dependencies {
 
     // Cloudnary to store images
     implementation ("com.cloudinary:cloudinary-android:2.1.0")
+
+    // Realtime Database
+    implementation("com.google.firebase:firebase-database:20.2.2")
 }

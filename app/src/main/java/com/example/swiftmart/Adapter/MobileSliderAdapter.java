@@ -9,18 +9,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.swiftmart.R;
 
 import java.util.List;
 
 public class MobileSliderAdapter extends RecyclerView.Adapter<MobileSliderAdapter.SliderViewHolder> {
 
-    private List<Integer> imageList; // List of drawable image resources
     private Context context;
+    private List<String> imageUrls;
 
-    public MobileSliderAdapter(Context context, List<Integer> imageList) {
+    public MobileSliderAdapter(Context context, List<String> imageUrls) {
         this.context = context;
-        this.imageList = imageList;
+        this.imageUrls = imageUrls;
     }
 
     @NonNull
@@ -32,12 +33,16 @@ public class MobileSliderAdapter extends RecyclerView.Adapter<MobileSliderAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
-        holder.imageView.setImageResource(imageList.get(position));
+        String imageUrl = imageUrls.get(position);
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.img_animation)
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return imageList.size();
+        return imageUrls.size();
     }
 
     static class SliderViewHolder extends RecyclerView.ViewHolder {

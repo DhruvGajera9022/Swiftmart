@@ -2,6 +2,7 @@ package com.example.swiftmart;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -24,6 +25,11 @@ import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -50,12 +56,17 @@ public class MobilesActivity extends AppCompatActivity {
     HorizontalScrollView mobileHorizontalScrollView;
     private ProgressBar mobileActivityProgressBar;
 
+    private DatabaseReference databaseReference;
+    private List<String> imageUrls;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobiles);
 
         db = FirebaseFirestore.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("root");
+        imageUrls = new ArrayList<>();
 
         mobileScrollView=findViewById(R.id.mobileScrollView);
         mobileHorizontalScrollView=findViewById(R.id.mobileHorizontalScrollView);
@@ -88,63 +99,11 @@ public class MobilesActivity extends AppCompatActivity {
             }
         });
 
+        getImageUrls();
+
 
         viewPager = findViewById(R.id.viewPager);
 
-        // Add drawable images to the list
-        imageList = Arrays.asList(
-                R.drawable.i1,
-                R.drawable.vivo1,
-                R.drawable.motorola1,
-                R.drawable.realme1,
-                R.drawable.samsung1,
-                R.drawable.oppo1,
-                R.drawable.mi1,
-                R.drawable.oneplus1,
-                R.drawable.poco1
-        );
-
-        mobilesliderAdapter = new MobileSliderAdapter(this, imageList);
-        viewPager.setAdapter(mobilesliderAdapter);
-
-        // Add swipe listener for manual changes
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                sliderHandler.removeCallbacks(sliderRunnable);
-                sliderHandler.postDelayed(sliderRunnable, 3000); // Restart the auto-slider after swipe
-            }
-        });
-        // Start auto-slide
-        sliderHandler.postDelayed(sliderRunnable, 3000);
-
-    }
-
-
-
-    private Runnable sliderRunnable = new Runnable() {
-        @Override
-        public void run() {
-            int currentItem = viewPager.getCurrentItem();
-            int nextItem = (currentItem + 1) % imageList.size(); // Loop back to the first item
-            viewPager.setCurrentItem(nextItem, true); // Smooth scroll
-            sliderHandler.postDelayed(this, 3000); // Slide every 3 seconds
-        }
-    };
-
-    // handle slider on onPause
-    @Override
-    protected void onPause() {
-        super.onPause();
-        sliderHandler.removeCallbacks(sliderRunnable); // Stop slider when activity is paused
-    }
-
-    // handle slider on onResume
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sliderHandler.postDelayed(sliderRunnable, 3000);
     }
 
     // handle on back press
@@ -239,5 +198,51 @@ public class MobilesActivity extends AppCompatActivity {
         goggle.setOnClickListener(v -> getCompany("Oppo"));
         oneplues.setOnClickListener(v -> getCompany("OnePlus"));
     }
+
+    private void getImageUrls() {
+        databaseReference.child("Mobile").child("imgurls").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult().exists()) {
+                    imageUrls.clear();
+                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null) {
+                            imageUrls.add(imageUrl);
+                        }
+                    }
+
+                    mobilesliderAdapter = new MobileSliderAdapter(MobilesActivity.this, imageUrls);
+                    viewPager.setAdapter(mobilesliderAdapter);
+
+                    sliderHandler.postDelayed(slideRunnable, 3000);
+                }
+            }
+        });
+    }
+
+    private final Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (viewPager != null && mobilesliderAdapter != null) {
+                int nextItem = (viewPager.getCurrentItem() + 1) % mobilesliderAdapter.getItemCount();
+                viewPager.setCurrentItem(nextItem);
+                sliderHandler.postDelayed(this, 3000);
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(slideRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sliderHandler.postDelayed(slideRunnable, 3000);
+    }
+
+
 
 }

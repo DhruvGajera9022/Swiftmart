@@ -46,6 +46,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private String uid;
     private List<String> currentImageUrls;
 
+    private Handler sliderHandler = new Handler(Looper.getMainLooper());
+    private Runnable sliderRunnable;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(sliderRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sliderRunnable != null) {
+            sliderHandler.postDelayed(sliderRunnable, 3000);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,29 +122,35 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ProductImageSliderAdapter adapter = new ProductImageSliderAdapter(this, imageUrls);
         productDetailsViewPager.setAdapter(adapter);
 
-//        // Automatic slide logic
-//        final int delay = 3000; // Delay time in milliseconds
-//        final Handler handler = new Handler(Looper.getMainLooper());
-//        final Runnable runnable = new Runnable() {
-//            int currentPage = 0;
-//
-//            @Override
-//            public void run() {
-//                if (currentPage >= imageUrls.size()) {
-//                    currentPage = 0; // Reset to the first page
-//                }
-//                productDetailsViewPager.setCurrentItem(currentPage++, true);
-//                handler.postDelayed(this, delay);
-//            }
-//        };
-//
-//        // Start the automatic sliding
-//        handler.postDelayed(runnable, delay);
-//
-//        productDetailsViewPager.setOnClickListener(v -> {
-//            handler.removeCallbacks(runnable);
-//        });
+        // Initialize sliderRunnable using the global sliderHandler
+        sliderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int currentItem = productDetailsViewPager.getCurrentItem();
+                int nextItem = (currentItem + 1) % imageUrls.size(); // Loop back to the first item
+                productDetailsViewPager.setCurrentItem(nextItem, true); // Smooth scroll
+                sliderHandler.postDelayed(this, 3000); // Slide every 3 seconds
+            }
+        };
 
+        // Start the slider
+        sliderHandler.postDelayed(sliderRunnable, 3000);
+
+        // Stop and restart slider on user interaction
+        productDetailsViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                sliderHandler.removeCallbacks(sliderRunnable); // Stop the slider
+                sliderHandler.postDelayed(sliderRunnable, 3000); // Restart after delay
+            }
+        });
+
+        // Optionally stop slider completely when touched
+        productDetailsViewPager.setOnTouchListener((v, event) -> {
+            sliderHandler.removeCallbacks(sliderRunnable);
+            sliderHandler.postDelayed(sliderRunnable, 3000); // Restart after touch
+            return false; // Pass the touch event to ViewPager2
+        });
     }
 
     private void handleAddToCartClick(){
