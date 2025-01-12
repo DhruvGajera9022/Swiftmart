@@ -73,7 +73,6 @@ public class CartFragment extends Fragment{
             @Override
             public void onItemClick(String data, boolean isPlus) {
                 if (isPlus) {
-                    CustomToast.showToast(getContext(), data);
                     updateTotalAdapterPlus(data);
                 } else {
                     updateTotalAdapterMinus(data);
