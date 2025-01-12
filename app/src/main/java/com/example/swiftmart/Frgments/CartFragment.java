@@ -33,7 +33,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
-public class CartFragment extends Fragment implements CartAdapter.CartTotalUpdateListener {
+public class CartFragment extends Fragment{
     private RecyclerView cartRecyclerView;
     private ArrayList<ProductModel> datalist = new ArrayList<>();
     private CartAdapter adapter;
@@ -67,7 +67,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartTotalUpdat
         cartProductVoucherTotal = view.findViewById(R.id.cartProductVoucherTotal);
         cartProductFinalTotal = view.findViewById(R.id.cartProductFinalTotal);
 
-        adapter = new CartAdapter(getContext(), datalist, this);
+        adapter = new CartAdapter(getContext(), datalist);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
         cartRecyclerView.setAdapter(adapter);
@@ -105,7 +105,6 @@ public class CartFragment extends Fragment implements CartAdapter.CartTotalUpdat
                     adapter.notifyDataSetChanged();
                     updateTotal();
                 } else {
-                    CustomToast.showToast(getContext(), "Cart is empty");
                     datalist.clear();
                     adapter.notifyDataSetChanged();
                     updateTotal();
@@ -118,11 +117,6 @@ public class CartFragment extends Fragment implements CartAdapter.CartTotalUpdat
         cartProductTotal.setText(String.valueOf(totalPrice));
         cartProductVoucherTotal.setText(String.valueOf(totalPrice));
         cartProductFinalTotal.setText(String.valueOf(totalPrice + deliveryCharges));
-    }
-
-    @Override
-    public void onCartItemUpdated() {
-        updateTotal();
     }
 
     private void handleOnBackPress() {

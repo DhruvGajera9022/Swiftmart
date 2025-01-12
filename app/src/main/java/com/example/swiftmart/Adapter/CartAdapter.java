@@ -31,18 +31,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
-    private CartTotalUpdateListener cartTotalUpdateListener;
 
-    public CartAdapter(Context context, ArrayList<ProductModel> datalist, CartTotalUpdateListener listener) {
+    public CartAdapter(Context context, ArrayList<ProductModel> datalist) {
         this.context = context;
         this.datalist = (datalist != null) ? datalist : new ArrayList<>();
-        this.cartTotalUpdateListener = listener;
     }
-
-    public void setCartTotalUpdateListener(CartTotalUpdateListener listener) {
-        this.cartTotalUpdateListener = listener;
-    }
-
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,10 +71,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                         holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
 
-                        // Notify CartFragment to update the total
-                        if (cartTotalUpdateListener != null) {
-                            cartTotalUpdateListener.onCartItemUpdated();
-                        }
                     } else {
                         CustomToast.showToast(context, "Maximum quantity is 10");
                     }
@@ -101,10 +90,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                         holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
 
-                        // Notify CartFragment to update the total
-                        if (cartTotalUpdateListener != null) {
-                            cartTotalUpdateListener.onCartItemUpdated();
-                        }
                     } else {
                         CustomToast.showToast(context, "Minimum quantity is 1");
                     }
@@ -117,7 +102,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     db = FirebaseFirestore.getInstance();
                     mAuth = FirebaseAuth.getInstance();
                     uid = mAuth.getCurrentUser().getUid();
-
                     db.collection("Users")
                             .document(uid)
                             .collection("Cart")
@@ -138,10 +122,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public int getItemCount() {
         return datalist.size();
-    }
-
-    public interface CartTotalUpdateListener {
-        void onCartItemUpdated();
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {

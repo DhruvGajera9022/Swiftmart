@@ -6,9 +6,11 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -85,9 +87,12 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
 
         changeBottomTabs();
 
+        setStatusBarColor(R.color.home);
+
     }
 
     private void changeBottomTabs(){
+
         homeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     scaleAnimation.setDuration(200);
                     scaleAnimation.setFillAfter(true);
                     homeLayout.startAnimation(scaleAnimation);
+
+                    setStatusBarColor(R.color.home);
 
                     selectedTab = 1;
                 }
@@ -171,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     scaleAnimation.setFillAfter(true);
                     exploreLayout.startAnimation(scaleAnimation);
 
+                    setStatusBarColor(R.color.like);
+
                     selectedTab = 2;
                 }
             }
@@ -214,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     scaleAnimation.setDuration(200);
                     scaleAnimation.setFillAfter(true);
                     categoryLayout.startAnimation(scaleAnimation);
+
+                    setStatusBarColor(R.color.notification);
 
                     selectedTab = 3;
                 }
@@ -259,6 +270,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     scaleAnimation.setFillAfter(true);
                     profileLayout.startAnimation(scaleAnimation);
 
+                    setStatusBarColor(R.color.profile);
+
                     selectedTab = 4;
                 }
             }
@@ -302,6 +315,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
                     scaleAnimation.setDuration(200);
                     scaleAnimation.setFillAfter(true);
                     cartLayout.startAnimation(scaleAnimation);
+
+                    setStatusBarColor(R.color.cart);
 
                     selectedTab = 5;
                 }
@@ -434,6 +449,13 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
     protected void onStop() {
         super.onStop();
         unregisterReceiver(networkChangeReceiver);
+    }
+
+    private void setStatusBarColor(int colorResource) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(getResources().getColor(colorResource));
+        }
     }
 
 }
