@@ -1,0 +1,17 @@
+<resources>
+    <array name="initial_slider_values">
+        <item>0.0</item>
+        <item>1000.0</item>
+    </array>
+
+    <string-array name="categories">
+        <item>Electronics</item>
+        <item>Clothing</item>
+        <item>Books</item>
+        <item>Home</item>
+        <item>Sports</item>
+        <item>Beauty</item>
+        <item>Toys</item>
+        <item>Automotive</item>
+    </string-array>
+</resources>

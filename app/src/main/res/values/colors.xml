@@ -43,4 +43,14 @@
     <color name="profile_20">#33583787</color>
     <color name="cart_20">#33FF6F3D</color>
 
+
+    <!-- Filter specific colors -->
+    <color name="chip_background_selected">#1976D2</color>
+    <color name="chip_background_default">#F5F5F5</color>
+    <color name="chip_text_selected">#FFFFFF</color>
+    <color name="chip_text_default">#000000</color>
+
+    <!-- Ripple effect color -->
+    <color name="ripple_color">#33000000</color>
+
 </resources>

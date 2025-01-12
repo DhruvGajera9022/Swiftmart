@@ -213,7 +213,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-//    // handle searchProduct
+    // handle searchProduct
     private void searchProducts(String query){
         homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         homeFragmentProgressBar.setVisibility(View.VISIBLE);
@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment {
 
         if (query.isEmpty()){
             getAllProducts();
-        }else {
+        } else {
             datalist.clear();
             db.collection("Products")
                     .whereGreaterThanOrEqualTo("name", query)
@@ -229,26 +229,34 @@ public class HomeFragment extends Fragment {
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (error != null){
+                            if (error != null) {
                                 CustomToast.showToast(getContext(), "Error in data fetching");
                                 homeFragmentProgressBar.setVisibility(View.GONE);
                                 return;
                             }
 
+                            // Hide progress bar as soon as the data starts processing
+                            homeFragmentProgressBar.setVisibility(View.GONE);
 
-                            if (value != null && !value.isEmpty()){
-                                homeFragmentProgressBar.setVisibility(View.GONE);
-                                for (QueryDocumentSnapshot documentSnapshot : value){
+                            if (value != null && !value.isEmpty()) {
+                                // Clear the list before adding new data
+                                datalist.clear();
+
+                                for (QueryDocumentSnapshot documentSnapshot : value) {
                                     ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
                                     datalist.add(productModel);
-
-                                    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                                    homeFragmentRecyclerView.setLayoutManager(layoutManager);
-                                    adapter = new ProductAdapter(getContext(), datalist);
-                                    homeFragmentRecyclerView.setHasFixedSize(true);
-                                    homeFragmentRecyclerView.setAdapter(adapter);
-                                    homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
                                 }
+
+                                // Set the layout manager and adapter only once
+                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(getContext(), datalist);
+                                homeFragmentRecyclerView.setHasFixedSize(true);
+                                homeFragmentRecyclerView.setAdapter(adapter);
+                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            } else {
+                                // Handle empty data case
+                                CustomToast.showToast(getContext(), "No products found.");
                             }
                         }
                     });
@@ -398,7 +406,7 @@ public class HomeFragment extends Fragment {
 
         bottomSheetOkayButton.setOnClickListener(v -> {
             sheetDialog.dismiss();
-            requireActivity().finish(); // Close the activity
+            requireActivity().finish();
         });
     }
 

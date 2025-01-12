@@ -15,4 +15,18 @@
         <item name="android:background">@drawable/sheet_background</item>
     </style>
 
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="behavior_peekHeight">600dp</item>
+        <item name="behavior_hideable">true</item>
+    </style>
+
+
+    <!-- Simplified Chip Style -->
+    <style name="FilterChip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textSize">14sp</item>
+        <item name="chipBackgroundColor">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
