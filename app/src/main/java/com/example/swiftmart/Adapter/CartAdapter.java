@@ -29,10 +29,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private ArrayList<ProductModel> datalist;
     private int maxQuantity = 10;
     private int minQuantity = 1;
-    private int currentQuantity = 1;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(String data, boolean isPlus);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public CartAdapter(Context context, ArrayList<ProductModel> datalist) {
         this.context = context;
@@ -64,34 +73,47 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
             holder.cartProductPrice.setText(currencyFormat.format(unitPrice));
 
-            // handle quantity plus
+            // Handle quantity plus
             holder.cartPlusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentQuantity = Integer.parseInt(holder.cartProductQuantity.getText().toString());
+                    int currentQuantity = product.getQty();
                     if (currentQuantity < maxQuantity) {
                         int newQuantity = currentQuantity + 1;
-                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
+                        product.setQty(newQuantity);
 
+                        // Recalculate the total price for this item
                         double totalPrice = unitPrice * newQuantity;
                         holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
+
+                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
+
+                        if (listener != null) {
+                            listener.onItemClick(String.valueOf(totalPrice), true);
+                        }
                     } else {
                         CustomToast.showToast(context, "Maximum quantity is 10");
                     }
                 }
             });
 
-            // handle quantity minus
+            // Handle quantity minus
             holder.cartMinusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentQuantity = Integer.parseInt(holder.cartProductQuantity.getText().toString());
+                    int currentQuantity = product.getQty();
                     if (currentQuantity > minQuantity) {
                         int newQuantity = currentQuantity - 1;
-                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
+                        product.setQty(newQuantity);
 
                         double totalPrice = unitPrice * newQuantity;
                         holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
+
+                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
+
+                        if (listener != null) {
+                            listener.onItemClick(String.valueOf(totalPrice), false);
+                        }
                     } else {
                         CustomToast.showToast(context, "Minimum quantity is 1");
                     }

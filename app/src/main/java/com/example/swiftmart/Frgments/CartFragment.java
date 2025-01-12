@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.CartAdapter;
 import com.example.swiftmart.Model.ProductModel;
@@ -68,6 +70,18 @@ public class CartFragment extends Fragment{
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cartRecyclerView.setItemAnimator(new DefaultItemAnimator());
         cartRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String data, boolean isPlus) {
+                if (isPlus) {
+                    updateTotalAdapterPlus(data);
+                } else {
+                    updateTotalAdapterMinus(data);
+                }
+            }
+        });
+
     }
 
     private void getCartData() {
@@ -89,7 +103,7 @@ public class CartFragment extends Fragment{
                         if (priceString != null) {
                             try {
                                 int price = Integer.parseInt(priceString);
-                                totalPrice += price;
+                                totalPrice += price * product.getQty();  // Multiply by quantity
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                                 CustomToast.showToast(getContext(), "Invalid price format detected");
@@ -104,22 +118,48 @@ public class CartFragment extends Fragment{
                 } else {
                     datalist.clear();
                     adapter.notifyDataSetChanged();
-                    updateTotal();
+                    cartProductTotal.setText("0");
+                    cartProductVoucherTotal.setText("0");
+                    cartProductDeliveryTotal.setText("0");
+                    cartProductFinalTotal.setText("0");
+
                 }
             }
         });
     }
 
     private void updateTotal() {
-
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+//        CustomToast.showToast(getContext(), currencyFormat.format(totalPrice));
 
         cartProductTotal.setText(currencyFormat.format(totalPrice));
-        cartProductVoucherTotal.setText(currencyFormat.format(totalPrice));
+//        cartProductVoucherTotal.setText(currencyFormat.format(totalPrice));
         cartProductDeliveryTotal.setText(currencyFormat.format(deliveryCharges));
+
         int finalTotal = totalPrice + deliveryCharges;
         cartProductFinalTotal.setText(currencyFormat.format(finalTotal));
     }
+
+    private void updateTotalAdapterPlus(String data) {
+        double itemPrice = Double.parseDouble(data);
+
+        totalPrice += itemPrice;
+
+        updateTotal();
+    }
+
+    private void updateTotalAdapterMinus(String data) {
+
+        double itemPrice = Double.parseDouble(data);
+
+        if (totalPrice > 0) {
+            totalPrice -= itemPrice;
+        }
+
+        updateTotal();
+    }
+
+
 
     private void handleOnBackPress() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
