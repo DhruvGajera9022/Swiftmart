@@ -6,23 +6,18 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.CartAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class CartFragment extends Fragment{
@@ -114,9 +111,14 @@ public class CartFragment extends Fragment{
     }
 
     private void updateTotal() {
-        cartProductTotal.setText(String.valueOf(totalPrice));
-        cartProductVoucherTotal.setText(String.valueOf(totalPrice));
-        cartProductFinalTotal.setText(String.valueOf(totalPrice + deliveryCharges));
+
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+
+        cartProductTotal.setText(currencyFormat.format(totalPrice));
+        cartProductVoucherTotal.setText(currencyFormat.format(totalPrice));
+        cartProductDeliveryTotal.setText(currencyFormat.format(deliveryCharges));
+        int finalTotal = totalPrice + deliveryCharges;
+        cartProductFinalTotal.setText(currencyFormat.format(finalTotal));
     }
 
     private void handleOnBackPress() {

@@ -20,7 +20,9 @@ import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private Context context;
@@ -56,8 +58,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
 
             holder.cartProductName.setText(product.getName());
-            holder.cartProductPrice.setText(product.getPrice());
 
+            // Format the price
+            double unitPrice = Double.parseDouble(product.getPrice());
+            NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            holder.cartProductPrice.setText(currencyFormat.format(unitPrice));
+
+            // handle quantity plus
             holder.cartPlusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -66,17 +73,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         int newQuantity = currentQuantity + 1;
                         holder.cartProductQuantity.setText(String.valueOf(newQuantity));
 
-                        double unitPrice = Double.parseDouble(product.getPrice());
                         double totalPrice = unitPrice * newQuantity;
-
-                        holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
-
+                        holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
                     } else {
                         CustomToast.showToast(context, "Maximum quantity is 10");
                     }
                 }
             });
 
+            // handle quantity minus
             holder.cartMinusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,17 +90,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         int newQuantity = currentQuantity - 1;
                         holder.cartProductQuantity.setText(String.valueOf(newQuantity));
 
-                        double unitPrice = Double.parseDouble(product.getPrice());
                         double totalPrice = unitPrice * newQuantity;
-
-                        holder.cartProductPrice.setText(String.format("%.2f", totalPrice));
-
+                        holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
                     } else {
                         CustomToast.showToast(context, "Minimum quantity is 1");
                     }
                 }
             });
 
+            // handle product delete from cart
             holder.cartTrashButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
