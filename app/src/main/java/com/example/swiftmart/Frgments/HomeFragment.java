@@ -22,6 +22,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.EarphoneActivity;
@@ -63,6 +64,7 @@ public class HomeFragment extends Fragment {
     SwipeRefreshLayout homeFragmentSwipeRefresh;
     BottomSheetDialog sheetDialog;
     ProgressBar homeFragmentProgressBar;
+    SearchView homeFragmentSearchView;
 
     public HomeFragment() {
 
@@ -98,6 +100,7 @@ public class HomeFragment extends Fragment {
         homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
         homeFragmentSwipeRefresh = view.findViewById(R.id.homeFragmentSwipeRefresh);
         homeFragmentProgressBar = view.findViewById(R.id.homeFragmentProgressBar);
+        homeFragmentSearchView = view.findViewById(R.id.homeFragmentSearchView);
 
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
@@ -105,6 +108,7 @@ public class HomeFragment extends Fragment {
 
         getUserData();
         handleHomeFragmentUserAvtarClick();
+        handleSearch();
         getAllProducts();
         swipeRefresh();
 
@@ -190,6 +194,65 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+    }
+
+    // handle search
+    private void handleSearch(){
+        homeFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchProducts(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchProducts(newText);
+                return false;
+            }
+        });
+    }
+
+//    // handle searchProduct
+    private void searchProducts(String query){
+        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        homeFragmentProgressBar.setVisibility(View.VISIBLE);
+        datalist.clear();
+
+        if (query.isEmpty()){
+            getAllProducts();
+        }else {
+            datalist.clear();
+            db.collection("Products")
+                    .whereGreaterThanOrEqualTo("name", query)
+                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if (error != null){
+                                CustomToast.showToast(getContext(), "Error in data fetching");
+                                homeFragmentProgressBar.setVisibility(View.GONE);
+                                return;
+                            }
+
+
+                            if (value != null && !value.isEmpty()){
+                                homeFragmentProgressBar.setVisibility(View.GONE);
+                                for (QueryDocumentSnapshot documentSnapshot : value){
+                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                    datalist.add(productModel);
+
+                                    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                                    homeFragmentRecyclerView.setLayoutManager(layoutManager);
+                                    adapter = new ProductAdapter(getContext(), datalist);
+                                    homeFragmentRecyclerView.setHasFixedSize(true);
+                                    homeFragmentRecyclerView.setAdapter(adapter);
+                                    homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     // Swipe refresh layout

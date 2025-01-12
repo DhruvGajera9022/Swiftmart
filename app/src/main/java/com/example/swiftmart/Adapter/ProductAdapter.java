@@ -117,25 +117,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         .document(uid)
                         .collection("wishlist")
                         .document(product.getPid())
-                        .set(product)
-                        .addOnSuccessListener(aVoid ->
-                                CustomToast.showToast(context,  "Added to wishlist!")
-                        )
-                        .addOnFailureListener(e ->
-                                CustomToast.showToast(context,"Failed to add to wishlist: ")
-                        );
+                        .set(product);
             } else {
                 db.collection("Users")
                         .document(uid)
                         .collection("wishlist")
                         .document(product.getPid())
-                        .delete()
-                        .addOnSuccessListener(aVoid ->
-                                CustomToast.showToast(context,  "Removed from wishlist!")
-                        )
-                        .addOnFailureListener(e ->
-                                CustomToast.showToast(context, "Failed to remove from wishlist")
-                        );
+                        .delete();
             }
         });
 

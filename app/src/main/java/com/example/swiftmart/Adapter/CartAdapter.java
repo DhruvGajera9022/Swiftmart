@@ -86,8 +86,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         double totalPrice = unitPrice * newQuantity;
                         holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
 
-                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
-
                         if (listener != null) {
                             listener.onItemClick(String.valueOf(totalPrice), true);
                         }
@@ -108,8 +106,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                         double totalPrice = unitPrice * newQuantity;
                         holder.cartProductPrice.setText(currencyFormat.format(totalPrice));
-
-                        holder.cartProductQuantity.setText(String.valueOf(newQuantity));
 
                         if (listener != null) {
                             listener.onItemClick(String.valueOf(totalPrice), false);

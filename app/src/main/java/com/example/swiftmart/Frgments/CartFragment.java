@@ -9,12 +9,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.swiftmart.Adapter.CartAdapter;
 import com.example.swiftmart.Model.ProductModel;
@@ -75,6 +73,7 @@ public class CartFragment extends Fragment{
             @Override
             public void onItemClick(String data, boolean isPlus) {
                 if (isPlus) {
+                    CustomToast.showToast(getContext(), data);
                     updateTotalAdapterPlus(data);
                 } else {
                     updateTotalAdapterMinus(data);

@@ -41,15 +41,17 @@
                 android:fontFamily="@font/poppinsbold"/>
         </LinearLayout>
 
-
-        <SearchView
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/homeFragmentSearchView"
             android:layout_width="match_parent"
-            android:id="@+id/searchViewUserHome"
             android:layout_height="wrap_content"
             android:background="@drawable/search_view_background"
-            android:inputType="textCapWords"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="5dp"/>
+            app:queryHint="Search"
+            app:iconifiedByDefault="false"
+            android:layout_margin="10dp"
+            android:inputType="textCapWords"
+            android:fontFamily="@font/poppinsregular"/>
 
 
     </LinearLayout>
