@@ -10,7 +10,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,10 +50,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
-    private TextView productDetailsProductName, productDetailsProductDescription, productDetailsProductPrice;
+    private TextView productDetailsProductName, productDetailsProductDescription, productDetailsProductPrice, expandDescriptionButton;
     private String productId;
     private ViewPager2 productDetailsViewPager;
-    private AppCompatButton productAddToCartButton, productBuyNowButton;
+    private AppCompatButton productBuyNowButton;
+    private LinearLayout productAddToCartButton;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -62,6 +66,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private RelativeLayout productDetailsRelativeLayout;
 
+    private ImageView productDetailsBackArrow, productDetailsWishlist;
     @Override
     protected void onPause() {
         super.onPause();
@@ -85,6 +90,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         initialization();
         loadProductData(productId);
         handleAddToCartClick();
+        handleOnBackArrowPress();
 
     }
 
@@ -98,6 +104,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsViewPager = findViewById(R.id.productDetailsViewPager);
 
         productAddToCartButton = findViewById(R.id.productAddToCartButton);
+
+        productDetailsBackArrow = findViewById(R.id.productDetailsBackArrow);
+        productDetailsWishlist = findViewById(R.id.productDetailsWishlist);
+
+        expandDescriptionButton = findViewById(R.id.expandDescriptionButton);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -131,41 +142,82 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private void displayProductDetails(ProductModel product) {
         productDetailsProductName.setText(product.getName());
         productDetailsProductPrice.setText(product.getPrice());
-        productDetailsProductDescription.setText(product.getDescription());
+
+        String fullDescription = product.getDescription();
+
+        String shortenedDescription = fullDescription.length() > 100 ? fullDescription.substring(0, 100) + "..." : fullDescription;
+        productDetailsProductDescription.setText(shortenedDescription);
+
+        expandDescriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (productDetailsProductDescription.getMaxLines() == 3) {
+                    // Show full description
+                    productDetailsProductDescription.setMaxLines(Integer.MAX_VALUE);
+                    productDetailsProductDescription.setText(fullDescription);
+                    expandDescriptionButton.setText("Less");
+                } else {
+                    // Show shortened description
+                    productDetailsProductDescription.setMaxLines(3);
+                    productDetailsProductDescription.setText(shortenedDescription);
+                    expandDescriptionButton.setText("More");
+                }
+            }
+        });
+
+
+        // Check if the product is in the wishlist using QuerySnapshot
+        db.collection("Users")
+                .document(uid)
+                .collection("wishlist")
+                .whereEqualTo("pid", product.getPid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && !value.isEmpty()){
+                            product.setWishlisted(true);
+                            productDetailsWishlist.setImageResource(R.drawable.ic_heart_filled);
+                        }else {
+                            product.setWishlisted(false);
+                            productDetailsWishlist.setImageResource(R.drawable.ic_heart_outline);
+                        }
+                    }
+                });
+
+        productDetailsWishlist.setImageResource(
+                product.isWishlisted() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+
+        handleWishlist(product);
     }
 
     private void setupImageSlider(List<String> imageUrls) {
         ProductImageSliderAdapter adapter = new ProductImageSliderAdapter(this, imageUrls);
         productDetailsViewPager.setAdapter(adapter);
 
-        // Initialize sliderRunnable using the global sliderHandler
         sliderRunnable = new Runnable() {
             @Override
             public void run() {
                 int currentItem = productDetailsViewPager.getCurrentItem();
-                int nextItem = (currentItem + 1) % imageUrls.size(); // Loop back to the first item
-                productDetailsViewPager.setCurrentItem(nextItem, true); // Smooth scroll
-                sliderHandler.postDelayed(this, 3000); // Slide every 3 seconds
+                int nextItem = (currentItem + 1) % imageUrls.size();
+                productDetailsViewPager.setCurrentItem(nextItem, true);
+                sliderHandler.postDelayed(this, 3000);
             }
         };
 
-        // Start the slider
         sliderHandler.postDelayed(sliderRunnable, 3000);
 
-        // Stop and restart slider on user interaction
         productDetailsViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                sliderHandler.removeCallbacks(sliderRunnable); // Stop the slider
-                sliderHandler.postDelayed(sliderRunnable, 3000); // Restart after delay
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, 3000);
             }
         });
 
-        // Optionally stop slider completely when touched
         productDetailsViewPager.setOnTouchListener((v, event) -> {
             sliderHandler.removeCallbacks(sliderRunnable);
-            sliderHandler.postDelayed(sliderRunnable, 3000); // Restart after touch
-            return false; // Pass the touch event to ViewPager2
+            sliderHandler.postDelayed(sliderRunnable, 3000);
+            return false;
         });
     }
 
@@ -174,6 +226,36 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addToCart();
+            }
+        });
+    }
+
+    // handle wishlist
+    private void handleWishlist(ProductModel product){
+        productDetailsWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isWishlisted = !product.isWishlisted();
+                product.setWishlisted(isWishlisted);
+
+                // Update UI
+                productDetailsWishlist.setImageResource(
+                        isWishlisted ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+
+                // Update Firestore
+                if (isWishlisted) {
+                    db.collection("Users")
+                            .document(uid)
+                            .collection("wishlist")
+                            .document(product.getPid())
+                            .set(product);
+                } else {
+                    db.collection("Users")
+                            .document(uid)
+                            .collection("wishlist")
+                            .document(product.getPid())
+                            .delete();
+                }
             }
         });
     }
@@ -245,24 +327,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
     }
 
-
-//    private void snackBar(String msg) {
-//        Snackbar productDetailsActivitySnackBar = Snackbar.make(
-//                        productDetailsRelativeLayout, msg, Snackbar.LENGTH_INDEFINITE
-//                )
-//                .setAction("Go to Cart", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                        CartFragment cartFragment = new CartFragment();
-//                        transaction.replace(R.id.frameLayout, cartFragment);
-//                        transaction.addToBackStack(null);
-//                        transaction.commit();
-//                    }
-//                })
-//                .setActionTextColor(Color.YELLOW);
-//
-//        productDetailsActivitySnackBar.show();
-//    }
+    // handle on back arrow press
+    private void handleOnBackArrowPress() {
+        productDetailsBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.widget.SearchView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.AllProducts;
 import com.example.swiftmart.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.Leptop_Activity;
@@ -35,6 +41,11 @@ import com.example.swiftmart.Utils.CustomToast;
 import com.example.swiftmart.tv_brandActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -45,6 +56,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,18 +65,21 @@ public class HomeFragment extends Fragment {
     LinearLayout mobiles, earbuds, tv, laptop, headphone, speaker, keyword, mouse, camera, smartwatch, tablet;
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
-    RecyclerView homeFragmentRecyclerView;
+    RecyclerView homeFragmentFeaturedRecyclerView, homeFragmentMostPopularRecyclerView, homeFragmentNewRecyclerView;
     ProductAdapter adapter;
     CircleImageView homeFragmentUserAvatar;
-    TextView homeFragmentUserName;
+    TextView homeFragmentUserName, seeAll1, seeAll2, seeAll3;
     FirebaseAuth mAuth;
     String uid;
     NestedScrollView homeFragmentScrollView;
-    HorizontalScrollView homeFragmentHorizontalScrollView;
-    SwipeRefreshLayout homeFragmentSwipeRefresh;
     BottomSheetDialog sheetDialog;
-    ProgressBar homeFragmentProgressBar;
     SearchView homeFragmentSearchView;
+    private ViewPager2 mainViewPager;
+    private MobileSliderAdapter mobilesliderAdapter;
+    private Handler sliderHandler = new Handler();
+
+    private DatabaseReference databaseReference;
+    private List<String> imageUrls;
 
     public HomeFragment() {
 
@@ -80,10 +95,14 @@ public class HomeFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("root");
+        imageUrls = new ArrayList<>();
 
-        homeFragmentRecyclerView = view.findViewById(R.id.homeFragmentRecyclerView);
         homeFragmentScrollView = view.findViewById(R.id.homeFragmentScrollView);
-        homeFragmentHorizontalScrollView = view.findViewById(R.id.homeFragmentHorizontalScrollView);
+
+        homeFragmentFeaturedRecyclerView = view.findViewById(R.id.homeFragmentFeaturedRecyclerView);
+        homeFragmentMostPopularRecyclerView = view.findViewById(R.id.homeFragmentMostPopularRecyclerView);
+        homeFragmentNewRecyclerView = view.findViewById(R.id.homeFragmentNewRecyclerView);
 
         mobiles = view.findViewById(R.id.mobiles);
         earbuds = view.findViewById(R.id.earbuds);
@@ -98,24 +117,31 @@ public class HomeFragment extends Fragment {
         tablet = view.findViewById(R.id.tablet);
         homeFragmentUserAvatar = view.findViewById(R.id.homeFragmentUserAvatar);
         homeFragmentUserName = view.findViewById(R.id.homeFragmentUserName);
-        homeFragmentSwipeRefresh = view.findViewById(R.id.homeFragmentSwipeRefresh);
-        homeFragmentProgressBar = view.findViewById(R.id.homeFragmentProgressBar);
         homeFragmentSearchView = view.findViewById(R.id.homeFragmentSearchView);
 
+        mainViewPager = view.findViewById(R.id.mainViewPager);
+
+        seeAll1 = view.findViewById(R.id.seeAll1);
+        seeAll2 = view.findViewById(R.id.seeAll2);
+        seeAll3 = view.findViewById(R.id.seeAll3);
+
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
-        homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
 
         getUserData();
         handleHomeFragmentUserAvtarClick();
-        handleSearch();
-        getAllProducts();
-        swipeRefresh();
+//        handleSearch();
+//        getAllProducts();
+        getFeaturedData();
+        getMostPopularData();
+        getNewArrivedData();
+        handleSeeAllClick();
+        getImageUrls();
 
-        handleMobileClick();
-        handleEarbudsClick();
-        handleTVClick();
-        handleLaptopClick();
+//        handleMobileClick();
+//        handleEarbudsClick();
+//        handleTVClick();
+//        handleLaptopClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -136,48 +162,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
-                    homeFragmentUserName.append(value.getString("Username").split(" ")[0]);
+                    homeFragmentUserName.setText(value.getString("Username").split(" ")[0]);
                     Picasso.get().load(value.getString("Image")).into(homeFragmentUserAvatar);
                 }
             }
         });
 
-    }
-
-    // Get all the products from the database
-    private void getAllProducts(){
-        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        homeFragmentProgressBar.setVisibility(View.VISIBLE);
-        datalist.clear();
-
-        db.collection("Products")
-                .limit(30)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null){
-                            CustomToast.showToast(getContext(), "Error in data fetching");
-                            homeFragmentProgressBar.setVisibility(View.GONE);
-                            return;
-                        }
-
-
-                        if (value != null && !value.isEmpty()){
-                            homeFragmentProgressBar.setVisibility(View.GONE);
-                            for (QueryDocumentSnapshot documentSnapshot : value){
-                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                datalist.add(productModel);
-
-                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(getContext(), datalist);
-                                homeFragmentRecyclerView.setHasFixedSize(true);
-                                homeFragmentRecyclerView.setAdapter(adapter);
-                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                            }
-                        }
-                    }
-                });
     }
 
     // handle homeFragmentUserAvatar click
@@ -197,196 +187,276 @@ public class HomeFragment extends Fragment {
     }
 
     // handle search
-    private void handleSearch(){
-        homeFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchProducts(query);
-                return false;
-            }
+//    private void handleSearch(){
+//        homeFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                searchProducts(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                searchProducts(newText);
+//                return false;
+//            }
+//        });
+//    }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchProducts(newText);
-                return false;
-            }
-        });
-    }
+//    // handle searchProduct
+//    private void searchProducts(String query){
+//        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        datalist.clear();
+//
+//        if (query.isEmpty()){
+//            getAllProducts();
+//        } else {
+//            datalist.clear();
+//            db.collection("Products")
+//                    .whereGreaterThanOrEqualTo("name", query)
+//                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
+//                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                            if (error != null) {
+//                                CustomToast.showToast(getContext(), "Error in data fetching");
+//                                return;
+//                            }
+//
+//                            if (value != null && !value.isEmpty()) {
+//                                // Clear the list before adding new data
+//                                datalist.clear();
+//
+//                                for (QueryDocumentSnapshot documentSnapshot : value) {
+//                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+//                                    datalist.add(productModel);
+//                                }
+//
+//                                // Set the layout manager and adapter only once
+//                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+//                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
+//                                adapter = new ProductAdapter(getContext(), datalist);
+//                                homeFragmentRecyclerView.setHasFixedSize(true);
+//                                homeFragmentRecyclerView.setAdapter(adapter);
+//                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//                            } else {
+//                                // Handle empty data case
+//                                CustomToast.showToast(getContext(), "No products found.");
+//                            }
+//                        }
+//                    });
+//        }
+//    }
 
-    // handle searchProduct
-    private void searchProducts(String query){
-        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        homeFragmentProgressBar.setVisibility(View.VISIBLE);
-        datalist.clear();
+    // get Featured Data
+    private void getFeaturedData(){
+        homeFragmentFeaturedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        if (query.isEmpty()){
-            getAllProducts();
-        } else {
-            datalist.clear();
-            db.collection("Products")
-                    .whereGreaterThanOrEqualTo("name", query)
-                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (error != null) {
-                                CustomToast.showToast(getContext(), "Error in data fetching");
-                                homeFragmentProgressBar.setVisibility(View.GONE);
-                                return;
-                            }
+        db.collection("Products")
+                .limit(10)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(getContext(), "Error in data fetching");
+                            return;
+                        }
 
-                            // Hide progress bar as soon as the data starts processing
-                            homeFragmentProgressBar.setVisibility(View.GONE);
+                        if (value != null && !value.isEmpty()){
+                            datalist.clear();
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
 
-                            if (value != null && !value.isEmpty()) {
-                                // Clear the list before adding new data
-                                datalist.clear();
-
-                                for (QueryDocumentSnapshot documentSnapshot : value) {
-                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                    datalist.add(productModel);
-                                }
-
-                                // Set the layout manager and adapter only once
-                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
                                 adapter = new ProductAdapter(getContext(), datalist);
-                                homeFragmentRecyclerView.setHasFixedSize(true);
-                                homeFragmentRecyclerView.setAdapter(adapter);
-                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                            } else {
-                                // Handle empty data case
-                                CustomToast.showToast(getContext(), "No products found.");
+                                homeFragmentFeaturedRecyclerView.setHasFixedSize(true);
+                                homeFragmentFeaturedRecyclerView.setAdapter(adapter);
+                                homeFragmentFeaturedRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
-                    });
+                    }
+                });
+    }
+
+    // get Most Popular Data
+    private void getMostPopularData(){
+        homeFragmentMostPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        db.collection("Products")
+                .limit(10)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(getContext(), "Error in data fetching");
+                            return;
+                        }
+
+                        if (value != null && !value.isEmpty()){
+                            datalist.clear();
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                adapter = new ProductAdapter(getContext(), datalist);
+                                homeFragmentMostPopularRecyclerView.setHasFixedSize(true);
+                                homeFragmentMostPopularRecyclerView.setAdapter(adapter);
+                                homeFragmentMostPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
+                        }
+                    }
+                });
+    }
+
+    // get New Arrived Data
+    private void getNewArrivedData(){
+        homeFragmentNewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        db.collection("Products")
+                .limit(10)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(getContext(), "Error in data fetching");
+                            return;
+                        }
+
+                        if (value != null && !value.isEmpty()){
+                            datalist.clear();
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                adapter = new ProductAdapter(getContext(), datalist);
+                                homeFragmentNewRecyclerView.setHasFixedSize(true);
+                                homeFragmentNewRecyclerView.setAdapter(adapter);
+                                homeFragmentNewRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
+                        }
+                    }
+                });
+    }
+
+    // handle see all click
+    private void handleSeeAllClick(){
+        seeAll1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AllProducts.class);
+                startActivity(intent);
+            }
+        });
+        seeAll2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AllProducts.class);
+                startActivity(intent);
+            }
+        });
+        seeAll3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AllProducts.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+//    // handle mobile click
+//    private void handleMobileClick(){
+//        mobiles.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent mobiles = new Intent(getActivity(), MobilesActivity.class);
+//                startActivity(mobiles);
+//            }
+//        });
+//    }
+//
+//    // handle earbuds click
+//    private void handleEarbudsClick(){
+//        earbuds.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
+//                startActivity(gadgets);
+//            }
+//        });
+//    }
+//
+//    // handle tv click
+//    private void handleTVClick(){
+//        tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
+//                startActivity(gadgets);
+//            }
+//        });
+//    }
+//
+//    // handle laptop click
+//    private void handleLaptopClick(){
+//        laptop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent gadgets = new Intent(getActivity(), Leptop_Activity.class);
+//                startActivity(gadgets);
+//            }
+//        });
+//    }
+//
+
+    private void getImageUrls() {
+        databaseReference.child("Home").child("imgurls").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    imageUrls.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        String imageUrl = dataSnapshot.getValue(String.class);
+                        if (imageUrl != null) {
+                            imageUrls.add(imageUrl);
+                        }
+                    }
+
+                    mobilesliderAdapter = new MobileSliderAdapter(getContext(), imageUrls);
+                    mainViewPager.setAdapter(mobilesliderAdapter);
+
+                    sliderHandler.postDelayed(slideRunnable, 3000);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Database error: " + error.getMessage());
+            }
+        });
+    }
+
+
+    private final Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mainViewPager != null && mobilesliderAdapter != null) {
+                int nextItem = (mainViewPager.getCurrentItem() + 1) % mobilesliderAdapter.getItemCount();
+                mainViewPager.setCurrentItem(nextItem);
+                sliderHandler.postDelayed(this, 3000);
+            }
         }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(slideRunnable);
     }
 
-    // Swipe refresh layout
-    private void swipeRefresh(){
-        homeFragmentSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getAllProducts();
-
-                homeFragmentSwipeRefresh.setRefreshing(false);
-            }
-        });
-    }
-
-    // handle mobile click
-    private void handleMobileClick(){
-        mobiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mobiles = new Intent(getActivity(), MobilesActivity.class);
-                startActivity(mobiles);
-            }
-        });
-    }
-
-    // handle earbuds click
-    private void handleEarbudsClick(){
-        earbuds.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
-                startActivity(gadgets);
-            }
-        });
-    }
-
-    // handle tv click
-    private void handleTVClick(){
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
-                startActivity(gadgets);
-            }
-        });
-    }
-
-    // handle laptop click
-    private void handleLaptopClick(){
-        laptop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gadgets = new Intent(getActivity(), Leptop_Activity.class);
-                startActivity(gadgets);
-            }
-        });
-    }
-
-    // TODO handle headphone click
-    private void handleHeadphoneClick(){
-        headphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle speaker click
-    private void handleSpeakerClick(){
-        speaker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle keyword click
-    private void handleKeyboardClick(){
-        keyword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle mouse click
-    private void handleMouseClick(){
-        mouse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle camera click
-    private void handleCameraClick(){
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle smartwatch click
-    private void handleSmartwatchClick(){
-        headphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    // TODO handle tablet click
-    private void handleTabletClick(){
-        tablet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        sliderHandler.postDelayed(slideRunnable, 3000);
     }
 
 

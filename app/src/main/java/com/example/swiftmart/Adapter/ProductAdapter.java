@@ -3,7 +3,6 @@ package com.example.swiftmart.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,15 +21,15 @@ import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
-import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     Context context;
@@ -48,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_product, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_home_product, parent, false);
         return new ViewHolder(view);
     }
 
@@ -62,10 +60,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .placeholder(R.raw.loading)
                 .into(holder.cardProductImage);
         holder.cardProductName.setText(product.getName());
-        holder.cardProductDescription.setText(product.getDescription());
-        holder.cardProductPrice.setText("₹" + product.getPrice());
 
-        holder.cardMaxPrice.setPaintFlags(holder.cardMaxPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        // Format the price
+        double unitPrice = Double.parseDouble(product.getPrice());
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        holder.cardProductPrice.setText(currencyFormat.format(unitPrice));
 
         // Set slide-in animation
         Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
@@ -94,6 +93,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
 
         holder.cardProductLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra("productId", product.getPid());
+                context.startActivity(intent);
+            }
+        });
+
+        holder.cardProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
@@ -147,9 +155,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             cardProductLinearLayout = itemView.findViewById(R.id.cardProductLinearLayout);
             cardProductImage = itemView.findViewById(R.id.cardProductImage);
             cardProductName = itemView.findViewById(R.id.cardProductName);
-            cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
+//            cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
             cardProductPrice = itemView.findViewById(R.id.cardProductPrice);
-            cardMaxPrice = itemView.findViewById(R.id.cardMaxPrice);
+//            cardMaxPrice = itemView.findViewById(R.id.cardMaxPrice);
             wishlistButton = itemView.findViewById(R.id.wishlistButton);
 
         }

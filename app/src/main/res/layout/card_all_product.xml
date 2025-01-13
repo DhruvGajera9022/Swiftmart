@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:elevation="5dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="147dp">
+
+
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/cardProductImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/boatearbuds" />
+
+        <!-- Wishlist Heart Button -->
+        <ImageView
+            android:id="@+id/wishlistButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_heart_outline" />
+    </FrameLayout>
+
+    <!-- FrameLayout for Product Info -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/card_background">
+
+        <!-- Main LinearLayout -->
+        <LinearLayout
+            android:id="@+id/cardProductLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="3">
+
+                <!-- Product Name -->
+                <TextView
+                    android:id="@+id/cardProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/boat"
+                    android:layout_marginHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppinssemibold" />
+
+                <!-- Price Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹"
+                        android:textColor="#6055D8"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppinssemibold" />
+
+                    <TextView
+                        android:id="@+id/cardProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#6055D8"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppinssemibold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/addToCartAllProducts"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_add_circle"
+                android:backgroundTint="#F8F7F7"
+                app:tint="#6055D8"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/addToCartDoneAllProducts"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/img_done_circle"
+                android:backgroundTint="#F8F7F7"
+                app:tint="#6055D8"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

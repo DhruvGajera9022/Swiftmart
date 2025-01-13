@@ -1,7 +1,6 @@
 package com.example.swiftmart.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +10,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.ProductModel;
-import com.example.swiftmart.ProductDetailsActivity;
 import com.example.swiftmart.R;
-import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdapter.ViewHolder>{
 
@@ -40,7 +35,7 @@ public class AdminCategoryAdapter extends RecyclerView.Adapter<AdminCategoryAdap
     @NonNull
     @Override
     public AdminCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_product, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_home_product, parent, false);
         return new AdminCategoryAdapter.ViewHolder(view);
     }
 
