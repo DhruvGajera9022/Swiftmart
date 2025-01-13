@@ -51,6 +51,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -64,9 +65,7 @@ public class HomeFragment extends Fragment {
 
     LinearLayout mobiles, earbuds, tv, laptop, headphone, speaker, keyword, mouse, camera, smartwatch, tablet;
     FirebaseFirestore db;
-    ArrayList<ProductModel> datalist = new ArrayList<>();
     RecyclerView homeFragmentFeaturedRecyclerView, homeFragmentMostPopularRecyclerView, homeFragmentNewRecyclerView;
-    ProductAdapter adapter;
     CircleImageView homeFragmentUserAvatar;
     TextView homeFragmentUserName, seeAll1, seeAll2, seeAll3;
     FirebaseAuth mAuth;
@@ -80,6 +79,14 @@ public class HomeFragment extends Fragment {
 
     private DatabaseReference databaseReference;
     private List<String> imageUrls;
+
+    private ArrayList<ProductModel> featuredDataList = new ArrayList<>();
+    private ArrayList<ProductModel> mostPopularDataList = new ArrayList<>();
+    private ArrayList<ProductModel> newArrivedDataList = new ArrayList<>();
+
+    private ProductAdapter featuredAdapter;
+    private ProductAdapter mostPopularAdapter;
+    private ProductAdapter newArrivedAdapter;
 
     public HomeFragment() {
 
@@ -186,72 +193,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    // handle search
-//    private void handleSearch(){
-//        homeFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                searchProducts(query);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                searchProducts(newText);
-//                return false;
-//            }
-//        });
-//    }
-
-//    // handle searchProduct
-//    private void searchProducts(String query){
-//        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        datalist.clear();
-//
-//        if (query.isEmpty()){
-//            getAllProducts();
-//        } else {
-//            datalist.clear();
-//            db.collection("Products")
-//                    .whereGreaterThanOrEqualTo("name", query)
-//                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
-//                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                            if (error != null) {
-//                                CustomToast.showToast(getContext(), "Error in data fetching");
-//                                return;
-//                            }
-//
-//                            if (value != null && !value.isEmpty()) {
-//                                // Clear the list before adding new data
-//                                datalist.clear();
-//
-//                                for (QueryDocumentSnapshot documentSnapshot : value) {
-//                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-//                                    datalist.add(productModel);
-//                                }
-//
-//                                // Set the layout manager and adapter only once
-//                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-//                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
-//                                adapter = new ProductAdapter(getContext(), datalist);
-//                                homeFragmentRecyclerView.setHasFixedSize(true);
-//                                homeFragmentRecyclerView.setAdapter(adapter);
-//                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//                            } else {
-//                                // Handle empty data case
-//                                CustomToast.showToast(getContext(), "No products found.");
-//                            }
-//                        }
-//                    });
-//        }
-//    }
-
     // get Featured Data
     private void getFeaturedData(){
         homeFragmentFeaturedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         db.collection("Products")
                 .limit(10)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -263,14 +207,14 @@ public class HomeFragment extends Fragment {
                         }
 
                         if (value != null && !value.isEmpty()){
-                            datalist.clear();
+                            featuredDataList.clear();
                             for (QueryDocumentSnapshot documentSnapshot : value){
                                 ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                datalist.add(productModel);
+                                featuredDataList.add(productModel);
 
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                featuredAdapter = new ProductAdapter(getContext(), featuredDataList);
                                 homeFragmentFeaturedRecyclerView.setHasFixedSize(true);
-                                homeFragmentFeaturedRecyclerView.setAdapter(adapter);
+                                homeFragmentFeaturedRecyclerView.setAdapter(featuredAdapter);
                                 homeFragmentFeaturedRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
@@ -281,7 +225,6 @@ public class HomeFragment extends Fragment {
     // get Most Popular Data
     private void getMostPopularData(){
         homeFragmentMostPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         db.collection("Products")
                 .limit(10)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -293,14 +236,14 @@ public class HomeFragment extends Fragment {
                         }
 
                         if (value != null && !value.isEmpty()){
-                            datalist.clear();
+                            mostPopularDataList.clear();
                             for (QueryDocumentSnapshot documentSnapshot : value){
                                 ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                datalist.add(productModel);
+                                mostPopularDataList.add(productModel);
 
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                mostPopularAdapter = new ProductAdapter(getContext(), mostPopularDataList);
                                 homeFragmentMostPopularRecyclerView.setHasFixedSize(true);
-                                homeFragmentMostPopularRecyclerView.setAdapter(adapter);
+                                homeFragmentMostPopularRecyclerView.setAdapter(mostPopularAdapter);
                                 homeFragmentMostPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
@@ -311,8 +254,8 @@ public class HomeFragment extends Fragment {
     // get New Arrived Data
     private void getNewArrivedData(){
         homeFragmentNewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         db.collection("Products")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(10)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -323,14 +266,14 @@ public class HomeFragment extends Fragment {
                         }
 
                         if (value != null && !value.isEmpty()){
-                            datalist.clear();
+                            newArrivedDataList.clear();
                             for (QueryDocumentSnapshot documentSnapshot : value){
                                 ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                datalist.add(productModel);
+                                newArrivedDataList.add(productModel);
 
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                newArrivedAdapter = new ProductAdapter(getContext(), newArrivedDataList);
                                 homeFragmentNewRecyclerView.setHasFixedSize(true);
-                                homeFragmentNewRecyclerView.setAdapter(adapter);
+                                homeFragmentNewRecyclerView.setAdapter(newArrivedAdapter);
                                 homeFragmentNewRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
@@ -362,51 +305,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-//    // handle mobile click
-//    private void handleMobileClick(){
-//        mobiles.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent mobiles = new Intent(getActivity(), MobilesActivity.class);
-//                startActivity(mobiles);
-//            }
-//        });
-//    }
-//
-//    // handle earbuds click
-//    private void handleEarbudsClick(){
-//        earbuds.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent gadgets = new Intent(getActivity(), EarphoneActivity.class);
-//                startActivity(gadgets);
-//            }
-//        });
-//    }
-//
-//    // handle tv click
-//    private void handleTVClick(){
-//        tv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent gadgets = new Intent(getActivity(), tv_brandActivity.class);
-//                startActivity(gadgets);
-//            }
-//        });
-//    }
-//
-//    // handle laptop click
-//    private void handleLaptopClick(){
-//        laptop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent gadgets = new Intent(getActivity(), Leptop_Activity.class);
-//                startActivity(gadgets);
-//            }
-//        });
-//    }
-//
 
     private void getImageUrls() {
         databaseReference.child("Home").child("imgurls").addValueEventListener(new ValueEventListener() {
@@ -479,5 +377,74 @@ public class HomeFragment extends Fragment {
             requireActivity().finish();
         });
     }
+
+
+
+
+
+
+
+
+    // handle search
+//    private void handleSearch(){
+//        homeFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                searchProducts(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                searchProducts(newText);
+//                return false;
+//            }
+//        });
+//    }
+
+//    // handle searchProduct
+//    private void searchProducts(String query){
+//        homeFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        datalist.clear();
+//
+//        if (query.isEmpty()){
+//            getAllProducts();
+//        } else {
+//            datalist.clear();
+//            db.collection("Products")
+//                    .whereGreaterThanOrEqualTo("name", query)
+//                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
+//                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                            if (error != null) {
+//                                CustomToast.showToast(getContext(), "Error in data fetching");
+//                                return;
+//                            }
+//
+//                            if (value != null && !value.isEmpty()) {
+//                                // Clear the list before adding new data
+//                                datalist.clear();
+//
+//                                for (QueryDocumentSnapshot documentSnapshot : value) {
+//                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+//                                    datalist.add(productModel);
+//                                }
+//
+//                                // Set the layout manager and adapter only once
+//                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+//                                homeFragmentRecyclerView.setLayoutManager(layoutManager);
+//                                adapter = new ProductAdapter(getContext(), datalist);
+//                                homeFragmentRecyclerView.setHasFixedSize(true);
+//                                homeFragmentRecyclerView.setAdapter(adapter);
+//                                homeFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//                            } else {
+//                                // Handle empty data case
+//                                CustomToast.showToast(getContext(), "No products found.");
+//                            }
+//                        }
+//                    });
+//        }
+//    }
 
 }
