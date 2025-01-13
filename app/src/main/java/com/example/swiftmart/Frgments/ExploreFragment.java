@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.swiftmart.Adapter.ExploreProductAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.MainActivity;
 import com.example.swiftmart.Model.ProductModel;
@@ -57,7 +58,7 @@ public class ExploreFragment extends Fragment {
 
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
-    ProductAdapter adapter;
+    ExploreProductAdapter adapter;
 
     int selectedTab = 1;
 
@@ -124,7 +125,7 @@ public class ExploreFragment extends Fragment {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                                 exploreFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                adapter = new ExploreProductAdapter(getContext(), datalist);
                                 exploreFragmentRecyclerView.setHasFixedSize(true);
                                 exploreFragmentRecyclerView.setAdapter(adapter);
                                 exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -200,7 +201,7 @@ public class ExploreFragment extends Fragment {
                                 // Set the layout manager and adapter only once
                                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                                 exploreFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                adapter = new ExploreProductAdapter(getContext(), datalist);
                                 exploreFragmentRecyclerView.setHasFixedSize(true);
                                 exploreFragmentRecyclerView.setAdapter(adapter);
                                 exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());

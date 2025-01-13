@@ -35,9 +35,6 @@
             android:name=".Account.Edit_profile_Activity"
             android:exported="false" />
         <activity
-            android:name=".AdminCategory"
-            android:exported="true" />
-        <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />
         <activity android:name=".Account.Language_Activity" />

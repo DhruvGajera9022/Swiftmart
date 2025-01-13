@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.example.swiftmart.Adapter.ExploreProductAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
@@ -48,7 +49,7 @@ public class CategoryFragment extends Fragment {
     private ArrayList<ProductModel> datalist = new ArrayList<>();
     private RecyclerView adminCategoryRecyclerview;
     private FirebaseFirestore db;
-    private ProductAdapter adapter;
+    private ExploreProductAdapter adapter;
 
     private ListenerRegistration categoryListener;
     private ListenerRegistration filteredDataListener;
@@ -179,7 +180,7 @@ public class CategoryFragment extends Fragment {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
                                 adminCategoryRecyclerview.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(getContext(), datalist);
+                                adapter = new ExploreProductAdapter(getContext(), datalist);
                                 adminCategoryRecyclerview.setHasFixedSize(true);
                                 adminCategoryRecyclerview.setAdapter(adapter);
                                 adminCategoryRecyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -311,7 +312,7 @@ public class CategoryFragment extends Fragment {
             if (adapter == null) {
                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
                 adminCategoryRecyclerview.setLayoutManager(layoutManager);
-                adapter = new ProductAdapter(getContext(), datalist);
+                adapter = new ExploreProductAdapter(getContext(), datalist);
                 adminCategoryRecyclerview.setHasFixedSize(true);
                 adminCategoryRecyclerview.setAdapter(adapter);
             } else {
