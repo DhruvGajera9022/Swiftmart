@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import com.google.android.material.slider.RangeSlider;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -305,10 +307,13 @@ public class ExploreFragment extends Fragment {
 
         // Get readable sort option text
         String sortText;
+        Query.Direction sortDirection = null;
         if (sortOption == R.id.sort_price_low) {
             sortText = "Price: Low to High";
+            sortDirection = Query.Direction.ASCENDING;
         } else if (sortOption == R.id.sort_price_high) {
             sortText = "Price: High to Low";
+            sortDirection = Query.Direction.DESCENDING;
         } else if (sortOption == R.id.sort_rating) {
             sortText = "Rating";
         } else {
@@ -331,7 +336,45 @@ public class ExploreFragment extends Fragment {
         message.append("Sort By: ").append(sortText);
 
         // Show toast
-        CustomToast.showToast(getContext(), message.toString());
+        String result = TextUtils.join(", ", categories);
+        getFilteredData(result, sortDirection);
+    }
+
+    private void getFilteredData(String category, Query.Direction sortDirection){
+        exploreFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        exploreFragmentProgressBar.setVisibility(View.VISIBLE);
+        datalist.clear();
+
+
+        db.collection("Products")
+                .whereEqualTo("category", category)
+                .orderBy("price", Query.Direction.valueOf(sortDirection.name()))
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null){
+                            CustomToast.showToast(getContext(), "Error in data fetching");
+                            exploreFragmentProgressBar.setVisibility(View.GONE);
+                            return;
+                        }
+
+
+                        if (value != null && !value.isEmpty()){
+                            exploreFragmentProgressBar.setVisibility(View.GONE);
+                            for (QueryDocumentSnapshot documentSnapshot : value){
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                datalist.add(productModel);
+
+                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                                exploreFragmentRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ExploreProductAdapter(getContext(), datalist);
+                                exploreFragmentRecyclerView.setHasFixedSize(true);
+                                exploreFragmentRecyclerView.setAdapter(adapter);
+                                exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            }
+                        }
+                    }
+                });
     }
 
     // handle onBack press
