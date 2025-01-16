@@ -37,12 +37,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryFragment extends Fragment {
+    //Category
     private LinearLayout mobiles, earbuds, tv, laptop, headphone, speaker, keyword, mouse, camera, smartwatch, tablet; // All category
-    private LinearLayout iphone, samsung, vivo, oppo, mi, realme, motorola, poco, goggle, oneplus, iqoo, nothing; // All mobiles company
-    private LinearLayout boatlogo, realmelogo, onepluslogo, nothinglogo, triggerlogo, trukelogo; // all earbuds company
-    private LinearLayout samsunglogo, lglogo, milogo, tcllogo; // all tv company
-    private LinearLayout hplogo, dellogo, lenovologo, acerlogo, asusogo, applelogo, msilogo; // all laptops company
-    private HorizontalScrollView mobileScrollView, earphoneHorizontalScrollView, tvHorizontalScrollView, laptopHorizontalScrollView;
+
+    //Mobile company
+    private LinearLayout iphone, samsung, vivo, oppo, mi, realme, motorola, poco, goggle, oneplus, iqoo, nothing;
+    //Earbuds company
+    private LinearLayout boatlogo, realmelogo, onepluslogo, nothinglogo, triggerlogo, trukelogo;
+    //TV company
+    private LinearLayout samsunglogo, lglogo, milogo, tcllogo;
+    //Laptops company
+    private LinearLayout hplogo, dellogo, lenovologo, acerlogo, asusogo, applelogo, msilogo;
+    //Headphone company
+    private LinearLayout headphoneBoat, headphoneJBL, headphoneCosmicByte, headphoneSennheiner, headphoneZebronics, headphoneSony;
+    //speaker company
+    private LinearLayout speakerBoat, speakerJBL, speakerLG, speakerBoult;
+    // mouse comapny
+    private LinearLayout mouseHp, mouseDell, mouseLogitech, mouseLenovo, mouseZebronics;
+    //keyboard company
+    private LinearLayout keyboardHp, keyboardDell, keyboardLogitech, keyboardLenovo, keyboardZebronics;
+    //camera company
+    private LinearLayout cameraNikon, cameraCanon, cameraSony, cameraFujifilm, cameraPanasonic;
+    //smartwatch company
+    private LinearLayout smartwatchApple, smartwatchSamsung, smartwatchNoise, smartwatchFirebolt;
+    //tablet company
+    private LinearLayout tabletApple, tabletSamsung, tabletRealme, tabletRedmi, tabletOneplus, tabletPoco;
+
+    private HorizontalScrollView mobileScrollView, earphoneHorizontalScrollView, tvHorizontalScrollView, laptopHorizontalScrollView,headphoneHorizontalScrollView,speakerHorizontalScrollView,keyboardHorizontalScrollView,mouseHorizontalScrollView,cameraHorizontalScrollView,smartwatchHorizontalScrollView,tabletHorizontalScrollView;
+
     private ScrollView homeFragmentScrollView;
     private View mobileIndicator, earbudsIndicator, tvIndicator, laptopsIndicator, headphonesIndicator, speakersIndicator, keyboardIndicator, mouseIndicator, cameraIndicator, smartwatchesIndicator, tabletsIndicator;
 
@@ -71,13 +93,20 @@ public class CategoryFragment extends Fragment {
         setEarbudsCompanyClickListeners();
         setTVCompanyClickListeners();
         setLaptopCompanyClickListeners();
+        setHeadphoneCompanyClickListeners();
+        setSpeakerCompanyClickListeners();
+        setKeyboardCompanyClickListeners();
+        setMouseCompanyClickListeners();
+        setCameraCompanyClickListeners();
+        setSmartwatchCompanyClickListeners();
+        setTabletCompanyClickListeners();
 
         handleOnBackPress();
 
         return view;
     }
 
-
+    // Initialize all views
     private void initViews(View view) {
         // recycler view
         adminCategoryRecyclerview = view.findViewById(R.id.adminCategoryRecyclerview);
@@ -145,17 +174,80 @@ public class CategoryFragment extends Fragment {
         applelogo = view.findViewById(R.id.applelogo);
         msilogo = view.findViewById(R.id.msilogo);
 
+        //headphone company
+        headphoneBoat = view.findViewById(R.id.headphoneBoat);
+        headphoneJBL = view.findViewById(R.id.headphoneJBL);
+        headphoneCosmicByte = view.findViewById(R.id.headphoneCosmicByte);
+        headphoneSennheiner = view.findViewById(R.id.headphoneSennheiser);
+        headphoneZebronics = view.findViewById(R.id.headphoneZebronics);
+        headphoneSony = view.findViewById(R.id.headphoneSony);
+
+        //speaker comapny
+        speakerBoat = view.findViewById(R.id.speakerBoat);
+        speakerJBL = view.findViewById(R.id.speakerJBL);
+        speakerLG = view.findViewById(R.id.speakerLG);
+        speakerBoult = view.findViewById(R.id.speakerBoult);
+
+        //keyboard company
+        keyboardHp = view.findViewById(R.id.keyboardHP);
+        keyboardDell = view.findViewById(R.id.keyboardDell);
+        keyboardLogitech = view.findViewById(R.id.keyboardLogitech);
+        keyboardLenovo = view.findViewById(R.id.keyboardLenovo);
+        keyboardZebronics = view.findViewById(R.id.keyboardZebronics);
+
+        //mouse company
+        mouseHp = view.findViewById(R.id.mouseHP);
+        mouseDell = view.findViewById(R.id.mouseDell);
+        mouseLogitech = view.findViewById(R.id.mouseLogitech);
+        mouseLenovo = view.findViewById(R.id.mouseLenovo);
+        mouseZebronics = view.findViewById(R.id.mouseZebronics);
+
+        //camera company
+        cameraNikon = view.findViewById(R.id.cameraNikon);
+        cameraCanon = view.findViewById(R.id.cameraCanon);
+        cameraSony = view.findViewById(R.id.cameraSony);
+        cameraFujifilm = view.findViewById(R.id.cameraFujifilm);
+        cameraPanasonic = view.findViewById(R.id.cameraPanasonic);
+
+        //smart watch company
+        smartwatchApple = view.findViewById(R.id.smartwatchApple);
+        smartwatchSamsung = view.findViewById(R.id.smartwatchSamsung);
+        smartwatchNoise = view.findViewById(R.id.smartwatchNoise);
+        smartwatchFirebolt = view.findViewById(R.id.smartwatchFirebolt);
+
+        //Tablet company
+        tabletApple = view.findViewById(R.id.tabletApple);
+        tabletSamsung = view.findViewById(R.id.tabletSamsung);
+        tabletRealme = view.findViewById(R.id.tabletRealme);
+        tabletRedmi = view.findViewById(R.id.tabletRedmi);
+        tabletOneplus = view.findViewById(R.id.tabletOneplus);
+        tabletPoco = view.findViewById(R.id.tabletPoco);
+
         homeFragmentScrollView = view.findViewById(R.id.homeFragmentScrollView);
         mobileScrollView = view.findViewById(R.id.mobileHorizontalScrollView);
         earphoneHorizontalScrollView = view.findViewById(R.id.earphoneHorizontalScrollView);
         tvHorizontalScrollView = view.findViewById(R.id.tvHorizontalScrollView);
         laptopHorizontalScrollView = view.findViewById(R.id.laptopHorizontalScrollView);
+        headphoneHorizontalScrollView = view.findViewById(R.id.headphoneHorizontalScrollView);
+        speakerHorizontalScrollView = view.findViewById(R.id.speakerHorizontalScrollView);
+        keyboardHorizontalScrollView = view.findViewById(R.id.keyboardHorizontalScrollView);
+        mouseHorizontalScrollView = view.findViewById(R.id.mouseHorizontalScrollView);
+        cameraHorizontalScrollView = view.findViewById(R.id.cameraHorizontalScrollView);
+        smartwatchHorizontalScrollView = view.findViewById(R.id.smartwatchHorizontalScrollView);
+        tabletHorizontalScrollView = view.findViewById(R.id.tabletHorizontalScrollView);
 
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         mobileScrollView.setHorizontalScrollBarEnabled(false);
         earphoneHorizontalScrollView.setHorizontalScrollBarEnabled(false);
         tvHorizontalScrollView.setHorizontalScrollBarEnabled(false);
         laptopHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        headphoneHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        speakerHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        keyboardHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        mouseHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        cameraHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        smartwatchHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        tabletHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
     }
 
@@ -190,6 +282,7 @@ public class CategoryFragment extends Fragment {
                 });
     }
 
+    // Set click on category
     private void setCategoryClickListeners() {
         mobiles.setOnClickListener(v -> {
             handleCategoryClick("Mobile", mobileScrollView);
@@ -208,28 +301,37 @@ public class CategoryFragment extends Fragment {
             selectIndicator(laptopsIndicator);
         });
         headphone.setOnClickListener(v -> {
+            handleCategoryClick("Headphone", headphoneHorizontalScrollView);
             selectIndicator(headphonesIndicator);
         });
         speaker.setOnClickListener(v -> {
+            handleCategoryClick("Speaker", speakerHorizontalScrollView);
             selectIndicator(speakersIndicator);
         });
         keyword.setOnClickListener(v -> {
+            handleCategoryClick("Keyboard", keyboardHorizontalScrollView);
             selectIndicator(keyboardIndicator);
         });
         mouse.setOnClickListener(v -> {
+            handleCategoryClick("Mouse", mouseHorizontalScrollView);
             selectIndicator(mouseIndicator);
         });
         camera.setOnClickListener(v -> {
+            handleCategoryClick("Camera", cameraHorizontalScrollView);
             selectIndicator(cameraIndicator);
         });
         smartwatch.setOnClickListener(v -> {
+            handleCategoryClick("SmartWatch", smartwatchHorizontalScrollView);
             selectIndicator(smartwatchesIndicator);
         });
         tablet.setOnClickListener(v -> {
+            handleCategoryClick("Tablet", tabletHorizontalScrollView);
             selectIndicator(tabletsIndicator);
         });
     }
 
+
+    // Set click on mobile company
     private void setMobileCompanyClickListeners() {
         iphone.setOnClickListener(v -> fetchFilteredData("Mobile", "Apple"));
         samsung.setOnClickListener(v -> fetchFilteredData("Mobile", "Samsung"));
@@ -245,6 +347,7 @@ public class CategoryFragment extends Fragment {
         nothing.setOnClickListener(v -> fetchFilteredData("Mobile", "Nothing"));
     }
 
+    // Set click on earbuds company
     private void setEarbudsCompanyClickListeners() {
         boatlogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Boat"));
         realmelogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Realme"));
@@ -254,6 +357,7 @@ public class CategoryFragment extends Fragment {
         trukelogo.setOnClickListener(v -> fetchFilteredData("AirBuds", "Truke"));
     }
 
+    // Set click on tv company
     private void setTVCompanyClickListeners() {
         samsunglogo.setOnClickListener(v -> fetchFilteredData("TV", "Samsung"));
         lglogo.setOnClickListener(v -> fetchFilteredData("TV", "LG"));
@@ -261,6 +365,7 @@ public class CategoryFragment extends Fragment {
         tcllogo.setOnClickListener(v -> fetchFilteredData("TV", "TCL"));
     }
 
+    // Set click on laptop company
     private void setLaptopCompanyClickListeners() {
         hplogo.setOnClickListener(v -> fetchFilteredData("Laptop", "HP"));
         dellogo.setOnClickListener(v -> fetchFilteredData("Laptop", "Dell"));
@@ -271,6 +376,70 @@ public class CategoryFragment extends Fragment {
         msilogo.setOnClickListener(v -> fetchFilteredData("Laptop", "MSI"));
     }
 
+    // Set click on headphone company
+    private void setHeadphoneCompanyClickListeners() {
+        headphoneBoat.setOnClickListener(v -> fetchFilteredData("Headphone", "Boat"));
+        headphoneJBL.setOnClickListener(v -> fetchFilteredData("Headphone", "JBL"));
+        headphoneCosmicByte.setOnClickListener(v -> fetchFilteredData("Headphone", "Cosmic Byte"));
+        headphoneSennheiner.setOnClickListener(v -> fetchFilteredData("Headphone", "Sennheiser"));
+        headphoneZebronics.setOnClickListener(v -> fetchFilteredData("Headphone", "Zebronics"));
+        headphoneSony.setOnClickListener(v -> fetchFilteredData("Headphone", "Sony"));
+    }
+
+    // Set click on speaker company
+    private void setSpeakerCompanyClickListeners() {
+        speakerBoat.setOnClickListener(v -> fetchFilteredData("Speaker", "Boat"));
+        speakerJBL.setOnClickListener(v -> fetchFilteredData("Speaker", "JBL"));
+        speakerLG.setOnClickListener(v -> fetchFilteredData("Speaker", "LG"));
+        speakerBoult.setOnClickListener(v -> fetchFilteredData("Speaker", "Boult"));
+    }
+
+    // Set click on mouse company
+    private void setMouseCompanyClickListeners() {
+        mouseHp.setOnClickListener(v -> fetchFilteredData("Mouse", "HP"));
+        mouseDell.setOnClickListener(v -> fetchFilteredData("Mouse", "Dell"));
+        mouseLogitech.setOnClickListener(v -> fetchFilteredData("Mouse", "Logitech"));
+        mouseLenovo.setOnClickListener(v -> fetchFilteredData("Mouse", "Lenovo"));
+        mouseZebronics.setOnClickListener(v -> fetchFilteredData("Mouse", "Zebronics"));
+    }
+
+    // Set click on keyboard company
+    private void setKeyboardCompanyClickListeners() {
+        keyboardHp.setOnClickListener(v -> fetchFilteredData("Keyboard", "HP"));
+        keyboardDell.setOnClickListener(v -> fetchFilteredData("Keyboard", "Dell"));
+        keyboardLogitech.setOnClickListener(v -> fetchFilteredData("Keyboard", "Logitech"));
+        keyboardLenovo.setOnClickListener(v -> fetchFilteredData("Keyboard", "Lenovo"));
+        keyboardZebronics.setOnClickListener(v -> fetchFilteredData("Keyboard", "Zebronics"));
+    }
+
+    // Set click on camera company
+    private void setCameraCompanyClickListeners() {
+        cameraNikon.setOnClickListener(v -> fetchFilteredData("Camera", "Nikon"));
+        cameraCanon.setOnClickListener(v -> fetchFilteredData("Camera", "Canon"));
+        cameraSony.setOnClickListener(v -> fetchFilteredData("Camera", "Sony"));
+        cameraFujifilm.setOnClickListener(v -> fetchFilteredData("Camera", "Fujifilm"));
+        cameraPanasonic.setOnClickListener(v -> fetchFilteredData("Camera", "Panasonic"));
+    }
+
+    // Set click on smartwatch company
+    private void setSmartwatchCompanyClickListeners() {
+        smartwatchApple.setOnClickListener(v -> fetchFilteredData("Smartwatch", "Apple"));
+        smartwatchSamsung.setOnClickListener(v -> fetchFilteredData("Smartwatch", "Samsung"));
+        smartwatchNoise.setOnClickListener(v -> fetchFilteredData("Smartwatch", "Noise"));
+        smartwatchFirebolt.setOnClickListener(v -> fetchFilteredData("Smartwatch", "Firebolt"));
+    }
+
+    // Set click on tablet company
+    private void setTabletCompanyClickListeners() {
+        tabletApple.setOnClickListener(v -> fetchFilteredData("Tablet", "Apple"));
+        tabletSamsung.setOnClickListener(v -> fetchFilteredData("Tablet", "Samsung"));
+        tabletRealme.setOnClickListener(v -> fetchFilteredData("Tablet", "Realme"));
+        tabletRedmi.setOnClickListener(v -> fetchFilteredData("Tablet", "Redmi"));
+        tabletOneplus.setOnClickListener(v -> fetchFilteredData("Tablet", "OnePlus"));
+        tabletPoco.setOnClickListener(v -> fetchFilteredData("Tablet", "Poco"));
+    }
+
+
     private void handleCategoryClick(String category, HorizontalScrollView visibleScrollView) {
         clearData();
         showOnlySelectedScrollView(visibleScrollView);
@@ -279,7 +448,7 @@ public class CategoryFragment extends Fragment {
 
     private void fetchCategoryData(String category) {
         if (categoryListener != null) {
-            categoryListener.remove(); // Remove previous listener if any
+            categoryListener.remove();
         }
 
         categoryListener = db.collection("Products")
@@ -289,7 +458,7 @@ public class CategoryFragment extends Fragment {
 
     private void fetchFilteredData(String category, String company) {
         if (filteredDataListener != null) {
-            filteredDataListener.remove(); // Remove previous listener if any
+            filteredDataListener.remove();
         }
 
         filteredDataListener = db.collection("Products")
@@ -333,6 +502,13 @@ public class CategoryFragment extends Fragment {
         earphoneHorizontalScrollView.setVisibility(View.GONE);
         tvHorizontalScrollView.setVisibility(View.GONE);
         laptopHorizontalScrollView.setVisibility(View.GONE);
+        headphoneHorizontalScrollView.setVisibility(View.GONE);
+        speakerHorizontalScrollView.setVisibility(View.GONE);
+        keyboardHorizontalScrollView.setVisibility(View.GONE);
+        mouseHorizontalScrollView.setVisibility(View.GONE);
+        cameraHorizontalScrollView.setVisibility(View.GONE);
+        smartwatchHorizontalScrollView.setVisibility(View.GONE);
+        tabletHorizontalScrollView.setVisibility(View.GONE);
 
         visibleScrollView.setVisibility(View.VISIBLE);
     }
