@@ -63,10 +63,12 @@ public class CategoryFragment extends Fragment {
     //tablet company
     private LinearLayout tabletApple, tabletSamsung, tabletRealme, tabletRedmi, tabletOneplus, tabletPoco;
 
+    //company horizontal scrollview
     private HorizontalScrollView mobileScrollView, earphoneHorizontalScrollView, tvHorizontalScrollView, laptopHorizontalScrollView,headphoneHorizontalScrollView,speakerHorizontalScrollView,keyboardHorizontalScrollView,mouseHorizontalScrollView,cameraHorizontalScrollView,smartwatchHorizontalScrollView,tabletHorizontalScrollView;
+    // category indicator
+    private View mobileIndicator, earbudsIndicator, tvIndicator, laptopsIndicator, headphonesIndicator, speakersIndicator, keyboardIndicator, mouseIndicator, cameraIndicator, smartwatchesIndicator, tabletsIndicator;
 
     private ScrollView homeFragmentScrollView;
-    private View mobileIndicator, earbudsIndicator, tvIndicator, laptopsIndicator, headphonesIndicator, speakersIndicator, keyboardIndicator, mouseIndicator, cameraIndicator, smartwatchesIndicator, tabletsIndicator;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
     private RecyclerView adminCategoryRecyclerview;
@@ -329,7 +331,6 @@ public class CategoryFragment extends Fragment {
             selectIndicator(tabletsIndicator);
         });
     }
-
 
     // Set click on mobile company
     private void setMobileCompanyClickListeners() {
