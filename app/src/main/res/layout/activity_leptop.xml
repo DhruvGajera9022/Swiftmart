@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".CategoryScreen.Leptop_Activity">
+
     <RelativeLayout
         android:id="@+id/lytoolbar"
         android:layout_width="match_parent"

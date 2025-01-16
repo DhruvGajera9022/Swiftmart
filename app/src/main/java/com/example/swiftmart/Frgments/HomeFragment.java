@@ -31,8 +31,10 @@ import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.AllProducts;
 import com.example.swiftmart.CategoryScreen.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
+import com.example.swiftmart.CategoryScreen.HeadPhoneActivity;
 import com.example.swiftmart.CategoryScreen.Leptop_Activity;
 import com.example.swiftmart.CategoryScreen.MobilesActivity;
+import com.example.swiftmart.CategoryScreen.SpeakersActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -166,6 +168,8 @@ public class HomeFragment extends Fragment {
         handleEarbudsClick();
         handleTVClick();
         handleLaptopClick();
+        handleHeadphoneClick();
+        handleSpeakerClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -363,6 +367,28 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Leptop_Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle speaker click
+    private void handleHeadphoneClick(){
+        homeHeadphoneImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HeadPhoneActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle speaker click
+    private void handleSpeakerClick(){
+        homeSpeakersImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SpeakersActivity.class);
                 startActivity(intent);
             }
         });
