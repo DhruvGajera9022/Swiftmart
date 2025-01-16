@@ -108,7 +108,6 @@ public class ExploreFragment extends Fragment {
         datalist.clear();
 
         db.collection("Products")
-                .limit(30)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
