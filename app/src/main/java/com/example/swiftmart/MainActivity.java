@@ -33,6 +33,7 @@ import com.example.swiftmart.Frgments.HomeFragment;
 import com.example.swiftmart.Utils.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.Locale;
 
@@ -42,10 +43,8 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
     AlertDialog dialog;
     NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver(this);
 
-    private LinearLayout homeLayout, exploreLayout, categoryLayout, profileLayout, cartLayout;
-    private ImageView homeImage, exploreImage, categoryImage, profileImage, cartImage;
-    private TextView homeText, exploreText, categoryText, profileText, cartText;
-    private int selectedTab = 1;
+    private ChipNavigationBar mainBottomNavigation;
+
     private FrameLayout frameLayout;
 
     @Override
@@ -57,269 +56,41 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
         selectedLanguage = getIntent().getStringExtra("selectedLanguage");
 
         frameLayout = findViewById(R.id.frameLayout);
-
-        homeLayout = findViewById(R.id.homeLayout);
-        exploreLayout = findViewById(R.id.exploreLayout);
-        categoryLayout = findViewById(R.id.categoryLayout);
-        profileLayout = findViewById(R.id.profileLayout);
-        cartLayout = findViewById(R.id.cartLayout);
-
-        homeImage = findViewById(R.id.homeImage);
-        exploreImage = findViewById(R.id.exploreImage);
-        categoryImage = findViewById(R.id.categoryImage);
-        profileImage = findViewById(R.id.profileImage);
-        cartImage = findViewById(R.id.cartImage);
-
-        homeText = findViewById(R.id.homeText);
-        exploreText = findViewById(R.id.exploreText);
-        categoryText = findViewById(R.id.categoryText);
-        profileText = findViewById(R.id.profileText);
-        cartText = findViewById(R.id.cartText);
+        mainBottomNavigation = findViewById(R.id.mainBottomNavigation);
 
         if (selectedLanguage != null) {
             changeLanguage(selectedLanguage);
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.frameLayout, HomeFragment.class, null)
-                .commit();
+        if (savedInstanceState == null) {
+            replaceFragment(new HomeFragment());
+            mainBottomNavigation.setItemSelected(R.id.nav_home, true);
+        }
 
-        changeBottomTabs();
-
+        bottomTabs();
         setStatusBarColor(R.color.home);
 
     }
 
-    private void changeBottomTabs(){
+    private void bottomTabs(){
+        // Set up listener for bottom navigation bar
+        mainBottomNavigation.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
 
-        homeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedTab != 1){
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    if (selectedTab > 1) {
-                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
-                    } else {
-                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
-                    }
-
-                    transaction.replace(R.id.frameLayout, HomeFragment.class, null).commit();
-
-                    exploreText.setVisibility(View.GONE);
-                    categoryText.setVisibility(View.GONE);
-                    profileText.setVisibility(View.GONE);
-                    cartText.setVisibility(View.GONE);
-
-                    exploreImage.setImageResource(R.drawable.icon_explore);
-                    categoryImage.setImageResource(R.drawable.icon_category);
-                    profileImage.setImageResource(R.drawable.icon_person);
-                    cartImage.setImageResource(R.drawable.icon_cart);
-
-                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                    homeText.setVisibility(View.VISIBLE);
-                    homeImage.setImageResource(R.drawable.icon_home_selected);
-                    homeLayout.setBackgroundResource(R.drawable.rounded_back_home_200);
-
-                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
-                    scaleAnimation.setDuration(200);
-                    scaleAnimation.setFillAfter(true);
-                    homeLayout.startAnimation(scaleAnimation);
-
-                    setStatusBarColor(R.color.home);
-
-                    selectedTab = 1;
-                }
+            if (item == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
+            } else if (item == R.id.nav_explore) {
+                selectedFragment = new ExploreFragment();
+            } else if (item == R.id.nav_category) {
+                selectedFragment = new CategoryFragment();
+            } else if (item == R.id.nav_person) {
+                selectedFragment = new AccountFragment();
+            } else if (item == R.id.nav_cart) {
+                selectedFragment = new CartFragment();
             }
-        });
 
-        exploreLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                if (selectedTab > 2) {
-                    transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
-                } else {
-                    transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
-                }
-
-                transaction.replace(R.id.frameLayout, ExploreFragment.class, null).commit();
-
-                if (selectedTab != 2){
-                    homeText.setVisibility(View.GONE);
-                    categoryText.setVisibility(View.GONE);
-                    profileText.setVisibility(View.GONE);
-                    cartText.setVisibility(View.GONE);
-
-                    homeImage.setImageResource(R.drawable.icon_home);
-                    categoryImage.setImageResource(R.drawable.icon_category);
-                    profileImage.setImageResource(R.drawable.icon_person);
-                    cartImage.setImageResource(R.drawable.icon_cart);
-
-                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                    exploreText.setVisibility(View.VISIBLE);
-                    exploreImage.setImageResource(R.drawable.icon_explore_selected);
-                    exploreLayout.setBackgroundResource(R.drawable.rounded_back_explore_200);
-
-                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
-                    scaleAnimation.setDuration(200);
-                    scaleAnimation.setFillAfter(true);
-                    exploreLayout.startAnimation(scaleAnimation);
-
-                    setStatusBarColor(R.color.like);
-
-                    selectedTab = 2;
-                }
-            }
-        });
-
-        categoryLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedTab != 3){
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    if (selectedTab > 3) {
-                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
-                    } else {
-                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
-                    }
-
-                    transaction.replace(R.id.frameLayout, CategoryFragment.class, null).commit();
-
-                    homeText.setVisibility(View.GONE);
-                    exploreText.setVisibility(View.GONE);
-                    profileText.setVisibility(View.GONE);
-                    cartText.setVisibility(View.GONE);
-
-                    homeImage.setImageResource(R.drawable.icon_home);
-                    exploreImage.setImageResource(R.drawable.icon_explore);
-                    profileImage.setImageResource(R.drawable.icon_person);
-                    cartImage.setImageResource(R.drawable.icon_cart);
-
-                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                    categoryText.setVisibility(View.VISIBLE);
-                    categoryImage.setImageResource(R.drawable.icon_category_selected);
-                    categoryLayout.setBackgroundResource(R.drawable.rounded_back_category_200);
-
-                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
-                    scaleAnimation.setDuration(200);
-                    scaleAnimation.setFillAfter(true);
-                    categoryLayout.startAnimation(scaleAnimation);
-
-                    setStatusBarColor(R.color.notification);
-
-                    selectedTab = 3;
-                }
-            }
-        });
-
-        profileLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedTab != 4){
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    if (selectedTab > 4) {
-                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
-                    } else {
-                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
-                    }
-
-                    transaction.replace(R.id.frameLayout, AccountFragment.class, null).commit();
-
-                    homeText.setVisibility(View.GONE);
-                    exploreText.setVisibility(View.GONE);
-                    categoryText.setVisibility(View.GONE);
-                    cartText.setVisibility(View.GONE);
-
-                    homeImage.setImageResource(R.drawable.icon_home);
-                    exploreImage.setImageResource(R.drawable.icon_explore);
-                    categoryImage.setImageResource(R.drawable.icon_category);
-                    cartImage.setImageResource(R.drawable.icon_cart);
-
-                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    cartLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                    profileText.setVisibility(View.VISIBLE);
-                    profileImage.setImageResource(R.drawable.icon_person_selected);
-                    profileLayout.setBackgroundResource(R.drawable.rounded_back_profile_200);
-
-                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
-                    scaleAnimation.setDuration(200);
-                    scaleAnimation.setFillAfter(true);
-                    profileLayout.startAnimation(scaleAnimation);
-
-                    setStatusBarColor(R.color.profile);
-
-                    selectedTab = 4;
-                }
-            }
-        });
-
-        cartLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedTab != 5){
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    if (selectedTab > 5) {
-                        transaction.setCustomAnimations(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
-                    } else {
-                        transaction.setCustomAnimations(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
-                    }
-
-                    transaction.replace(R.id.frameLayout, CartFragment.class, null).commit();
-
-                    homeText.setVisibility(View.GONE);
-                    exploreText.setVisibility(View.GONE);
-                    categoryText.setVisibility(View.GONE);
-                    profileText.setVisibility(View.GONE);
-
-                    homeImage.setImageResource(R.drawable.icon_home);
-                    exploreImage.setImageResource(R.drawable.icon_explore);
-                    categoryImage.setImageResource(R.drawable.icon_category);
-                    profileImage.setImageResource(R.drawable.icon_person);
-
-                    homeLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    exploreLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    categoryLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    profileLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                    cartText.setVisibility(View.VISIBLE);
-                    cartImage.setImageResource(R.drawable.icon_cart_selected);
-                    cartLayout.setBackgroundResource(R.drawable.rounded_back_cart_200);
-
-                    ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1f,1f,1f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.0f);
-                    scaleAnimation.setDuration(200);
-                    scaleAnimation.setFillAfter(true);
-                    cartLayout.startAnimation(scaleAnimation);
-
-                    setStatusBarColor(R.color.cart);
-
-                    selectedTab = 5;
-                }
+            if (selectedFragment != null) {
+                replaceFragment(selectedFragment);
             }
         });
     }
@@ -457,5 +228,32 @@ public class MainActivity extends AppCompatActivity implements NetworkChangeRece
             window.setStatusBarColor(getResources().getColor(colorResource));
         }
     }
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.right_to_left_enter,
+                        R.anim.right_to_left_exit,
+                        R.anim.left_to_right_enter,
+                        R.anim.left_to_right_exit
+                )
+                .replace(R.id.frameLayout, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.frameLayout);
+
+        if (currentFragment instanceof HomeFragment) {
+            super.onBackPressed();
+        } else {
+            replaceFragment(new HomeFragment());
+            mainBottomNavigation.setItemSelected(R.id.nav_home, true);
+        }
+    }
+
 
 }

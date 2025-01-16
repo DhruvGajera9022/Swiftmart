@@ -76,4 +76,7 @@ dependencies {
 
     // Realtime Database
     implementation("com.google.firebase:firebase-database:20.2.2")
+
+    // For bottom navigation
+    implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 }
