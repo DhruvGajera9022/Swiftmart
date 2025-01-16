@@ -23,7 +23,7 @@ public class CustomToast {
         ImageView toastImage = customView.findViewById(R.id.toast_image);
         TextView toastMessage = customView.findViewById(R.id.toast_text);
 
-        toastImage.setImageResource(R.drawable.img_logo);
+        toastImage.setImageResource(R.drawable.app_logo);
         toastMessage.setText(message);
 
         // Apply entry animation
