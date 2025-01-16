@@ -68,7 +68,7 @@ public class SpeakersActivity extends AppCompatActivity {
 
         initialization();
         getLaptops();
-        getLaptopCompany();
+        getSpeakerCompany();
         getImageUrls();
 
         backSpeaker.setOnClickListener(v -> onBackPressed());
@@ -175,13 +175,12 @@ public class SpeakersActivity extends AppCompatActivity {
     }
 
     // Get company wise mobile data
-    private void getLaptopCompany(){
-        lglogo.setOnClickListener(v -> getCompany("HP"));
-        boatlogo.setOnClickListener(v -> getCompany("Dell"));
-        boultlogo.setOnClickListener(v -> getCompany("Lenovo"));
-        jbllogo.setOnClickListener(v -> getCompany("Acer"));
+    private void getSpeakerCompany(){
+        lglogo.setOnClickListener(v -> getCompany("LG"));
+        boatlogo.setOnClickListener(v -> getCompany("Boat"));
+        boultlogo.setOnClickListener(v -> getCompany("Boult"));
+        jbllogo.setOnClickListener(v -> getCompany("JBL"));
     }
-
 
     private void getImageUrls() {
         databaseReference.child("Speaker").child("imgurls").addValueEventListener(new ValueEventListener() {
