@@ -123,14 +123,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     db = FirebaseFirestore.getInstance();
                     mAuth = FirebaseAuth.getInstance();
                     uid = mAuth.getCurrentUser().getUid();
+
+                    String oid = datalist.get(position).getOid();
+
                     db.collection("Users")
                             .document(uid)
                             .collection("Cart")
-                            .document(datalist.get(position).getOid())
+                            .document(oid)
                             .get()
                             .addOnSuccessListener(documentSnapshot -> {
                                 if (documentSnapshot.exists()) {
-                                    documentSnapshot.getReference().delete();
+                                    documentSnapshot.getReference().delete()
+                                            .addOnSuccessListener(aVoid -> {
+                                                datalist.remove(position);
+                                                notifyDataSetChanged();
+                                            });
                                 } else {
                                     Log.d("Firestore", "Document does not exist.");
                                 }

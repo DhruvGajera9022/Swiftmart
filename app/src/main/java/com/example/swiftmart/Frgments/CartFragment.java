@@ -3,6 +3,7 @@ package com.example.swiftmart.Frgments;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -18,6 +19,8 @@ import com.example.swiftmart.Adapter.CartAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -83,47 +86,49 @@ public class CartFragment extends Fragment{
     }
 
     private void getCartData() {
-        db.collection("Users").document(uid).collection("Cart").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    CustomToast.showToast(getContext(), "Error in fetching cart data");
-                    return;
-                }
+        db.collection("Users").document(uid).collection("Cart").get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot value = task.getResult();
 
-                if (value != null && !value.isEmpty()) {
-                    datalist.clear();
-                    totalPrice = 0;
+                        if (value != null && !value.isEmpty()) {
+                            datalist.clear();
+                            totalPrice = 0;
 
-                    for (QueryDocumentSnapshot documentSnapshot : value) {
-                        ProductModel product = documentSnapshot.toObject(ProductModel.class);
-                        String priceString = product.getPrice();
-                        if (priceString != null) {
-                            try {
-                                int price = Integer.parseInt(priceString);
-                                totalPrice += price * product.getQty();  // Multiply by quantity
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                                CustomToast.showToast(getContext(), "Invalid price format detected");
+                            for (QueryDocumentSnapshot documentSnapshot : value) {
+                                ProductModel product = documentSnapshot.toObject(ProductModel.class);
+                                String priceString = product.getPrice();
+                                if (priceString != null) {
+                                    try {
+                                        int price = Integer.parseInt(priceString);
+                                        totalPrice += price * product.getQty();
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                        CustomToast.showToast(getContext(), "Invalid price format detected");
+                                    }
+                                }
+                                datalist.add(product);
                             }
+
+                            // Update UI
+                            adapter.notifyDataSetChanged();
+                            updateTotal();
+                        } else {
+                            datalist.clear();
+                            adapter.notifyDataSetChanged();
+                            cartProductTotal.setText("0");
+                            cartProductVoucherTotal.setText("0");
+                            cartProductDeliveryTotal.setText("0");
+                            cartProductFinalTotal.setText("0");
                         }
-                        datalist.add(product);
+                    } else {
+                        CustomToast.showToast(getContext(), "Error in fetching cart data");
                     }
-
-                    // Update UI
-                    adapter.notifyDataSetChanged();
-                    updateTotal();
-                } else {
-                    datalist.clear();
-                    adapter.notifyDataSetChanged();
-                    cartProductTotal.setText("0");
-                    cartProductVoucherTotal.setText("0");
-                    cartProductDeliveryTotal.setText("0");
-                    cartProductFinalTotal.setText("0");
-
-                }
-            }
-        });
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    CustomToast.showToast(getContext(), "Failed to fetch cart data");
+                });
     }
 
     private void updateTotal() {
