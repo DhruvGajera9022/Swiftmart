@@ -34,6 +34,7 @@ import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.CategoryScreen.HeadPhoneActivity;
 import com.example.swiftmart.CategoryScreen.Leptop_Activity;
 import com.example.swiftmart.CategoryScreen.MobilesActivity;
+import com.example.swiftmart.CategoryScreen.SmartWatchActivity;
 import com.example.swiftmart.CategoryScreen.SpeakersActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
     NestedScrollView homeFragmentScrollView;
     BottomSheetDialog sheetDialog;
     SearchView homeFragmentSearchView;
+
     private HorizontalScrollView homeFragmentHorizontalScrollView;
     private ViewPager2 mainViewPager;
     private MobileSliderAdapter mobilesliderAdapter;
@@ -170,6 +172,7 @@ public class HomeFragment extends Fragment {
         handleLaptopClick();
         handleHeadphoneClick();
         handleSpeakerClick();
+        handleSmartWatchClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -389,6 +392,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SpeakersActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle smart watch click
+    private void handleSmartWatchClick(){
+        homeSmartwatchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SmartWatchActivity.class);
                 startActivity(intent);
             }
         });
