@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Leptop_Activity">
+    tools:context=".CategoryScreen.Leptop_Activity">
     <RelativeLayout
         android:id="@+id/lytoolbar"
         android:layout_width="match_parent"
@@ -63,7 +63,8 @@
 
 
     </RelativeLayout>
-    <ScrollView
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/laptopScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -222,7 +223,7 @@
                 card_view:cardCornerRadius="10dp">
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewPagerleptop"
+                    android:id="@+id/laptopViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -232,8 +233,15 @@
 
             </androidx.cardview.widget.CardView>
 
+            <ProgressBar
+                android:id="@+id/laptopActivityProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/leptopRecyclerView"
+                android:id="@+id/laptopRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20sp"
                 android:layout_height="wrap_content"/>
@@ -243,5 +251,5 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

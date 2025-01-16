@@ -1,4 +1,4 @@
-package com.example.swiftmart;
+package com.example.swiftmart.CategoryScreen;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,11 +8,11 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,9 +22,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,12 +36,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MobilesActivity extends AppCompatActivity {
 
-    LinearLayout iphone,vivo,oppo,mi,realme,samsung,motorola,poco,goggle,oneplues;
+    LinearLayout iphone,vivo,oppo,mi,realme,samsung,motorola,poco,goggle,oneplues, iqoo, nothing;
     private ViewPager2 mobileViewPager;
     private MobileSliderAdapter mobilesliderAdapter;
     private Handler sliderHandler = new Handler();
@@ -51,7 +49,7 @@ public class MobilesActivity extends AppCompatActivity {
     private RecyclerView mobileRecyclerView;
     private FirebaseFirestore db;
     ProductAdapter adapter;
-    ScrollView mobileScrollView;
+    NestedScrollView mobileScrollView;
     HorizontalScrollView mobileHorizontalScrollView;
     private ProgressBar mobileActivityProgressBar;
 
@@ -80,6 +78,9 @@ public class MobilesActivity extends AppCompatActivity {
         poco=findViewById(R.id.poco);
         goggle=findViewById(R.id.goggle);
         oneplues=findViewById(R.id.oneplues);
+        iqoo=findViewById(R.id.iqoo);
+        nothing=findViewById(R.id.nothing);
+
         backmobiles=findViewById(R.id.backmobiles);
         mobileRecyclerView=findViewById(R.id.mobileRecyclerView);
         mobileActivityProgressBar=findViewById(R.id.mobileActivityProgressBar);
@@ -192,8 +193,11 @@ public class MobilesActivity extends AppCompatActivity {
         realme.setOnClickListener(v -> getCompany("Realme"));
         samsung.setOnClickListener(v -> getCompany("Samsung"));
         motorola.setOnClickListener(v -> getCompany("Motorola"));
-        goggle.setOnClickListener(v -> getCompany("Oppo"));
+        poco.setOnClickListener(v -> getCompany("Poco"));
+        goggle.setOnClickListener(v -> getCompany("Google"));
         oneplues.setOnClickListener(v -> getCompany("OnePlus"));
+        iqoo.setOnClickListener(v -> getCompany("Nothing"));
+        nothing.setOnClickListener(v -> getCompany("Iqoo"));
     }
 
     private void getImageUrls() {
@@ -222,7 +226,6 @@ public class MobilesActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private final Runnable slideRunnable = new Runnable() {
         @Override

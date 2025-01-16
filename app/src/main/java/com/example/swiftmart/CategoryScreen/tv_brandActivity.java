@@ -1,12 +1,10 @@
-package com.example.swiftmart;
+package com.example.swiftmart.CategoryScreen;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -24,9 +22,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,23 +36,21 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class EarphoneActivity extends AppCompatActivity {
+public class tv_brandActivity extends AppCompatActivity {
 
-    LinearLayout boatlogo,realmelogo,onepluslogo,nothinglogo,triggerlogo,trukelogo;
-    private ViewPager2 earbudsViewPager;
-    private MobileSliderAdapter earphoneSliderAdapter;
+    LinearLayout samsunglogo, lglogo, milogo, tcllogo;
+    ImageView backetvbrand;
+    private ViewPager2 tvViewPager;
+    private MobileSliderAdapter tvSliderAdapter;
     private Handler sliderHandler = new Handler();
-    ImageView backearphone;
-    private RecyclerView earphoneRecyclerView;
+    private RecyclerView tvRecyclerView;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private FirebaseFirestore db;
     ProductAdapter adapter;
-    ScrollView earphoneScrollView;
-    HorizontalScrollView earphoneHorizontalScrollView;
-    ProgressBar earphoneActivityProgressBar;
+    ScrollView tvActivityScrollView;
+    ProgressBar tvActivityProgressBar;
 
     private DatabaseReference databaseReference;
     private List<String> imageUrls;
@@ -64,41 +59,32 @@ public class EarphoneActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earphone);
+        setContentView(R.layout.activity_tv_brand);
 
         db = FirebaseFirestore.getInstance();
+
+        tvActivityScrollView = findViewById(R.id.tvActivityScrollView);
         databaseReference = FirebaseDatabase.getInstance().getReference("root");
         imageUrls = new ArrayList<>();
 
-        earphoneScrollView = findViewById(R.id.earphoneScrollView);
-        earphoneHorizontalScrollView = findViewById(R.id.earphoneHorizontalScrollView);
+        // Initialize views
+        samsunglogo = findViewById(R.id.samsunglogo);
+        lglogo = findViewById(R.id.lglogo);
+        milogo = findViewById(R.id.milogo);
+        tcllogo = findViewById(R.id.tcllogo);
+        backetvbrand = findViewById(R.id.backetvbrand);
+        tvRecyclerView=findViewById(R.id.tvRecyclerView);
+        tvActivityProgressBar=findViewById(R.id.tvActivityProgressBar);
 
-        boatlogo=findViewById(R.id.boatlogo);
-        nothinglogo=findViewById(R.id.nothinglogo);
-        realmelogo=findViewById(R.id.realmelogo);
-        onepluslogo=findViewById(R.id.onepluslogo);
-        triggerlogo=findViewById(R.id.triggerlogo);
-        trukelogo=findViewById(R.id.trukelogo);
-        backearphone=findViewById(R.id.backearphone);
-        earphoneRecyclerView=findViewById(R.id.earphoneRecyclerView);
-        earphoneActivityProgressBar=findViewById(R.id.earphoneActivityProgressBar);
+        tvActivityScrollView.setVerticalScrollBarEnabled(false);
 
-        earphoneScrollView.setVerticalScrollBarEnabled(false);
-        earphoneHorizontalScrollView.setHorizontalScrollBarEnabled(false);
-
-        getEarbuds();
-        getEarbudsCompany();
-
-        backearphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        getTVs();
+        getTVsCompany();
 
         getImageUrls();
-        earbudsViewPager = findViewById(R.id.earbudsViewPager);
+        tvViewPager = findViewById(R.id.tvViewPager);
 
+     
     }
 
     @Override
@@ -106,36 +92,36 @@ public class EarphoneActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    // Get all the earbuds
-    private void getEarbuds(){
-        earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
-        earphoneActivityProgressBar.setVisibility(View.VISIBLE);
+    // Get all the TVs
+    private void getTVs(){
+        tvRecyclerView.setLayoutManager(new LinearLayoutManager(tv_brandActivity.this));
+        tvActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
-                .whereEqualTo("category", "AirBuds")
+                .whereEqualTo("category", "TV")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(EarphoneActivity.this, "Error in data fetching");
-                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            CustomToast.showToast(tv_brandActivity.this,  "Error in data fetching");
+                            tvActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }
 
 
                         if (value != null && !value.isEmpty()){
-                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            tvActivityProgressBar.setVisibility(View.GONE);
                             for (QueryDocumentSnapshot documentSnapshot : value){
                                 ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
                                 datalist.add(productModel);
 
-                                GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
-                                earphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
-                                earphoneRecyclerView.setHasFixedSize(true);
-                                earphoneRecyclerView.setAdapter(adapter);
-                                earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                                GridLayoutManager layoutManager = new GridLayoutManager(tv_brandActivity.this, 2);
+                                tvRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(tv_brandActivity.this, datalist);
+                                tvRecyclerView.setHasFixedSize(true);
+                                tvRecyclerView.setAdapter(adapter);
+                                tvRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
                     }
@@ -144,37 +130,37 @@ public class EarphoneActivity extends AppCompatActivity {
 
     }
 
-    // Get single earbuds company data
+    // Get single TVs company data
     private void getCompany(String company){
-        earphoneRecyclerView.setLayoutManager(new LinearLayoutManager(EarphoneActivity.this));
-        earphoneActivityProgressBar.setVisibility(View.VISIBLE);
+        tvRecyclerView.setLayoutManager(new LinearLayoutManager(tv_brandActivity.this));
+        tvActivityProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         db.collection("Products")
-                .whereEqualTo("category", "AirBuds")
+                .whereEqualTo("category", "TV")
                 .whereEqualTo("company", company)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null){
-                            CustomToast.showToast(EarphoneActivity.this,  "Error in data fetching");
-                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            CustomToast.showToast(tv_brandActivity.this, "Error in data fetching");
+                            tvActivityProgressBar.setVisibility(View.GONE);
                             return;
                         }
 
 
                         if (value != null && !value.isEmpty()){
-                            earphoneActivityProgressBar.setVisibility(View.GONE);
+                            tvActivityProgressBar.setVisibility(View.GONE);
                             for (QueryDocumentSnapshot documentSnapshot : value){
                                 ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
                                 datalist.add(productModel);
 
-                                GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
-                                earphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
-                                earphoneRecyclerView.setHasFixedSize(true);
-                                earphoneRecyclerView.setAdapter(adapter);
-                                earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                                GridLayoutManager layoutManager = new GridLayoutManager(tv_brandActivity.this, 2);
+                                tvRecyclerView.setLayoutManager(layoutManager);
+                                adapter = new ProductAdapter(tv_brandActivity.this, datalist);
+                                tvRecyclerView.setHasFixedSize(true);
+                                tvRecyclerView.setAdapter(adapter);
+                                tvRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             }
                         }
                     }
@@ -183,18 +169,16 @@ public class EarphoneActivity extends AppCompatActivity {
 
     }
 
-    // Get company wise earbuds data
-    private void getEarbudsCompany(){
-        boatlogo.setOnClickListener(v -> getCompany("Boat"));
-        realmelogo.setOnClickListener(v -> getCompany("Realme"));
-        onepluslogo.setOnClickListener(v -> getCompany("OnePlus"));
-        nothinglogo.setOnClickListener(v -> getCompany("Nothing"));
-        triggerlogo.setOnClickListener(v -> getCompany("Trigger"));
-        trukelogo.setOnClickListener(v -> getCompany("Truke"));
+    // Get company wise TV data
+    private void getTVsCompany(){
+        samsunglogo.setOnClickListener(v -> getCompany("Samsung"));
+        lglogo.setOnClickListener(v -> getCompany("LG"));
+        milogo.setOnClickListener(v -> getCompany("Xiaomi"));
+        tcllogo.setOnClickListener(v -> getCompany("TCL"));
     }
 
     private void getImageUrls() {
-        databaseReference.child("AirBuds").child("imgurls").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("TV").child("imgurls").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -206,8 +190,8 @@ public class EarphoneActivity extends AppCompatActivity {
                         }
                     }
 
-                    earphoneSliderAdapter = new MobileSliderAdapter(EarphoneActivity.this, imageUrls);
-                    earbudsViewPager.setAdapter(earphoneSliderAdapter);
+                    tvSliderAdapter = new MobileSliderAdapter(tv_brandActivity.this, imageUrls);
+                    tvViewPager.setAdapter(tvSliderAdapter);
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
                 }
@@ -223,9 +207,9 @@ public class EarphoneActivity extends AppCompatActivity {
     private final Runnable slideRunnable = new Runnable() {
         @Override
         public void run() {
-            if (earbudsViewPager != null && earbudsViewPager != null) {
-                int nextItem = (earbudsViewPager.getCurrentItem() + 1) % earphoneSliderAdapter.getItemCount();
-                earbudsViewPager.setCurrentItem(nextItem);
+            if (tvViewPager != null && tvViewPager != null) {
+                int nextItem = (tvViewPager.getCurrentItem() + 1) % tvSliderAdapter.getItemCount();
+                tvViewPager.setCurrentItem(nextItem);
                 sliderHandler.postDelayed(this, 3000);
             }
         }

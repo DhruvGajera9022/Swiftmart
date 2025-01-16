@@ -10,10 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
@@ -22,8 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.widget.SearchView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -31,14 +29,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.AllProducts;
-import com.example.swiftmart.EarphoneActivity;
+import com.example.swiftmart.CategoryScreen.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
-import com.example.swiftmart.Leptop_Activity;
-import com.example.swiftmart.MobilesActivity;
+import com.example.swiftmart.CategoryScreen.Leptop_Activity;
+import com.example.swiftmart.CategoryScreen.MobilesActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
-import com.example.swiftmart.tv_brandActivity;
+import com.example.swiftmart.CategoryScreen.tv_brandActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -73,6 +71,7 @@ public class HomeFragment extends Fragment {
     NestedScrollView homeFragmentScrollView;
     BottomSheetDialog sheetDialog;
     SearchView homeFragmentSearchView;
+    private HorizontalScrollView homeFragmentHorizontalScrollView;
     private ViewPager2 mainViewPager;
     private MobileSliderAdapter mobilesliderAdapter;
     private Handler sliderHandler = new Handler();
@@ -87,6 +86,9 @@ public class HomeFragment extends Fragment {
     private ProductAdapter featuredAdapter;
     private ProductAdapter mostPopularAdapter;
     private ProductAdapter newArrivedAdapter;
+
+    // Categories
+    private ImageView homeMobileImage, homeEarbudsImage, homeTVImage, homeLaptopImage, homeHeadphoneImage, homeSpeakersImage, homeKeyboardImage, homeMouseImage, homeCameraImage, homeSmartwatchImage, homeTabletImage, homeMoreImage;
 
     public HomeFragment() {
 
@@ -106,6 +108,7 @@ public class HomeFragment extends Fragment {
         imageUrls = new ArrayList<>();
 
         homeFragmentScrollView = view.findViewById(R.id.homeFragmentScrollView);
+        homeFragmentHorizontalScrollView = view.findViewById(R.id.homeFragmentHorizontalScrollView);
 
         homeFragmentFeaturedRecyclerView = view.findViewById(R.id.homeFragmentFeaturedRecyclerView);
         homeFragmentMostPopularRecyclerView = view.findViewById(R.id.homeFragmentMostPopularRecyclerView);
@@ -132,7 +135,21 @@ public class HomeFragment extends Fragment {
         seeAll2 = view.findViewById(R.id.seeAll2);
         seeAll3 = view.findViewById(R.id.seeAll3);
 
+        homeMobileImage = view.findViewById(R.id.homeMobileImage);
+        homeEarbudsImage = view.findViewById(R.id.homeEarbudsImage);
+        homeTVImage = view.findViewById(R.id.homeTVImage);
+        homeLaptopImage = view.findViewById(R.id.homeLaptopImage);
+        homeHeadphoneImage = view.findViewById(R.id.homeHeadphoneImage);
+        homeSpeakersImage = view.findViewById(R.id.homeSpeakersImage);
+        homeKeyboardImage = view.findViewById(R.id.homeKeyboardImage);
+        homeMouseImage = view.findViewById(R.id.homeMouseImage);
+        homeCameraImage = view.findViewById(R.id.homeCameraImage);
+        homeSmartwatchImage = view.findViewById(R.id.homeSmartwatchImage);
+        homeTabletImage = view.findViewById(R.id.homeTabletImage);
+        homeMoreImage = view.findViewById(R.id.homeMoreImage);
+
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
+        homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
 
 
         getUserData();
@@ -145,10 +162,10 @@ public class HomeFragment extends Fragment {
         handleSeeAllClick();
         getImageUrls();
 
-//        handleMobileClick();
-//        handleEarbudsClick();
-//        handleTVClick();
-//        handleLaptopClick();
+        handleMobileClick();
+        handleEarbudsClick();
+        handleTVClick();
+        handleLaptopClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -306,6 +323,58 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
+    // handle mobile click
+    private void handleMobileClick(){
+        homeMobileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MobilesActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle earbuds click
+    private void handleEarbudsClick(){
+        homeEarbudsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EarphoneActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle tv click
+    private void handleTVClick(){
+        homeTVImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), tv_brandActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle laptop click
+    private void handleLaptopClick(){
+        homeLaptopImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Leptop_Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+
+
+
+
+
+
     private void getImageUrls() {
         databaseReference.child("Home").child("imgurls").addValueEventListener(new ValueEventListener() {
             @Override
@@ -333,7 +402,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
     private final Runnable slideRunnable = new Runnable() {
         @Override
         public void run() {
@@ -356,6 +424,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         sliderHandler.postDelayed(slideRunnable, 3000);
     }
+
 
 
     private void showBottomSheetDialog() {
