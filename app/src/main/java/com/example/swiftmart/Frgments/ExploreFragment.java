@@ -143,8 +143,8 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onRefresh() {
                 getAllProducts();
-
                 exploreFragmentSwipeRefresh.setRefreshing(false);
+                exploreFragmentSearchView.setQuery("", false);
             }
         });
     }
@@ -167,54 +167,74 @@ public class ExploreFragment extends Fragment {
     }
 
     // handle searchProduct
-    private void searchProducts(String query){
+    private void searchProducts(String query) {
         exploreFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         exploreFragmentProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
-        if (query.isEmpty()){
+        if (query.isEmpty()) {
             getAllProducts();
         } else {
             datalist.clear();
+
+            // Search by name
             db.collection("Products")
                     .whereGreaterThanOrEqualTo("name", query)
                     .whereLessThanOrEqualTo("name", query + '\uf8ff')
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (error != null) {
-                                CustomToast.showToast(getContext(), "Error in data fetching");
-                                exploreFragmentProgressBar.setVisibility(View.GONE);
-                                return;
-                            }
-
-                            // Hide progress bar as soon as the data starts processing
-                            exploreFragmentProgressBar.setVisibility(View.GONE);
-
-                            if (value != null && !value.isEmpty()) {
-                                // Clear the list before adding new data
-                                datalist.clear();
-
-                                for (QueryDocumentSnapshot documentSnapshot : value) {
-                                    ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                    .get()
+                    .addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task1.getResult()) {
+                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                if (!containsProduct(datalist, productModel)) { // Avoid duplicates
                                     datalist.add(productModel);
                                 }
-
-                                // Set the layout manager and adapter only once
-                                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-                                exploreFragmentRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ExploreProductAdapter(getContext(), datalist);
-                                exploreFragmentRecyclerView.setHasFixedSize(true);
-                                exploreFragmentRecyclerView.setAdapter(adapter);
-                                exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                            } else {
-                                // Handle empty data case
-                                CustomToast.showToast(getContext(), "No products found.");
                             }
+                            // Search by category
+                            db.collection("Products")
+                                    .whereGreaterThanOrEqualTo("category", query)
+                                    .whereLessThanOrEqualTo("category", query + '\uf8ff')
+                                    .get()
+                                    .addOnCompleteListener(task2 -> {
+                                        exploreFragmentProgressBar.setVisibility(View.GONE);
+                                        if (task2.isSuccessful()) {
+                                            for (QueryDocumentSnapshot documentSnapshot : task2.getResult()) {
+                                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
+                                                if (!containsProduct(datalist, productModel)) { // Avoid duplicates
+                                                    datalist.add(productModel);
+                                                }
+                                            }
+
+                                            updateRecyclerView();
+                                        }
+                                    });
+                        } else {
+                            exploreFragmentProgressBar.setVisibility(View.GONE);
                         }
                     });
         }
     }
+
+    // Helper function to check if the product is already in the list
+    private boolean containsProduct(List<ProductModel> list, ProductModel product) {
+        for (ProductModel item : list) {
+            if (item.getPid().equals(product.getPid())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void updateRecyclerView() {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        exploreFragmentRecyclerView.setLayoutManager(layoutManager);
+        adapter = new ExploreProductAdapter(getContext(), datalist);
+        exploreFragmentRecyclerView.setHasFixedSize(true);
+        exploreFragmentRecyclerView.setAdapter(adapter);
+        exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+
 
     // handle filter button click
     private void handleFilterButton(){
@@ -225,6 +245,9 @@ public class ExploreFragment extends Fragment {
             }
         });
     }
+
+
+
 
     // Updated showBottomSheetDialog() method implementation
     private void showBottomSheetDialog() {
