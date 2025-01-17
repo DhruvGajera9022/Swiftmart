@@ -29,6 +29,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.AllProducts;
+import com.example.swiftmart.CategoryScreen.CameraActivity;
 import com.example.swiftmart.CategoryScreen.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.CategoryScreen.HeadPhoneActivity;
@@ -172,6 +173,7 @@ public class HomeFragment extends Fragment {
         handleLaptopClick();
         handleHeadphoneClick();
         handleSpeakerClick();
+        handleCameraClick();
         handleSmartWatchClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -392,6 +394,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SpeakersActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle camera click
+    private void handleCameraClick(){
+        homeCameraImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CameraActivity.class);
                 startActivity(intent);
             }
         });
