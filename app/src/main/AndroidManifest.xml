@@ -20,6 +20,18 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
         <activity
+            android:name=".CategoryScreen.TabletsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryScreen.MouseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryScreen.KeyboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryScreen.CameraActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryScreen.SmartWatchActivity"
             android:exported="false" />
         <activity
