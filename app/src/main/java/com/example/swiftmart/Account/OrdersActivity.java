@@ -1,6 +1,7 @@
 package com.example.swiftmart.Account;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -66,16 +68,23 @@ public class OrdersActivity extends AppCompatActivity {
     }
 
     private void getOrders() {
+        if (uid == null || uid.isEmpty()) {
+            return;
+        }
+
         db.collection("Orders")
                 .whereEqualTo("uid", uid)
+                .whereEqualTo("status", "Pending")
+                .orderBy("orderDate", Query.Direction.DESCENDING)
+                .orderBy("orderTime", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
-                            // Handle errors by logging and showing a toast
-                            Toast.makeText(OrdersActivity.this, "Error loading orders", Toast.LENGTH_SHORT).show();
+                            Log.e("Firestore Error", "Error loading orders: ", error);
                             return;
                         }
+
                         if (value != null && !value.isEmpty()) {
                             orderList.clear();
                             for (QueryDocumentSnapshot documentSnapshot : value) {
@@ -87,4 +96,5 @@ public class OrdersActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
