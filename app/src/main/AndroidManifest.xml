@@ -55,9 +55,23 @@
         <activity
             android:name=".Account.Edit_profile_Activity"
             android:exported="false" />
+
         <activity
             android:name=".ProductDetailsActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="electrohub.page.link"
+                    android:pathPrefix="/product" />
+            </intent-filter>
+        </activity>
+
+
+
         <activity android:name=".Account.Language_Activity" />
         <activity
             android:name=".CategoryScreen.Leptop_Activity"

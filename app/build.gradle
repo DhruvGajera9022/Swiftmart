@@ -79,4 +79,7 @@ dependencies {
 
     // For bottom navigation
     implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
+
+    // For share link
+    implementation("com.google.firebase:firebase-dynamic-links:21.1.0")
 }

@@ -5,6 +5,7 @@ import static com.google.android.material.internal.ContextUtils.getActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +35,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -66,7 +69,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private RelativeLayout productDetailsRelativeLayout;
 
-    private ImageView productDetailsBackArrow, productDetailsWishlist;
+    private ImageView productDetailsBackArrow, productDetailsWishlist, productDetailsShare;
     @Override
     protected void onPause() {
         super.onPause();
@@ -87,9 +90,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
+        // Check for the dynamic link
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    if (pendingDynamicLinkData != null) {
+                        Uri deepLink = pendingDynamicLinkData.getLink();
+                        if (deepLink != null && deepLink.getQueryParameter("productId") != null) {
+                            productId = deepLink.getQueryParameter("productId");
+                            loadProductData(productId); // Load the product details
+                        }
+                    }
+                })
+                .addOnFailureListener(this, e -> Log.e("DynamicLink", "Error fetching dynamic link", e));
+
+
         initialization();
         loadProductData(productId);
         handleAddToCartClick();
+        handleShare();
         handleOnBackArrowPress();
 
     }
@@ -107,6 +126,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         productDetailsBackArrow = findViewById(R.id.productDetailsBackArrow);
         productDetailsWishlist = findViewById(R.id.productDetailsWishlist);
+        productDetailsShare = findViewById(R.id.productDetailsShare);
 
         expandDescriptionButton = findViewById(R.id.expandDescriptionButton);
 
@@ -256,6 +276,38 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             .document(product.getPid())
                             .delete();
                 }
+            }
+        });
+    }
+
+    // handle share
+    private void handleShare(){
+        productDetailsShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deepLink = "https://electrohub.page.link/product?productId=" + productId;
+
+                FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLink(Uri.parse(deepLink))
+                        .setDomainUriPrefix("https://electrohub.page.link")
+                        .setAndroidParameters(
+                                new DynamicLink.AndroidParameters.Builder()
+                                        .build())
+                        .buildShortDynamicLink()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                Uri shortLink = task.getResult().getShortLink();
+
+                                // Share the short link
+                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                sharingIntent.setType("text/plain");
+                                String shareBody = "Check out this product: " + shortLink.toString();
+                                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                                startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                            } else {
+                                Toast.makeText(ProductDetailsActivity.this, "Failed to generate link", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }
