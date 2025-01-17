@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/product_card.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tv"
+            android:background="@drawable/rounded_image_background"/>
+
+        <!-- Product Details Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <!-- Product Name -->
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Watch"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsmedium"/>
+
+            <!-- Brand Name -->
+            <TextView
+                android:id="@+id/productCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rolex"
+                android:textSize="14sp"
+                android:textColor="#9B9B9B"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/poppinsregular"/>
+
+            <!-- Price and Button Container -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical">
+
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$40"
+                    android:textSize="16sp"
+                    android:textColor="#6055D8"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/poppinsmedium"/>
+
+                <!-- Track Order Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/trackOrderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Track Order"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/btn"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/poppinsmedium"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

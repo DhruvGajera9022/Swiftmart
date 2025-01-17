@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     private TextView productDetailsProductName, productDetailsProductDescription, productDetailsProductPrice, expandDescriptionButton;
-    private String productId;
+    private String productId, productCategory, productCompany;
     private ViewPager2 productDetailsViewPager;
     private AppCompatButton productBuyNowButton;
     private LinearLayout productAddToCartButton;
@@ -153,6 +153,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 displayProductDetails(product);
                                 setupImageSlider(product.getImgurls());
                                 currentImageUrls = product.getImgurls();
+                                productCategory = product.getCategory();
+                                productCompany = product.getCompany();
                             }
                         }
                     }
@@ -337,6 +339,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("imgurls", currentImageUrls);
         cartMap.put("name", productName);
         cartMap.put("price", productPrice);
+        cartMap.put("category", productCategory);
+        cartMap.put("company", productCompany);
         cartMap.put("description", productDescription);
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);
@@ -508,14 +512,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
         String oid = db.collection("Orders").document().getId();
 
         Map<String, Object> orderMap = new HashMap<>();
-        orderMap.put("userId", uid);
+        orderMap.put("uid", uid);
         orderMap.put("pid", productId);
         orderMap.put("name", productName);
-        orderMap.put("price", productPrice);
+        orderMap.put("price", Double.parseDouble(productPrice));
         orderMap.put("description", productDescription);
+        orderMap.put("category", productCategory);
+        orderMap.put("company", productCompany);
         orderMap.put("paymentID", paymentID);
         orderMap.put("oid", oid);
         orderMap.put("quantity", 1);
+        orderMap.put("imgurls", currentImageUrls);
         orderMap.put("orderDate", saveCurrentDate);
         orderMap.put("orderTime", saveCurrentTime);
         orderMap.put("status", "Pending");
