@@ -111,7 +111,7 @@ public class CategoryFragment extends Fragment {
     // Initialize all views
     private void initViews(View view) {
         // recycler view
-        adminCategoryRecyclerview = view.findViewById(R.id.adminCategoryRecyclerview);
+        adminCategoryRecyclerview = view.findViewById(R.id.categoryRecyclerview);
 
         // all categories
         mobiles = view.findViewById(R.id.mobiles);

@@ -99,7 +99,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/hp" />
+                            android:src="@drawable/logo_hp" />
 
 
                     </LinearLayout>
@@ -115,7 +115,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/dell"
+                            android:src="@drawable/logo_dell"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -136,7 +136,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/lenovo" />
+                            android:src="@drawable/logo_lenovo" />
 
 
                     </LinearLayout>
@@ -155,7 +155,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/acer" />
+                            android:src="@drawable/logo_acer" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -171,7 +171,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/asus" />
+                            android:src="@drawable/logo_asus" />
 
 
                     </LinearLayout>
@@ -189,7 +189,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/applelogo" />
+                            android:src="@drawable/logo_apple" />
 
 
                     </LinearLayout>
@@ -207,7 +207,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/msi" />
+                            android:src="@drawable/logo_msi" />
 
 
                     </LinearLayout>

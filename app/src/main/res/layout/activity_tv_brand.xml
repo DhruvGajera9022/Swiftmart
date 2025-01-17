@@ -94,7 +94,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/samsunglogo" />
+                            android:src="@drawable/logo_samsung" />
 
 
                     </LinearLayout>
@@ -108,7 +108,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/lg"
+                            android:src="@drawable/logo_lg"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -125,7 +125,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/mi"
+                            android:src="@drawable/logo_mi"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -146,7 +146,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/tcl" />
+                            android:src="@drawable/logo_tcl" />
 
 
                     </LinearLayout>

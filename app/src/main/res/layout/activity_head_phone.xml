@@ -99,7 +99,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/boat" />
+                            android:src="@drawable/logo_boat" />
 
 
                     </LinearLayout>
@@ -115,7 +115,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/jbl"
+                            android:src="@drawable/logo_jbl"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -136,7 +136,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/sony" />
+                            android:src="@drawable/logo_sony" />
 
 
                     </LinearLayout>
@@ -154,7 +154,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/zebronics" />
+                            android:src="@drawable/logo_zebronics" />
 
 
                     </LinearLayout>
@@ -172,7 +172,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/cosmicbyte" />
+                            android:src="@drawable/logo_cosmicbyte" />
 
 
                     </LinearLayout>
@@ -191,7 +191,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/sennheiser" />
+                            android:src="@drawable/logo_sennheiser" />
                     </LinearLayout>
 
                 </LinearLayout>

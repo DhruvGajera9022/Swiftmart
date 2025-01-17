@@ -101,7 +101,7 @@
                 android:orientation="vertical">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="60dp"
-                android:src="@drawable/iphone"
+                android:src="@drawable/logo_apple"
                 android:layout_marginHorizontal="10sp"
                 android:layout_gravity="center"
                 android:layout_height="60dp"/>
@@ -117,7 +117,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/samsung"
+                    android:src="@drawable/logo_samsung"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -134,7 +134,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/vivo"
+                    android:src="@drawable/logo_vivo"
                     android:layout_height="60dp"/>
 
 
@@ -151,7 +151,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/oppo"
+                    android:src="@drawable/logo_oppo"
                     android:layout_height="60dp"/>
 
             </LinearLayout>
@@ -167,7 +167,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/mi"
+                    android:src="@drawable/logo_redmi"
                     android:layout_height="60dp"/>
 
             </LinearLayout>
@@ -182,7 +182,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/realme"
+                    android:src="@drawable/logo_realme"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -198,7 +198,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/motorola"
+                    android:src="@drawable/logo_motorola"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -215,7 +215,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/poco"
+                    android:src="@drawable/logo_poco"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -232,7 +232,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/goggle"
+                    android:src="@drawable/logo_goggle"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -249,7 +249,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/oneplue"
+                    android:src="@drawable/logo_oneplus"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -266,7 +266,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/iqoo"
+                    android:src="@drawable/logo_iqoo"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 
@@ -282,7 +282,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/nothing"
+                    android:src="@drawable/logo_nothing"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
 

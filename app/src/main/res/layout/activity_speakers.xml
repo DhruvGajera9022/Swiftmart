@@ -99,7 +99,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/lg" />
+                            android:src="@drawable/logo_lg" />
 
 
                     </LinearLayout>
@@ -115,7 +115,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/boat"
+                            android:src="@drawable/logo_boat"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -136,7 +136,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/boult" />
+                            android:src="@drawable/logo_boult" />
 
 
                     </LinearLayout>
@@ -155,7 +155,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/jbl" />
+                            android:src="@drawable/logo_jbl" />
                     </LinearLayout>
 
                 </LinearLayout>

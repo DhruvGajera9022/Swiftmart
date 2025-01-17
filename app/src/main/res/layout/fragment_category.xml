@@ -507,7 +507,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/iphone"
+                            android:src="@drawable/logo_apple"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -534,7 +534,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/samsung"
+                            android:src="@drawable/logo_samsung"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -561,7 +561,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/vivo"
+                            android:src="@drawable/logo_vivo"
                             android:layout_height="60dp"/>
 
                         <TextView
@@ -587,7 +587,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/oppo"
+                            android:src="@drawable/logo_oppo"
                             android:layout_height="60dp"/>
 
                         <TextView
@@ -613,7 +613,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/mi"
+                            android:src="@drawable/logo_redmi"
                             android:layout_height="60dp"/>
 
                         <TextView
@@ -638,7 +638,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/realme"
+                            android:src="@drawable/logo_realme"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -665,7 +665,7 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/motorola"
+                            android:src="@drawable/logo_motorola"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -691,7 +691,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/poco"
+                            android:src="@drawable/logo_poco"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -717,7 +717,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/goggle"
+                            android:src="@drawable/logo_goggle"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -743,7 +743,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/oneplue"
+                            android:src="@drawable/logo_oneplus"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -769,7 +769,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/iqoo"
+                            android:src="@drawable/logo_iqoo"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -795,7 +795,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/nothing"
+                            android:src="@drawable/logo_nothing"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
 
@@ -843,7 +843,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/boat" />
+                            android:src="@drawable/logo_boat" />
 
 
                     </LinearLayout>
@@ -859,7 +859,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/realmelogo"
+                            android:src="@drawable/logo_realme"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -880,7 +880,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/onepluslogo" />
+                            android:src="@drawable/logo_oneplus" />
 
 
                     </LinearLayout>
@@ -899,7 +899,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/nothing1" />
+                            android:src="@drawable/logo_nothing" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -915,7 +915,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/trigger" />
+                            android:src="@drawable/logo_trigger" />
 
 
                     </LinearLayout>
@@ -933,7 +933,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/truke" />
+                            android:src="@drawable/logo_truke" />
 
 
                     </LinearLayout>
@@ -968,7 +968,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/samsunglogo" />
+                            android:src="@drawable/logo_samsung" />
 
 
                     </LinearLayout>
@@ -982,7 +982,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/lg"
+                            android:src="@drawable/logo_lg"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -999,7 +999,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/mi"
+                            android:src="@drawable/logo_redmi"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -1020,7 +1020,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/tcl" />
+                            android:src="@drawable/logo_tcl" />
 
 
                     </LinearLayout>
@@ -1057,7 +1057,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/hp" />
+                            android:src="@drawable/logo_hp" />
 
                     </LinearLayout>
 
@@ -1070,7 +1070,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/dell"
+                            android:src="@drawable/logo_dell"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -1091,7 +1091,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/lenovo" />
+                            android:src="@drawable/logo_lenovo" />
 
 
                     </LinearLayout>
@@ -1110,7 +1110,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/acer" />
+                            android:src="@drawable/logo_acer" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1126,7 +1126,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/asus" />
+                            android:src="@drawable/logo_asus" />
 
 
                     </LinearLayout>
@@ -1144,7 +1144,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/applelogo" />
+                            android:src="@drawable/logo_apple" />
 
 
                     </LinearLayout>
@@ -1162,7 +1162,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/msi" />
+                            android:src="@drawable/logo_msi" />
 
 
                     </LinearLayout>
@@ -1197,7 +1197,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/boat"
+                            android:src="@drawable/logo_boat"
                             app:civ_border_width="1dp"/>
 
                     </LinearLayout>
@@ -1212,7 +1212,7 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/jbl"
+                            android:src="@drawable/logo_jbl"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1233,7 +1233,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/cosmicbyte"
+                            android:src="@drawable/logo_cosmicbyte"
                             app:civ_border_width="1dp"/>
 
                     </LinearLayout>
@@ -1252,7 +1252,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/sennheiser"
+                            android:src="@drawable/logo_sennheiser"
                             app:civ_border_width="1dp"/>
                     </LinearLayout>
 
@@ -1269,7 +1269,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/zebronics"
+                            android:src="@drawable/logo_zebronics"
                             app:civ_border_width="1dp"/>
 
 
@@ -1288,7 +1288,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/sony"
+                            android:src="@drawable/logo_sony"
                             app:civ_border_width="1dp"/>
 
 
@@ -1319,7 +1319,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/lg"
+                            android:src="@drawable/logo_lg"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1334,7 +1334,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/boat"
+                            android:src="@drawable/logo_boat"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1349,7 +1349,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/boult"
+                            android:src="@drawable/logo_boult"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1364,7 +1364,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/jbl"
+                            android:src="@drawable/logo_jbl"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1396,7 +1396,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/hp"
+                            android:src="@drawable/logo_hp"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1411,7 +1411,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/dell"
+                            android:src="@drawable/logo_dell"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1426,7 +1426,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/lenovo"
+                            android:src="@drawable/logo_lenovo"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1441,7 +1441,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/zebronics"
+                            android:src="@drawable/logo_zebronics"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1456,7 +1456,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/logitech"
+                            android:src="@drawable/logo_logitech"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1488,7 +1488,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/hp"
+                            android:src="@drawable/logo_hp"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1503,7 +1503,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/dell"
+                            android:src="@drawable/logo_dell"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1518,7 +1518,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/lenovo"
+                            android:src="@drawable/logo_lenovo"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1533,7 +1533,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/zebronics"
+                            android:src="@drawable/logo_zebronics"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1548,7 +1548,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/logitech"
+                            android:src="@drawable/logo_logitech"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1580,7 +1580,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/nikon"
+                            android:src="@drawable/logo_nikon"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1595,7 +1595,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/canon"
+                            android:src="@drawable/logo_canon"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1610,7 +1610,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/sony"
+                            android:src="@drawable/logo_sony"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1625,7 +1625,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/fujifilm"
+                            android:src="@drawable/logo_fujifilm"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1640,7 +1640,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/panasonic"
+                            android:src="@drawable/logo_panasonic"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1672,7 +1672,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/apple"
+                            android:src="@drawable/logo_apple"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1687,7 +1687,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/samsung"
+                            android:src="@drawable/logo_samsung"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1702,7 +1702,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/noise"
+                            android:src="@drawable/logo_noise"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1717,7 +1717,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/firebolt"
+                            android:src="@drawable/logo_firebolt"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1749,7 +1749,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/realme"
+                            android:src="@drawable/logo_realme"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1764,7 +1764,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/apple"
+                            android:src="@drawable/logo_apple"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1779,7 +1779,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/samsung"
+                            android:src="@drawable/logo_samsung"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1794,7 +1794,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/onepluslogo"
+                            android:src="@drawable/logo_oneplus"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1809,7 +1809,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/mi"
+                            android:src="@drawable/logo_redmi"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1824,7 +1824,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/poco"
+                            android:src="@drawable/logo_poco"
                             android:layout_marginHorizontal="10sp"
                             android:layout_gravity="center"
                             android:layout_height="60dp"
@@ -1836,7 +1836,7 @@
             </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/adminCategoryRecyclerview"
+                android:id="@+id/categoryRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"/>

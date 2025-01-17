@@ -99,7 +99,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/applelogo" />
+                            android:src="@drawable/logo_apple" />
 
 
                     </LinearLayout>
@@ -115,7 +115,7 @@
                         android:orientation="vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="60dp"
-                            android:src="@drawable/samsung"
+                            android:src="@drawable/logo_samsung"
                             android:background="@drawable/round"
                             android:layout_gravity="center"
                             android:layout_height="60dp"/>
@@ -136,7 +136,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/noise" />
+                            android:src="@drawable/logo_noise" />
 
 
                     </LinearLayout>
@@ -155,7 +155,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/round"
-                            android:src="@drawable/firebolt" />
+                            android:src="@drawable/logo_firebolt" />
                     </LinearLayout>
 
                 </LinearLayout>

@@ -101,7 +101,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/round"
-                    android:src="@drawable/boat" />
+                    android:src="@drawable/logo_boat" />
 
 
             </LinearLayout>
@@ -117,7 +117,7 @@
                 android:orientation="vertical">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="60dp"
-                    android:src="@drawable/realmelogo"
+                    android:src="@drawable/logo_realme"
                     android:background="@drawable/round"
                     android:layout_gravity="center"
                     android:layout_height="60dp"/>
@@ -138,7 +138,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/round"
-                    android:src="@drawable/onepluslogo" />
+                    android:src="@drawable/logo_oneplus" />
 
 
             </LinearLayout>
@@ -157,7 +157,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/round"
-                    android:src="@drawable/nothing1" />
+                    android:src="@drawable/logo_nothing" />
             </LinearLayout>
 
             <LinearLayout
@@ -173,7 +173,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/round"
-                    android:src="@drawable/trigger" />
+                    android:src="@drawable/logo_trigger" />
 
 
             </LinearLayout>
@@ -191,7 +191,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/round"
-                    android:src="@drawable/truke" />
+                    android:src="@drawable/logo_truke" />
 
 
             </LinearLayout>

@@ -216,7 +216,7 @@
                         android:layout_width="100sp"
                         android:layout_height="80sp"
                         android:layout_margin="5sp"
-                        android:src="@drawable/boat"/>
+                        android:src="@drawable/logo_boat"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
