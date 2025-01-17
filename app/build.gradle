@@ -25,6 +25,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -32,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -82,4 +82,7 @@ dependencies {
 
     // For share link
     implementation("com.google.firebase:firebase-dynamic-links:21.1.0")
+
+    // For payment
+    implementation("com.razorpay:checkout:1.6.23")
 }

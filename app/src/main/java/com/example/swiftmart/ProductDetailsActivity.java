@@ -1,18 +1,13 @@
 package com.example.swiftmart;
 
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,29 +18,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.swiftmart.Account.Add_Address_Activity;
-import com.example.swiftmart.Account.Address_Activity;
 import com.example.swiftmart.Adapter.ProductImageSliderAdapter;
-import com.example.swiftmart.Frgments.CartFragment;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.razorpay.Checkout;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -71,6 +62,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private RelativeLayout productDetailsRelativeLayout;
 
     private ImageView productDetailsBackArrow, productDetailsWishlist, productDetailsShare;
+
+    private String userName, userPhone;
+
+    private Checkout checkout;
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -111,6 +107,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         handleAddToCartClick();
         handleShare();
         handleBuyClick();
+        getUserData();
         handleOnBackArrowPress();
 
     }
@@ -319,9 +316,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productBuyNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailsActivity.this, Address_Activity.class);
-                intent.putExtra("productID", productId);
-                startActivity(intent);
+                handlePayment();
             }
         });
     }
@@ -393,5 +388,115 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    // get user data
+    private void getUserData(){
+        uid = mAuth.getCurrentUser().getUid();
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    userName = value.getString("Username");
+                    userPhone = value.getString("Number");
+                }
+            }
+        });
+
+    }
+
+    // handle payment
+    private void handlePayment() {
+        checkout = new Checkout();
+
+        // Set your custom icon here
+        checkout.setImage(R.drawable.app_logo);
+
+        final Activity activity = this;
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", getString(R.string.app_name));
+            options.put("description", productDetailsProductName.getText().toString());
+            options.put("send_sms_hash", false);
+            options.put("allow_rotation", false);
+            options.put("currency", "INR");
+
+            double price = 0;
+            try {
+                price = Double.parseDouble(productDetailsProductPrice.getText().toString());
+            } catch (NumberFormatException e) {
+                Toast.makeText(activity, "Invalid price format", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            options.put("amount", price * 100);
+
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", userName);
+            preFill.put("contact", userPhone);
+
+            options.put("prefill", preFill);
+
+            checkout.open(activity, options);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Log.d("Payment", "Error in payment: " + exception.getMessage());
+        }
+    }
+
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        // Successfully processed the payment
+        getPaymentID(razorpayPaymentID);
+    }
+
+    void getPaymentID(String paymentID) {
+        // Retrieve the product document
+        DocumentReference productRef = db.collection("Products").document(productId);
+
+        productRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Object quantityObj = documentSnapshot.get("quantity");
+
+                    long currentQuantity = 0;
+                    if (quantityObj instanceof Number) {
+                        currentQuantity = ((Number) quantityObj).longValue();
+                    } else if (quantityObj instanceof String) {
+                        try {
+                            currentQuantity = Long.parseLong((String) quantityObj);
+                        } catch (NumberFormatException e) {
+                            Log.e("Payment", "Invalid quantity format", e);
+                            Toast.makeText(ProductDetailsActivity.this, "Invalid quantity format", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                    if (currentQuantity > 0) {
+                        productRef.update("quantity", currentQuantity - 1)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Payment", "Product quantity updated successfully");
+                                        Toast.makeText(ProductDetailsActivity.this, "Payment successful! Product quantity updated.", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("Payment", "Error updating product quantity", e);
+                                    Toast.makeText(ProductDetailsActivity.this, "Failed to update quantity", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        Toast.makeText(ProductDetailsActivity.this, "Product out of stock", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("Payment", "Product not found");
+                    Toast.makeText(ProductDetailsActivity.this, "Product not found in the database", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 
 }
