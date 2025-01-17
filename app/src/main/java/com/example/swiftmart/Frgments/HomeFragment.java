@@ -33,10 +33,13 @@ import com.example.swiftmart.CategoryScreen.CameraActivity;
 import com.example.swiftmart.CategoryScreen.EarphoneActivity;
 import com.example.swiftmart.Account.Edit_profile_Activity;
 import com.example.swiftmart.CategoryScreen.HeadPhoneActivity;
+import com.example.swiftmart.CategoryScreen.KeyboardActivity;
 import com.example.swiftmart.CategoryScreen.Leptop_Activity;
 import com.example.swiftmart.CategoryScreen.MobilesActivity;
+import com.example.swiftmart.CategoryScreen.MouseActivity;
 import com.example.swiftmart.CategoryScreen.SmartWatchActivity;
 import com.example.swiftmart.CategoryScreen.SpeakersActivity;
+import com.example.swiftmart.CategoryScreen.TabletsActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -173,8 +176,11 @@ public class HomeFragment extends Fragment {
         handleLaptopClick();
         handleHeadphoneClick();
         handleSpeakerClick();
+        handleKeyboardClick();
+        handleMouseClick();
         handleCameraClick();
         handleSmartWatchClick();
+        handleTabletClick();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -399,6 +405,28 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // handle keyboard click
+    private void handleKeyboardClick(){
+        homeKeyboardImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), KeyboardActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle mouse click
+    private void handleMouseClick(){
+        homeMouseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MouseActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     // handle camera click
     private void handleCameraClick(){
         homeCameraImage.setOnClickListener(new View.OnClickListener() {
@@ -416,6 +444,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SmartWatchActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // handle tablet click
+    private void handleTabletClick(){
+        homeTabletImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TabletsActivity.class);
                 startActivity(intent);
             }
         });
