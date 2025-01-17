@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
@@ -30,7 +31,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -82,7 +86,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         // Handle "Save Address" button
         btnSaveAddress.setOnClickListener(v -> {
             if (validateInputs()) {
-                storeAddress();
+                addAddress();
             }
         });
 
@@ -201,7 +205,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         finish(); // Close the current activity if necessary
     }
 
-    private void storeAddress(){
+    private void addAddress(){
         String fullName = addAddressFullName.getText().toString();
         String phoneNumber = addAddressPhoneNumber.getText().toString();
         String pincode = addAddressPincode.getText().toString();

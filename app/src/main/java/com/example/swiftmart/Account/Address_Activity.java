@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +23,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -102,12 +105,11 @@ public class Address_Activity extends AppCompatActivity {
         db.collection("Users")
                 .document(uid)
                 .collection("Addresses")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<AddressModel> data = task.getResult().toObjects(AddressModel.class);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && !value.isEmpty()){
+                            List<AddressModel> data = value.toObjects(AddressModel.class);
 
                             datalist.clear();
                             datalist.addAll(data);
@@ -118,20 +120,9 @@ public class Address_Activity extends AppCompatActivity {
 
                             addressRecyclerView.setHasFixedSize(true);
                             addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        } else {
-                            Toast.makeText(Address_Activity.this, "Failed to fetch addresses", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Address_Activity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
-
 
 }

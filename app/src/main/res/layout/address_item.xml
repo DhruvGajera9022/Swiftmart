@@ -55,8 +55,8 @@
             <!-- Popup Menu Icon -->
             <ImageView
                 android:id="@+id/popupMenuIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@drawable/pop"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>

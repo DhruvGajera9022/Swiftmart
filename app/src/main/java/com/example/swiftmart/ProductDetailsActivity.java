@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Account.Add_Address_Activity;
+import com.example.swiftmart.Account.Address_Activity;
 import com.example.swiftmart.Adapter.ProductImageSliderAdapter;
 import com.example.swiftmart.Frgments.CartFragment;
 import com.example.swiftmart.Model.ProductModel;
@@ -109,6 +110,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         loadProductData(productId);
         handleAddToCartClick();
         handleShare();
+        handleBuyClick();
         handleOnBackArrowPress();
 
     }
@@ -123,6 +125,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsViewPager = findViewById(R.id.productDetailsViewPager);
 
         productAddToCartButton = findViewById(R.id.productAddToCartButton);
+        productBuyNowButton = findViewById(R.id.productBuyNowButton);
 
         productDetailsBackArrow = findViewById(R.id.productDetailsBackArrow);
         productDetailsWishlist = findViewById(R.id.productDetailsWishlist);
@@ -316,7 +319,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productBuyNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ProductDetailsActivity.this, Address_Activity.class);
+                intent.putExtra("productID", productId);
+                startActivity(intent);
             }
         });
     }
