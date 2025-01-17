@@ -448,10 +448,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     public void onPaymentSuccess(String razorpayPaymentID) {
         // Successfully processed the payment
-        getPaymentID(razorpayPaymentID);
+        updateQuantity(razorpayPaymentID);
+        createNewOrder(razorpayPaymentID);
     }
 
-    void getPaymentID(String paymentID) {
+    void updateQuantity(String paymentID) {
         // Retrieve the product document
         DocumentReference productRef = db.collection("Products").document(productId);
 
@@ -469,7 +470,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             currentQuantity = Long.parseLong((String) quantityObj);
                         } catch (NumberFormatException e) {
                             Log.e("Payment", "Invalid quantity format", e);
-                            Toast.makeText(ProductDetailsActivity.this, "Invalid quantity format", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
@@ -480,23 +480,62 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d("Payment", "Product quantity updated successfully");
-                                        Toast.makeText(ProductDetailsActivity.this, "Payment successful! Product quantity updated.", Toast.LENGTH_SHORT).show();
                                     }
                                 })
                                 .addOnFailureListener(e -> {
                                     Log.e("Payment", "Error updating product quantity", e);
-                                    Toast.makeText(ProductDetailsActivity.this, "Failed to update quantity", Toast.LENGTH_SHORT).show();
                                 });
-                    } else {
-                        Toast.makeText(ProductDetailsActivity.this, "Product out of stock", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Payment", "Product not found");
-                    Toast.makeText(ProductDetailsActivity.this, "Product not found in the database", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    void createNewOrder(String paymentID) {
+        String productName = productDetailsProductName.getText().toString();
+        String productPrice = productDetailsProductPrice.getText().toString();
+        String productDescription = productDetailsProductDescription.getText().toString();
+        String productId = getIntent().getStringExtra("productId");
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        String saveCurrentDate = currentDate.format(calForDate.getTime());
+        String saveCurrentTime = currentTime.format(calForDate.getTime());
+
+        String oid = db.collection("Orders").document().getId();
+
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("userId", uid);
+        orderMap.put("pid", productId);
+        orderMap.put("name", productName);
+        orderMap.put("price", productPrice);
+        orderMap.put("description", productDescription);
+        orderMap.put("paymentID", paymentID);
+        orderMap.put("oid", oid);
+        orderMap.put("quantity", 1);
+        orderMap.put("orderDate", saveCurrentDate);
+        orderMap.put("orderTime", saveCurrentTime);
+        orderMap.put("status", "Pending");
+
+        db.collection("Orders")
+                .document(oid)
+                .set(orderMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        CustomToast.showToast(ProductDetailsActivity.this, "Order placed successfully");
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        CustomToast.showToast(ProductDetailsActivity.this, "Failed to place the order");
+                    }
+                });
+    }
 
 }
