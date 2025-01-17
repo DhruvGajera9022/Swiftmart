@@ -74,9 +74,6 @@ public class OrdersActivity extends AppCompatActivity {
 
         db.collection("Orders")
                 .whereEqualTo("uid", uid)
-                .whereEqualTo("status", "Pending")
-                .orderBy("orderDate", Query.Direction.DESCENDING)
-                .orderBy("orderTime", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
