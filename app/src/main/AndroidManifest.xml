@@ -65,7 +65,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="electrohub.page.link"
+                    android:host="swiftmartstore.page.link"
                     android:pathPrefix="/product" />
             </intent-filter>
         </activity>

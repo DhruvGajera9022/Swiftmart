@@ -285,11 +285,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String deepLink = "https://electrohub.page.link/product?productId=" + productId;
+                String deepLink = "https://swiftmartstore.page.link/product?productId=" + productId;
 
                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                         .setLink(Uri.parse(deepLink))
-                        .setDomainUriPrefix("https://electrohub.page.link")
+                        .setDomainUriPrefix("https://swiftmartstore.page.link")
                         .setAndroidParameters(
                                 new DynamicLink.AndroidParameters.Builder()
                                         .build())
