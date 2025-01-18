@@ -19,10 +19,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.swiftmart.Account.Add_Address_Activity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.Utils.CustomToast;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -136,10 +138,6 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         confirmAddressDeliver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ConfirmAddressActivity.this, PaymentActivity.class);
-//                intent.putExtra("productId", productID);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 handlePayment();
             }
         });
@@ -205,7 +203,6 @@ public class ConfirmAddressActivity extends AppCompatActivity {
             try {
                 price = Double.parseDouble(productPrice);
             } catch (NumberFormatException e) {
-                Toast.makeText(activity, "Invalid price format", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -229,24 +226,50 @@ public class ConfirmAddressActivity extends AppCompatActivity {
     }
 
     void updateQuantity() {
+        // Retrieve the product document
         DocumentReference productRef = db.collection("Products").document(productID);
 
-        productRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Long currentQuantity = documentSnapshot.getLong("quantity");
+        productRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Object quantityObj = documentSnapshot.get("quantity");
 
-                if (currentQuantity != null && currentQuantity > 0) {
-                    productRef.update("quantity", currentQuantity - 1)
-                            .addOnSuccessListener(aVoid -> Log.d("Payment", "Product quantity updated successfully"))
-                            .addOnFailureListener(e -> Log.e("Payment", "Error updating product quantity", e));
+                    long currentQuantity = 0;
+                    if (quantityObj instanceof Number) {
+                        currentQuantity = ((Number) quantityObj).longValue();
+                    } else if (quantityObj instanceof String) {
+                        try {
+                            currentQuantity = Long.parseLong((String) quantityObj);
+                        } catch (NumberFormatException e) {
+                            Log.e("Payment", "Invalid quantity format", e);
+                            return;
+                        }
+                    }
+
+                    if (currentQuantity > 0) {
+                        productRef.update("quantity", String.valueOf(currentQuantity - 1))
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Payment", "Product quantity updated successfully");
+                                        CustomToast.showToast(ConfirmAddressActivity.this, "Payment placed successfully");
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("Payment", "Error updating product quantity", e);
+                                });
+                    } else {
+                        CustomToast.showToast(ConfirmAddressActivity.this, "Product out of stock");
+                    }
+                } else {
+                    Log.e("Payment", "Product not found");
                 }
-            } else {
-                Log.e("Payment", "Product not found");
             }
         });
     }
 
-    void createNewOrder(String paymentID) {
+    private void createNewOrder(String paymentID) {
 
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yyyy");
@@ -276,10 +299,10 @@ public class ConfirmAddressActivity extends AppCompatActivity {
                 .document(oid)
                 .set(orderMap)
                 .addOnSuccessListener(aVoid -> {
-                    CustomToast.showToast(ConfirmAddressActivity.this, "Order placed successfully");
-                    finish();
-                })
-                .addOnFailureListener(e -> CustomToast.showToast(ConfirmAddressActivity.this, "Failed to place the order"));
+                    Intent intent = new Intent(ConfirmAddressActivity.this, SummeryActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                });
     }
 
 }

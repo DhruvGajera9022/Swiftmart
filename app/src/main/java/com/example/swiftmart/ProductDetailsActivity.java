@@ -375,12 +375,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                     CustomToast.showToast(ProductDetailsActivity.this, "Failed to add to cart");
                                                 });
                                     }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        CustomToast.showToast(ProductDetailsActivity.this, "Error adding to cart");
-                                    }
                                 });
                     }
                 });
