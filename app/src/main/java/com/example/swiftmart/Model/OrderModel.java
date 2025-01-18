@@ -4,15 +4,13 @@ import java.util.List;
 
 public class OrderModel {
 
-    String pid, name, description, company, category, oid, date, time;
+    String pid, name, description,price, qty, company, category, oid, date, time;
     private List<String> imgurls;
-    private int qty;
-    double price;
 
     public OrderModel() {
     }
 
-    public OrderModel(String pid, String name, String description, String company, String category, String oid, String date, String time, List<String> imgurls, int qty, double price) {
+    public OrderModel(String pid, String name, String description, String company, String category, String oid, String date, String time, List<String> imgurls, String qty, String price) {
         this.pid = pid;
         this.name = name;
         this.description = description;
@@ -98,19 +96,19 @@ public class OrderModel {
         this.imgurls = imgurls;
     }
 
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
     }
 }
