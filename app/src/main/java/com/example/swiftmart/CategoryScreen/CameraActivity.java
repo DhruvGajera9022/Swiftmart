@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
 import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
@@ -57,7 +58,7 @@ public class CameraActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView cameraRecyclerView;
     private ProgressBar cameraActivityProgressBar;
 
@@ -127,7 +128,7 @@ public class CameraActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(CameraActivity.this, 2);
                                 cameraRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(CameraActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(CameraActivity.this, datalist);
                                 cameraRecyclerView.setHasFixedSize(true);
                                 cameraRecyclerView.setAdapter(adapter);
                                 cameraRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -165,7 +166,7 @@ public class CameraActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(CameraActivity.this, 2);
                                 cameraRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(CameraActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(CameraActivity.this, datalist);
                                 cameraRecyclerView.setHasFixedSize(true);
                                 cameraRecyclerView.setAdapter(adapter);
                                 cameraRecyclerView.setItemAnimator(new DefaultItemAnimator());
