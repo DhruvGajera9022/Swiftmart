@@ -253,7 +253,8 @@ public class ConfirmAddressActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d("Payment", "Product quantity updated successfully");
-                                        CustomToast.showToast(ConfirmAddressActivity.this, "Payment placed successfully");
+                                        CustomToast.showToast(ConfirmAddressActivity.this, "Order placed successfully");
+                                        finish();
                                     }
                                 })
                                 .addOnFailureListener(e -> {
@@ -299,9 +300,7 @@ public class ConfirmAddressActivity extends AppCompatActivity {
                 .document(oid)
                 .set(orderMap)
                 .addOnSuccessListener(aVoid -> {
-                    Intent intent = new Intent(ConfirmAddressActivity.this, SummeryActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 });
     }
 
