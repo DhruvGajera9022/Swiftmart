@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
     private ProductAdapter newArrivedAdapter;
 
     // Categories
-    private ImageView homeMobileImage, homeEarbudsImage, homeTVImage, homeLaptopImage, homeHeadphoneImage, homeSpeakersImage, homeKeyboardImage, homeMouseImage, homeCameraImage, homeSmartwatchImage, homeTabletImage, homeMoreImage;
+    private ImageView homeMobileImage, homeEarbudsImage, homeTVImage, homeLaptopImage, homeHeadphoneImage, homeSpeakersImage, homeKeyboardImage, homeMouseImage, homeCameraImage, homeSmartwatchImage, homeTabletImage;
 
     public HomeFragment() {
 
@@ -154,7 +154,6 @@ public class HomeFragment extends Fragment {
         homeCameraImage = view.findViewById(R.id.homeCameraImage);
         homeSmartwatchImage = view.findViewById(R.id.homeSmartwatchImage);
         homeTabletImage = view.findViewById(R.id.homeTabletImage);
-        homeMoreImage = view.findViewById(R.id.homeMoreImage);
 
         homeFragmentScrollView.setVerticalScrollBarEnabled(false);
         homeFragmentHorizontalScrollView.setHorizontalScrollBarEnabled(false);
