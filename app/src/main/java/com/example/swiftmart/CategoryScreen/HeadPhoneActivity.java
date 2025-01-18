@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -57,7 +57,7 @@ public class HeadPhoneActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView headphoneRecyclerView;
     private ProgressBar headphoneActivityProgressBar;
 
@@ -127,7 +127,7 @@ public class HeadPhoneActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(HeadPhoneActivity.this, 2);
                                 headphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(HeadPhoneActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(HeadPhoneActivity.this, datalist);
                                 headphoneRecyclerView.setHasFixedSize(true);
                                 headphoneRecyclerView.setAdapter(adapter);
                                 headphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -165,7 +165,7 @@ public class HeadPhoneActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(HeadPhoneActivity.this, 2);
                                 headphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(HeadPhoneActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(HeadPhoneActivity.this, datalist);
                                 headphoneRecyclerView.setHasFixedSize(true);
                                 headphoneRecyclerView.setAdapter(adapter);
                                 headphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());

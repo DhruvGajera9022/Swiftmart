@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -54,7 +54,7 @@ public class Leptop_Activity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView laptopRecyclerView;
     private ProgressBar laptopActivityProgressBar;
 
@@ -125,7 +125,7 @@ public class Leptop_Activity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(Leptop_Activity.this, 2);
                                 laptopRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(Leptop_Activity.this, datalist);
+                                adapter = new CategoryProductAdapter(Leptop_Activity.this, datalist);
                                 laptopRecyclerView.setHasFixedSize(true);
                                 laptopRecyclerView.setAdapter(adapter);
                                 laptopRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -163,7 +163,7 @@ public class Leptop_Activity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(Leptop_Activity.this, 2);
                                 laptopRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(Leptop_Activity.this, datalist);
+                                adapter = new CategoryProductAdapter(Leptop_Activity.this, datalist);
                                 laptopRecyclerView.setHasFixedSize(true);
                                 laptopRecyclerView.setAdapter(adapter);
                                 laptopRecyclerView.setItemAnimator(new DefaultItemAnimator());

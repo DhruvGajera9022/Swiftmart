@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -57,7 +57,7 @@ public class MouseActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView mouseRecyclerView;
     private ProgressBar mouseActivityProgressBar;
 
@@ -125,7 +125,7 @@ public class MouseActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(MouseActivity.this, 2);
                                 mouseRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(MouseActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(MouseActivity.this, datalist);
                                 mouseRecyclerView.setHasFixedSize(true);
                                 mouseRecyclerView.setAdapter(adapter);
                                 mouseRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -163,7 +163,7 @@ public class MouseActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(MouseActivity.this, 2);
                                 mouseRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(MouseActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(MouseActivity.this, datalist);
                                 mouseRecyclerView.setHasFixedSize(true);
                                 mouseRecyclerView.setAdapter(adapter);
                                 mouseRecyclerView.setItemAnimator(new DefaultItemAnimator());

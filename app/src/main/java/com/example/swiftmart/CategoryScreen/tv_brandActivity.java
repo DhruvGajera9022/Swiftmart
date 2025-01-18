@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -48,7 +48,7 @@ public class tv_brandActivity extends AppCompatActivity {
     private RecyclerView tvRecyclerView;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private FirebaseFirestore db;
-    ProductAdapter adapter;
+    CategoryProductAdapter adapter;
     ScrollView tvActivityScrollView;
     ProgressBar tvActivityProgressBar;
 
@@ -118,7 +118,7 @@ public class tv_brandActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(tv_brandActivity.this, 2);
                                 tvRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(tv_brandActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(tv_brandActivity.this, datalist);
                                 tvRecyclerView.setHasFixedSize(true);
                                 tvRecyclerView.setAdapter(adapter);
                                 tvRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -157,7 +157,7 @@ public class tv_brandActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(tv_brandActivity.this, 2);
                                 tvRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(tv_brandActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(tv_brandActivity.this, datalist);
                                 tvRecyclerView.setHasFixedSize(true);
                                 tvRecyclerView.setAdapter(adapter);
                                 tvRecyclerView.setItemAnimator(new DefaultItemAnimator());

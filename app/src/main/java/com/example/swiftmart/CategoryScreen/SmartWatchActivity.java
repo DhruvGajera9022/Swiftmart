@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -57,7 +57,7 @@ public class SmartWatchActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView smartwatchRecyclerView;
     private ProgressBar smartwatchActivityProgressBar;
 
@@ -126,7 +126,7 @@ public class SmartWatchActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(SmartWatchActivity.this, 2);
                                 smartwatchRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(SmartWatchActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(SmartWatchActivity.this, datalist);
                                 smartwatchRecyclerView.setHasFixedSize(true);
                                 smartwatchRecyclerView.setAdapter(adapter);
                                 smartwatchRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -164,7 +164,7 @@ public class SmartWatchActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(SmartWatchActivity.this, 2);
                                 smartwatchRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(SmartWatchActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(SmartWatchActivity.this, datalist);
                                 smartwatchRecyclerView.setHasFixedSize(true);
                                 smartwatchRecyclerView.setAdapter(adapter);
                                 smartwatchRecyclerView.setItemAnimator(new DefaultItemAnimator());

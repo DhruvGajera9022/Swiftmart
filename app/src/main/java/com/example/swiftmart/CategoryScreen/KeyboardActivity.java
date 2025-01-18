@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -57,7 +57,7 @@ public class KeyboardActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView keyboardRecyclerView;
     private ProgressBar keyboardActivityProgressBar;
 
@@ -126,7 +126,7 @@ public class KeyboardActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(KeyboardActivity.this, 2);
                                 keyboardRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(KeyboardActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(KeyboardActivity.this, datalist);
                                 keyboardRecyclerView.setHasFixedSize(true);
                                 keyboardRecyclerView.setAdapter(adapter);
                                 keyboardRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -164,7 +164,7 @@ public class KeyboardActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(KeyboardActivity.this, 2);
                                 keyboardRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(KeyboardActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(KeyboardActivity.this, datalist);
                                 keyboardRecyclerView.setHasFixedSize(true);
                                 keyboardRecyclerView.setAdapter(adapter);
                                 keyboardRecyclerView.setItemAnimator(new DefaultItemAnimator());

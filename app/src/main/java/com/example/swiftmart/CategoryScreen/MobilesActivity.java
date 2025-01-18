@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -48,7 +48,7 @@ public class MobilesActivity extends AppCompatActivity {
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private RecyclerView mobileRecyclerView;
     private FirebaseFirestore db;
-    ProductAdapter adapter;
+    CategoryProductAdapter adapter;
     NestedScrollView mobileScrollView;
     HorizontalScrollView mobileHorizontalScrollView;
     private ProgressBar mobileActivityProgressBar;
@@ -136,7 +136,7 @@ public class MobilesActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
                                 mobileRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(MobilesActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(MobilesActivity.this, datalist);
                                 mobileRecyclerView.setHasFixedSize(true);
                                 mobileRecyclerView.setAdapter(adapter);
                                 mobileRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -174,7 +174,7 @@ public class MobilesActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(MobilesActivity.this, 2);
                                 mobileRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(MobilesActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(MobilesActivity.this, datalist);
                                 mobileRecyclerView.setHasFixedSize(true);
                                 mobileRecyclerView.setAdapter(adapter);
                                 mobileRecyclerView.setItemAnimator(new DefaultItemAnimator());

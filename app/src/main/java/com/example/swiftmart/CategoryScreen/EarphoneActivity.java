@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -49,7 +49,7 @@ public class EarphoneActivity extends AppCompatActivity {
     private RecyclerView earphoneRecyclerView;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private FirebaseFirestore db;
-    ProductAdapter adapter;
+    CategoryProductAdapter adapter;
     ScrollView earphoneScrollView;
     HorizontalScrollView earphoneHorizontalScrollView;
     ProgressBar earphoneActivityProgressBar;
@@ -129,7 +129,7 @@ public class EarphoneActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
                                 earphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(EarphoneActivity.this, datalist);
                                 earphoneRecyclerView.setHasFixedSize(true);
                                 earphoneRecyclerView.setAdapter(adapter);
                                 earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -168,7 +168,7 @@ public class EarphoneActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(EarphoneActivity.this, 2);
                                 earphoneRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(EarphoneActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(EarphoneActivity.this, datalist);
                                 earphoneRecyclerView.setHasFixedSize(true);
                                 earphoneRecyclerView.setAdapter(adapter);
                                 earphoneRecyclerView.setItemAnimator(new DefaultItemAnimator());

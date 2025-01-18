@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.MobileSliderAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
+import com.example.swiftmart.Adapter.CategoryProductAdapter;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
@@ -57,7 +57,7 @@ public class TabletsActivity extends AppCompatActivity {
     private List<String> imageUrls;
 
     private ArrayList<ProductModel> datalist = new ArrayList<>();
-    private ProductAdapter adapter;
+    private CategoryProductAdapter adapter;
     private RecyclerView tabletRecyclerView;
     private ProgressBar tabletActivityProgressBar;
 
@@ -129,7 +129,7 @@ public class TabletsActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(TabletsActivity.this, 2);
                                 tabletRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(TabletsActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(TabletsActivity.this, datalist);
                                 tabletRecyclerView.setHasFixedSize(true);
                                 tabletRecyclerView.setAdapter(adapter);
                                 tabletRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -167,7 +167,7 @@ public class TabletsActivity extends AppCompatActivity {
 
                                 GridLayoutManager layoutManager = new GridLayoutManager(TabletsActivity.this, 2);
                                 tabletRecyclerView.setLayoutManager(layoutManager);
-                                adapter = new ProductAdapter(TabletsActivity.this, datalist);
+                                adapter = new CategoryProductAdapter(TabletsActivity.this, datalist);
                                 tabletRecyclerView.setHasFixedSize(true);
                                 tabletRecyclerView.setAdapter(adapter);
                                 tabletRecyclerView.setItemAnimator(new DefaultItemAnimator());
