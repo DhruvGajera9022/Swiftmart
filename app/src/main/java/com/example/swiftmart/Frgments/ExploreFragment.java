@@ -1,6 +1,5 @@
 package com.example.swiftmart.Frgments;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,27 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.example.swiftmart.Adapter.ExploreProductAdapter;
-import com.example.swiftmart.Adapter.ProductAdapter;
 import com.example.swiftmart.MainActivity;
 import com.example.swiftmart.Model.ProductModel;
 import com.example.swiftmart.R;
 import com.example.swiftmart.Utils.CustomToast;
 import com.example.swiftmart.Utils.FilterData;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -61,9 +55,6 @@ public class ExploreFragment extends Fragment {
     FirebaseFirestore db;
     ArrayList<ProductModel> datalist = new ArrayList<>();
     ExploreProductAdapter adapter;
-
-    int selectedTab = 1;
-
 
     public ExploreFragment() {
 
@@ -153,14 +144,20 @@ public class ExploreFragment extends Fragment {
         exploreFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchProducts(query);
-                return false;
+                if (query != null && !query.trim().isEmpty()) {
+                    searchProducts(query.trim());
+                }
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchProducts(newText);
-                return false;
+                if (newText != null && !newText.trim().isEmpty()) {
+                    searchProducts(newText.trim());
+                } else {
+                    getAllProducts();
+                }
+                return true;
             }
         });
     }
@@ -168,7 +165,6 @@ public class ExploreFragment extends Fragment {
     // handle searchProduct
     private void searchProducts(String query) {
         exploreFragmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        exploreFragmentProgressBar.setVisibility(View.VISIBLE);
         datalist.clear();
 
         if (query.isEmpty()) {
@@ -176,52 +172,24 @@ public class ExploreFragment extends Fragment {
         } else {
             datalist.clear();
 
-            // Search by name
             db.collection("Products")
-                    .whereGreaterThanOrEqualTo("name", query)
-                    .whereLessThanOrEqualTo("name", query + '\uf8ff')
-                    .get()
-                    .addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            for (QueryDocumentSnapshot documentSnapshot : task1.getResult()) {
-                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                if (!containsProduct(datalist, productModel)) { // Avoid duplicates
-                                    datalist.add(productModel);
-                                }
-                            }
-                            // Search by category
-                            db.collection("Products")
-                                    .whereGreaterThanOrEqualTo("category", query)
-                                    .whereLessThanOrEqualTo("category", query + '\uf8ff')
-                                    .get()
-                                    .addOnCompleteListener(task2 -> {
-                                        exploreFragmentProgressBar.setVisibility(View.GONE);
-                                        if (task2.isSuccessful()) {
-                                            for (QueryDocumentSnapshot documentSnapshot : task2.getResult()) {
-                                                ProductModel productModel = documentSnapshot.toObject(ProductModel.class);
-                                                if (!containsProduct(datalist, productModel)) { // Avoid duplicates
-                                                    datalist.add(productModel);
+                            .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            datalist.clear();
+                                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                                ProductModel model = document.toObject(ProductModel.class);
+
+                                                if (model.getName().toLowerCase().contains(query.toLowerCase())) {
+                                                    datalist.add(model);
                                                 }
                                             }
-
+                                            adapter.notifyDataSetChanged();
                                             updateRecyclerView();
                                         }
                                     });
-                        } else {
-                            exploreFragmentProgressBar.setVisibility(View.GONE);
-                        }
-                    });
         }
-    }
-
-    // Helper function to check if the product is already in the list
-    private boolean containsProduct(List<ProductModel> list, ProductModel product) {
-        for (ProductModel item : list) {
-            if (item.getPid().equals(product.getPid())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void updateRecyclerView() {
@@ -232,8 +200,6 @@ public class ExploreFragment extends Fragment {
         exploreFragmentRecyclerView.setAdapter(adapter);
         exploreFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
-
-
 
     // handle filter button click
     private void handleFilterButton(){
