@@ -200,6 +200,22 @@ public class SmartWatchActivity extends AppCompatActivity {
                     smartWatchViewPager.setAdapter(smartwatchSliderAdapter);
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
+
+                    // Add listener to reset the auto-slide when the page is changed
+                    smartWatchViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            sliderHandler.removeCallbacks(slideRunnable);
+                            sliderHandler.postDelayed(slideRunnable, 3000);
+                        }
+                    });
+
+                    // Handle touch events to reset auto-slide interval
+                    smartWatchViewPager.setOnTouchListener((v, event) -> {
+                        sliderHandler.removeCallbacks(slideRunnable);
+                        sliderHandler.postDelayed(slideRunnable, 3000);
+                        return false;
+                    });
                 }
             }
 

@@ -203,6 +203,22 @@ public class HeadPhoneActivity extends AppCompatActivity {
                     headphoneViewPager.setAdapter(headphoneSliderAdapter);
 
                     sliderHandler.postDelayed(slideRunnable, 3000);
+
+                    // Add listener to reset the auto-slide when the page is changed
+                    headphoneViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            sliderHandler.removeCallbacks(slideRunnable);
+                            sliderHandler.postDelayed(slideRunnable, 3000);
+                        }
+                    });
+
+                    // Handle touch events to reset auto-slide interval
+                    headphoneViewPager.setOnTouchListener((v, event) -> {
+                        sliderHandler.removeCallbacks(slideRunnable);
+                        sliderHandler.postDelayed(slideRunnable, 3000);
+                        return false;
+                    });
                 }
             }
 
