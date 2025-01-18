@@ -479,7 +479,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     }
 
                     if (currentQuantity > 0) {
-                        productRef.update("quantity", currentQuantity - 1)
+                        // Convert the updated quantity to a string
+                        String updatedQuantity = String.valueOf(currentQuantity - 1);
+
+                        productRef.update("quantity", updatedQuantity)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -515,13 +518,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         orderMap.put("uid", uid);
         orderMap.put("pid", productId);
         orderMap.put("name", productName);
-        orderMap.put("price", Double.parseDouble(productPrice));
+        orderMap.put("price", productPrice);
         orderMap.put("description", productDescription);
         orderMap.put("category", productCategory);
         orderMap.put("company", productCompany);
         orderMap.put("paymentID", paymentID);
         orderMap.put("oid", oid);
-        orderMap.put("quantity", 1);
+        orderMap.put("quantity", "1");
         orderMap.put("imgurls", currentImageUrls);
         orderMap.put("orderDate", saveCurrentDate);
         orderMap.put("orderTime", saveCurrentTime);
