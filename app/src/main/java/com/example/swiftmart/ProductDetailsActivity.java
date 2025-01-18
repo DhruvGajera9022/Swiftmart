@@ -318,7 +318,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productBuyNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handlePayment();
+                Intent intent = new Intent(ProductDetailsActivity.this, ConfirmAddressActivity.class);
+                intent.putExtra("productId", productId);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
