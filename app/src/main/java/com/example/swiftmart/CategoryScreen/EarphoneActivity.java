@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,7 +51,7 @@ public class EarphoneActivity extends AppCompatActivity {
     ArrayList<ProductModel> datalist = new ArrayList<>();
     private FirebaseFirestore db;
     CategoryProductAdapter adapter;
-    ScrollView earphoneScrollView;
+    NestedScrollView earphoneScrollView;
     HorizontalScrollView earphoneHorizontalScrollView;
     ProgressBar earphoneActivityProgressBar;
 
