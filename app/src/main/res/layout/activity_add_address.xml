@@ -186,6 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:backgroundTint="#6055D8"
                 android:text="Use my location"
                 android:drawablePadding="8dp" />
         </LinearLayout>
@@ -332,25 +333,39 @@
             android:padding="8dp"
             android:textSize="12sp" />
 
-        <RadioGroup
-            android:id="@+id/rgAddressType"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rbHome"
+            <RadioGroup
+                android:id="@+id/rgAddressType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home" />
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rbWork"
+                <RadioButton
+                    android:id="@+id/rbHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home" />
+
+                <RadioButton
+                    android:id="@+id/rbWork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Work" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/isDefaultCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Work" />
-        </RadioGroup>
+                android:text="Default"
+                android:layout_marginStart="30dp"/>
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSaveAddress"
@@ -358,11 +373,18 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="Save Address"
-            android:background="@color/orange"
+            android:background="@drawable/btn"
             android:textAllCaps="false"
             android:textSize="15sp"
             android:padding="12dp"
             android:layout_marginTop="16dp"/>
+
+        <ProgressBar
+            android:id="@+id/addressProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

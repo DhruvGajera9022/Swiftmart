@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.app.ActivityCompat;
 
 import com.example.swiftmart.MainActivity;
@@ -48,10 +50,15 @@ public class Add_Address_Activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     ImageView backaddnewaddress,cart3;
     private TextInputEditText addAddressFullName, addAddressPhoneNumber, addAddressPincode, addAddressState, addAddressCity, addAddressHouseNo, addAddressRoadName;
+    private AppCompatCheckBox isDefaultCheckBox;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+
+    private ProgressBar addressProgressBar;
+    private AppCompatButton btnSaveAddress;
+    private Button btnUseMyLocation;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,11 +79,13 @@ public class Add_Address_Activity extends AppCompatActivity {
         addAddressRoadName = findViewById(R.id.addAddressRoadName);
         rgAddressType = findViewById(R.id.rgAddressType);
         backaddnewaddress = findViewById(R.id.backaddnewaddress);
+        isDefaultCheckBox = findViewById(R.id.isDefaultCheckBox);
         cart3 = findViewById(R.id.cart3);
+        addressProgressBar = findViewById(R.id.addressProgressBar);
 
 
-        Button btnUseMyLocation = findViewById(R.id.btnUseMyLocation);
-        AppCompatButton btnSaveAddress = findViewById(R.id.btnSaveAddress);
+        btnUseMyLocation = findViewById(R.id.btnUseMyLocation);
+        btnSaveAddress = findViewById(R.id.btnSaveAddress);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -206,6 +215,9 @@ public class Add_Address_Activity extends AppCompatActivity {
     }
 
     private void addAddress(){
+
+        progress();
+
         String fullName = addAddressFullName.getText().toString();
         String phoneNumber = addAddressPhoneNumber.getText().toString();
         String pincode = addAddressPincode.getText().toString();
@@ -213,6 +225,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         String city = addAddressCity.getText().toString();
         String houseNo = addAddressHouseNo.getText().toString();
         String roadName = addAddressRoadName.getText().toString();
+        boolean isDefault = isDefaultCheckBox.isChecked();
 
         String addressType = ((RadioButton) findViewById(rgAddressType.getCheckedRadioButtonId())).getText().toString();
 
@@ -226,6 +239,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         addressData.put("state", state);
         addressData.put("pinCode", pincode);
         addressData.put("addressType", addressType);
+        addressData.put("isDefault", isDefault);
 
         db.collection("Users")
                 .document(uid)
@@ -237,9 +251,14 @@ public class Add_Address_Activity extends AppCompatActivity {
                         String addressId = documentReference.getId();
                         documentReference.update("AddressId", addressId)
                                 .addOnSuccessListener(aVoid -> {
+                                    addressProgressBar.setVisibility(View.GONE);
+                                    btnSaveAddress.setVisibility(View.VISIBLE);
                                     CustomToast.showToast(Add_Address_Activity.this, "Address added");
+                                    clearAllValue();
                                 })
                                 .addOnFailureListener(e -> {
+                                    addressProgressBar.setVisibility(View.GONE);
+                                    btnSaveAddress.setVisibility(View.VISIBLE);
                                     CustomToast.showToast(Add_Address_Activity.this, "Failed to update addressId");
                                 });
                     }
@@ -247,10 +266,35 @@ public class Add_Address_Activity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        addressProgressBar.setVisibility(View.GONE);
+                        btnSaveAddress.setVisibility(View.VISIBLE);
                         CustomToast.showToast(Add_Address_Activity.this, "Failed to add address");
                     }
                 });
 
+    }
+
+    private void clearAllValue(){
+        addAddressFullName.setText("");
+        addAddressPhoneNumber.setText("");
+        addAddressPincode.setText("");
+        addAddressState.setText("");
+        addAddressCity.setText("");
+        addAddressHouseNo.setText("");
+        addAddressRoadName.setText("");
+        rgAddressType.clearCheck();
+        isDefaultCheckBox.setChecked(false);
+    }
+
+    // handle progress bar
+    public void progress(){
+        if (btnSaveAddress.isPressed()){
+            btnSaveAddress.setVisibility(View.GONE);
+            addressProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            btnSaveAddress.setVisibility(View.VISIBLE);
+            addressProgressBar.setVisibility(View.GONE);
+        }
     }
 
 }
