@@ -2,13 +2,13 @@ package com.example.swiftmart.Model;
 
 public class AddressModel {
 
-    String addressId, fullName, phoneNumber, houseNo, roadName, city, state, pinCode, addressType;
+    String aid, fullName, phoneNumber, houseNo, roadName, city, state, pinCode, addressType;
 
     public AddressModel() {
     }
 
     public AddressModel(
-            String addressId,
+            String aid,
             String fullName,
             String phoneNumber,
             String houseNo,
@@ -17,7 +17,7 @@ public class AddressModel {
             String state,
             String pinCode,
             String addressType) {
-        this.addressId = addressId;
+        this.aid = aid;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.houseNo = houseNo;
@@ -28,12 +28,12 @@ public class AddressModel {
         this.addressType = addressType;
     }
 
-    public String getAddressId() {
-        return addressId;
+    public String getAid() {
+        return aid;
     }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
+    public void setAid(String aid) {
+        this.aid = aid;
     }
 
     public String getFullName() {

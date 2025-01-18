@@ -37,6 +37,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.WriteBatch;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,6 +61,8 @@ public class Add_Address_Activity extends AppCompatActivity {
     private ProgressBar addressProgressBar;
     private AppCompatButton btnSaveAddress;
     private Button btnUseMyLocation;
+
+    private String addressID;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -92,12 +96,19 @@ public class Add_Address_Activity extends AppCompatActivity {
         // Handle "Use my location" button
         btnUseMyLocation.setOnClickListener(v -> requestLocationPermission());
 
-        // Handle "Save Address" button
-        btnSaveAddress.setOnClickListener(v -> {
-            if (validateInputs()) {
-                addAddress();
-            }
-        });
+        addressID = getIntent().getStringExtra("addressID");
+        if (addressID != null) {
+            btnSaveAddress.setText("Edit Address");
+            getAddressData();
+            btnSaveAddress.setOnClickListener(v -> editAddress());
+        } else {
+            btnSaveAddress.setText("Save Address");
+            btnSaveAddress.setOnClickListener(v -> {
+                if (validateInputs()) {
+                    addAddress();
+                }
+            });
+        }
 
         backaddnewaddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,8 +225,7 @@ public class Add_Address_Activity extends AppCompatActivity {
         finish(); // Close the current activity if necessary
     }
 
-    private void addAddress(){
-
+    private void addAddress() {
         progress();
 
         String fullName = addAddressFullName.getText().toString();
@@ -241,6 +251,40 @@ public class Add_Address_Activity extends AppCompatActivity {
         addressData.put("addressType", addressType);
         addressData.put("isDefault", isDefault);
 
+        // If the new address is marked as default, update other addresses first
+        if (isDefault) {
+            db.collection("Users")
+                    .document(uid)
+                    .collection("Addresses")
+                    .whereEqualTo("isDefault", true)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        // Batch to update existing addresses
+                        WriteBatch batch = db.batch();
+                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                            batch.update(document.getReference(), "isDefault", false);
+                        }
+                        batch.commit()
+                                .addOnSuccessListener(aVoid -> {
+                                    // Proceed to add the new address after updating others
+                                    saveNewAddress(addressData);
+                                })
+                                .addOnFailureListener(e -> {
+                                    clearAllValue();
+                                    CustomToast.showToast(Add_Address_Activity.this, "Failed to update other addresses");
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        clearAllValue();
+                        CustomToast.showToast(Add_Address_Activity.this, "Failed to check existing addresses");
+                    });
+        } else {
+            // Directly save the new address if not default
+            saveNewAddress(addressData);
+        }
+    }
+
+    private void saveNewAddress(HashMap<String, Object> addressData) {
         db.collection("Users")
                 .document(uid)
                 .collection("Addresses")
@@ -249,16 +293,14 @@ public class Add_Address_Activity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         String addressId = documentReference.getId();
-                        documentReference.update("AddressId", addressId)
+                        documentReference.update("aid", addressId)
                                 .addOnSuccessListener(aVoid -> {
-                                    addressProgressBar.setVisibility(View.GONE);
-                                    btnSaveAddress.setVisibility(View.VISIBLE);
                                     CustomToast.showToast(Add_Address_Activity.this, "Address added");
                                     clearAllValue();
+                                    finish();
                                 })
                                 .addOnFailureListener(e -> {
-                                    addressProgressBar.setVisibility(View.GONE);
-                                    btnSaveAddress.setVisibility(View.VISIBLE);
+                                    clearAllValue();
                                     CustomToast.showToast(Add_Address_Activity.this, "Failed to update addressId");
                                 });
                     }
@@ -266,13 +308,109 @@ public class Add_Address_Activity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        addressProgressBar.setVisibility(View.GONE);
-                        btnSaveAddress.setVisibility(View.VISIBLE);
+                        clearAllValue();
                         CustomToast.showToast(Add_Address_Activity.this, "Failed to add address");
                     }
                 });
-
     }
+
+    private void getAddressData(){
+        DocumentReference reference = db.collection("Users").document(uid).collection("Addresses").document(addressID);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    addAddressFullName.setText(value.getString("fullName"));
+                    addAddressPhoneNumber.setText(value.getString("phoneNumber"));
+                    addAddressPincode.setText(value.getString("pinCode"));
+                    addAddressState.setText(value.getString("state"));
+                    addAddressCity.setText(value.getString("city"));
+                    addAddressHouseNo.setText(value.getString("houseNo"));
+                    addAddressRoadName.setText(value.getString("roadName"));
+                    isDefaultCheckBox.setChecked(value.getBoolean("isDefault"));
+                    rgAddressType.check(value.getString("addressType").equals("Home") ? R.id.rbHome : R.id.rbWork);
+                }
+            }
+        });
+    }
+
+    private void editAddress(){
+        if (addressID == null) {
+            Toast.makeText(this, "No address to edit.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progress();
+
+        String fullName = addAddressFullName.getText().toString();
+        String phoneNumber = addAddressPhoneNumber.getText().toString();
+        String pincode = addAddressPincode.getText().toString();
+        String state = addAddressState.getText().toString();
+        String city = addAddressCity.getText().toString();
+        String houseNo = addAddressHouseNo.getText().toString();
+        String roadName = addAddressRoadName.getText().toString();
+        boolean isDefault = isDefaultCheckBox.isChecked();
+
+        String addressType = ((RadioButton) findViewById(rgAddressType.getCheckedRadioButtonId())).getText().toString();
+
+        HashMap<String, Object> updatedAddressData = new HashMap<>();
+        updatedAddressData.put("fullName", fullName);
+        updatedAddressData.put("phoneNumber", phoneNumber);
+        updatedAddressData.put("houseNo", houseNo);
+        updatedAddressData.put("roadName", roadName);
+        updatedAddressData.put("city", city);
+        updatedAddressData.put("state", state);
+        updatedAddressData.put("pinCode", pincode);
+        updatedAddressData.put("addressType", addressType);
+        updatedAddressData.put("isDefault", isDefault);
+
+        DocumentReference addressRef = db.collection("Users").document(uid).collection("Addresses").document(addressID);
+
+        if (isDefault) {
+            db.collection("Users")
+                    .document(uid)
+                    .collection("Addresses")
+                    .whereEqualTo("isDefault", true)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        WriteBatch batch = db.batch();
+                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                            if (!document.getId().equals(addressID)) {
+                                batch.update(document.getReference(), "isDefault", false);
+                            }
+                        }
+                        batch.commit()
+                                .addOnSuccessListener(aVoid -> {
+                                    saveEditedAddress(addressRef, updatedAddressData);
+                                })
+                                .addOnFailureListener(e -> {
+                                    clearAllValue();
+                                    CustomToast.showToast(Add_Address_Activity.this, "Failed to update other addresses");
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        clearAllValue();
+                        CustomToast.showToast(Add_Address_Activity.this, "Failed to check existing addresses");
+                    });
+        } else {
+            saveEditedAddress(addressRef, updatedAddressData);
+        }
+    }
+
+    private void saveEditedAddress(DocumentReference addressRef, HashMap<String, Object> updatedAddressData) {
+        addressRef.update(updatedAddressData)
+                .addOnSuccessListener(aVoid -> {
+                    CustomToast.showToast(Add_Address_Activity.this, "Address updated successfully");
+                    clearAllValue();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    clearAllValue();
+                    CustomToast.showToast(Add_Address_Activity.this, "Failed to update address");
+                });
+    }
+
 
     private void clearAllValue(){
         addAddressFullName.setText("");
@@ -284,6 +422,9 @@ public class Add_Address_Activity extends AppCompatActivity {
         addAddressRoadName.setText("");
         rgAddressType.clearCheck();
         isDefaultCheckBox.setChecked(false);
+
+        addressProgressBar.setVisibility(View.GONE);
+        btnSaveAddress.setVisibility(View.VISIBLE);
     }
 
     // handle progress bar
