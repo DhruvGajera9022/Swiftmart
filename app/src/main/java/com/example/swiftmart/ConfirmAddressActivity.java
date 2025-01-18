@@ -1,9 +1,12 @@
 package com.example.swiftmart;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -14,6 +17,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.swiftmart.Account.Add_Address_Activity;
+import com.example.swiftmart.Model.ProductModel;
+import com.example.swiftmart.Utils.CustomToast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,7 +27,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.razorpay.Checkout;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ConfirmAddressActivity extends AppCompatActivity {
     private TextView confirmAddressAddNew, confirmAddressType, confirmAddressFullName, confirmAddressText, confirmAddressState, confirmAddressNumber, confirmAddressEdit;
@@ -30,7 +44,13 @@ public class ConfirmAddressActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private String uid, addressID;
+    private String uid, addressID, productID;
+
+    private String productName, productPrice, productDescription, productCompany, productCategory;
+    private String userName, userPhone;
+    private List<String> currentImageUrls;
+
+    private Checkout checkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +62,9 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         handleNewClick();
         handleEditClick();
         handleDeliverClick();
+
+        getProductData();
+        getUserData();
 
     }
 
@@ -59,6 +82,9 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
+
+        productID = getIntent().getStringExtra("productId");
+
     }
 
     private void getAddress() {
@@ -110,11 +136,150 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         confirmAddressDeliver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConfirmAddressActivity.this, PaymentActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                Intent intent = new Intent(ConfirmAddressActivity.this, PaymentActivity.class);
+//                intent.putExtra("productId", productID);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                handlePayment();
             }
         });
+    }
+
+    private void getProductData() {
+        db.collection("Products").document(productID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            CustomToast.showToast(ConfirmAddressActivity.this, "Error in fetching details");
+                            return;
+                        }
+
+                        if (value != null && value.exists()) {
+                            ProductModel product = value.toObject(ProductModel.class);
+                            if (product != null) {
+                                productName = product.getName();
+                                productPrice = product.getPrice();
+                                productDescription = product.getDescription();
+                                productCompany = product.getCompany();
+                                productCategory = product.getCategory();
+                                currentImageUrls = product.getImgurls();
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void getUserData(){
+        uid = mAuth.getCurrentUser().getUid();
+        DocumentReference reference = db.collection("Users").document(uid);
+
+        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    userName = value.getString("Username");
+                    userPhone = value.getString("Number");
+                }
+            }
+        });
+
+    }
+
+    // Handle payment
+    private void handlePayment() {
+        checkout = new Checkout();
+        checkout.setImage(R.drawable.app_logo);
+
+        final Activity activity = this;
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", getString(R.string.app_name));
+            options.put("description", "Best E-Commerce app");
+            options.put("send_sms_hash", false);
+            options.put("allow_rotation", false);
+            options.put("currency", "INR");
+
+            double price;
+            try {
+                price = Double.parseDouble(productPrice);
+            } catch (NumberFormatException e) {
+                Toast.makeText(activity, "Invalid price format", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            options.put("amount", price * 100);
+
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", userName);
+            preFill.put("contact", userPhone);
+
+            options.put("prefill", preFill);
+
+            checkout.open(activity, options);
+        } catch (Exception exception) {
+            Log.e("Payment", "Error in payment: ", exception);
+        }
+    }
+
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        updateQuantity();
+        createNewOrder(razorpayPaymentID);
+    }
+
+    void updateQuantity() {
+        DocumentReference productRef = db.collection("Products").document(productID);
+
+        productRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Long currentQuantity = documentSnapshot.getLong("quantity");
+
+                if (currentQuantity != null && currentQuantity > 0) {
+                    productRef.update("quantity", currentQuantity - 1)
+                            .addOnSuccessListener(aVoid -> Log.d("Payment", "Product quantity updated successfully"))
+                            .addOnFailureListener(e -> Log.e("Payment", "Error updating product quantity", e));
+                }
+            } else {
+                Log.e("Payment", "Product not found");
+            }
+        });
+    }
+
+    void createNewOrder(String paymentID) {
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        String saveCurrentDate = currentDate.format(calForDate.getTime());
+        String saveCurrentTime = currentTime.format(calForDate.getTime());
+
+        String oid = db.collection("Orders").document().getId();
+
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("uid", uid);
+        orderMap.put("pid", productID);
+        orderMap.put("name", productName);
+        orderMap.put("price", productPrice);
+        orderMap.put("description", productDescription);
+        orderMap.put("category", productCategory);
+        orderMap.put("company", productCompany);
+        orderMap.put("paymentID", paymentID);
+        orderMap.put("oid", oid);
+        orderMap.put("quantity", "1");
+        orderMap.put("imgurls", currentImageUrls);
+        orderMap.put("orderDate", saveCurrentDate);
+        orderMap.put("orderTime", saveCurrentTime);
+        orderMap.put("status", "Pending");
+
+        db.collection("Orders")
+                .document(oid)
+                .set(orderMap)
+                .addOnSuccessListener(aVoid -> {
+                    CustomToast.showToast(ConfirmAddressActivity.this, "Order placed successfully");
+                    finish();
+                })
+                .addOnFailureListener(e -> CustomToast.showToast(ConfirmAddressActivity.this, "Failed to place the order"));
     }
 
 }
