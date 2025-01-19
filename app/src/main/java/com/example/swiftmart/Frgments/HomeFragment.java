@@ -62,6 +62,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -163,7 +164,7 @@ public class HomeFragment extends Fragment {
         handleHomeFragmentUserAvtarClick();
 //        handleSearch();
 //        getAllProducts();
-        getFeaturedData();
+        getTrendingData();
         getMostPopularData();
         getNewArrivedData();
         handleSeeAllClick();
@@ -225,9 +226,10 @@ public class HomeFragment extends Fragment {
     }
 
     // get Featured Data
-    private void getFeaturedData(){
+    private void getTrendingData(){
         homeFragmentFeaturedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         db.collection("Products")
+                .whereIn("category", Arrays.asList("Mobile", "AirBuds", "Laptop"))
                 .limit(10)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -257,6 +259,7 @@ public class HomeFragment extends Fragment {
     private void getMostPopularData(){
         homeFragmentMostPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         db.collection("Products")
+                .orderBy("price", Query.Direction.DESCENDING)
                 .limit(10)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
