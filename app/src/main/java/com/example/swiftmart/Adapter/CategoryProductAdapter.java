@@ -61,6 +61,10 @@ public class CategoryProductAdapter extends RecyclerView.Adapter<CategoryProduct
                 .into(holder.cardProductImage);
         holder.cardProductName.setText(product.getName());
 
+        String fullDescription = product.getDescription();
+        String shortenedDescription = fullDescription.length() > 20 ? fullDescription.substring(0, 23) + "..." : fullDescription;
+        holder.cardProductDescription.setText(shortenedDescription);
+
         // Format the price
         double unitPrice = Double.parseDouble(product.getPrice());
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
@@ -155,9 +159,8 @@ public class CategoryProductAdapter extends RecyclerView.Adapter<CategoryProduct
             cardProductLinearLayout = itemView.findViewById(R.id.cardProductLinearLayout);
             cardProductImage = itemView.findViewById(R.id.cardProductImage);
             cardProductName = itemView.findViewById(R.id.cardProductName);
-//            cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
+            cardProductDescription = itemView.findViewById(R.id.cardProductDescription);
             cardProductPrice = itemView.findViewById(R.id.cardProductPrice);
-//            cardMaxPrice = itemView.findViewById(R.id.cardMaxPrice);
             wishlistButton = itemView.findViewById(R.id.wishlistButton);
 
         }

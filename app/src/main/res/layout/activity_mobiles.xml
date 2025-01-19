@@ -49,13 +49,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10sp"
         android:orientation="vertical">
 
         <HorizontalScrollView
             android:id="@+id/mobileHorizontalScrollView"
             android:layout_width="match_parent"
             android:layout_marginStart="8sp"
+            android:layout_marginTop="10sp"
             android:layout_height="wrap_content">
 
         <LinearLayout
@@ -293,9 +293,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mobileRecyclerView"
             android:layout_width="match_parent"
-            android:layout_marginTop="20sp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

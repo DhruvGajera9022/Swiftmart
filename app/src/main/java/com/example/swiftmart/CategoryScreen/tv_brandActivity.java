@@ -41,7 +41,7 @@ import java.util.List;
 public class tv_brandActivity extends AppCompatActivity {
 
     LinearLayout samsunglogo, lglogo, milogo, tcllogo;
-    ImageView backetvbrand;
+    ImageView backTVBrand;
     private ViewPager2 tvViewPager;
     private MobileSliderAdapter tvSliderAdapter;
     private Handler sliderHandler = new Handler();
@@ -72,7 +72,7 @@ public class tv_brandActivity extends AppCompatActivity {
         lglogo = findViewById(R.id.lglogo);
         milogo = findViewById(R.id.milogo);
         tcllogo = findViewById(R.id.tcllogo);
-        backetvbrand = findViewById(R.id.backetvbrand);
+        backTVBrand = findViewById(R.id.backTVBrand);
         tvRecyclerView=findViewById(R.id.tvRecyclerView);
         tvActivityProgressBar=findViewById(R.id.tvActivityProgressBar);
 
@@ -84,7 +84,7 @@ public class tv_brandActivity extends AppCompatActivity {
         getImageUrls();
         tvViewPager = findViewById(R.id.tvViewPager);
 
-     
+        backTVBrand.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
