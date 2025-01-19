@@ -49,6 +49,7 @@ public class ConfirmAddressActivity extends AppCompatActivity {
     private String uid, addressID, productID;
 
     private String productName, productPrice, productDescription, productCompany, productCategory;
+    private Double totalAmount;
     private String userName, userPhone;
     private List<String> currentImageUrls;
 
@@ -279,6 +280,7 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         String saveCurrentTime = currentTime.format(calForDate.getTime());
 
         String oid = db.collection("Orders").document().getId();
+        totalAmount = Double.parseDouble(productPrice) * 1;
 
         Map<String, Object> orderMap = new HashMap<>();
         orderMap.put("uid", uid);
@@ -294,6 +296,7 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         orderMap.put("imgurls", currentImageUrls);
         orderMap.put("orderDate", saveCurrentDate);
         orderMap.put("orderTime", saveCurrentTime);
+        orderMap.put("totalAmount", totalAmount.toString());
         orderMap.put("status", "Pending");
 
         db.collection("Orders")
