@@ -1,6 +1,7 @@
 package com.example.swiftmart.Frgments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,28 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.swiftmart.Adapter.OrderProductAdapter;
+import com.example.swiftmart.Model.OrderModel;
 import com.example.swiftmart.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class TabFragment extends Fragment {
-    private RecyclerView recyclerView;
+    private RecyclerView ordersRecyclerView;
     private TextView emptyView;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private ArrayList<OrderModel> orderList;
+    private OrderProductAdapter orderAdapter;
+    private String uid;
+
 
     @Nullable
     @Override
@@ -29,29 +47,70 @@ public class TabFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        ordersRecyclerView = view.findViewById(R.id.ordersRecyclerView);
         emptyView = view.findViewById(R.id.emptyView);
 
-        // Setup RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        // Get tab position from arguments
+        if (mAuth.getCurrentUser() != null) {
+            uid = mAuth.getCurrentUser().getUid();
+        } else {
+            return;
+        }
+
+        orderList = new ArrayList<>();
+        orderAdapter = new OrderProductAdapter(getContext(), orderList);
+
+        ordersRecyclerView.setAdapter(orderAdapter);
+
+        ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         int position = getArguments().getInt("tab_position", 0);
 
-        // Set empty view text based on tab
         switch (position) {
             case 0:
                 emptyView.setText("No active items");
-                // Load active items data
+                getOrders("Pending");
                 break;
             case 1:
                 emptyView.setText("No completed items");
-                // Load completed items data
+                getOrders("Accepted");
                 break;
             case 2:
                 emptyView.setText("No canceled items");
-                // Load canceled items data
+                getOrders("Canceled");
                 break;
         }
     }
+
+    private void getOrders(String status){
+        if (uid == null || uid.isEmpty()) {
+            return;
+        }
+
+        db.collection("Orders")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("status", status)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e("Firestore Error", "Error loading orders: ", error);
+                            return;
+                        }
+
+                        if (value != null && !value.isEmpty()) {
+                            orderList.clear();
+                            for (QueryDocumentSnapshot documentSnapshot : value) {
+                                OrderModel orderModel = documentSnapshot.toObject(OrderModel.class);
+                                orderList.add(orderModel);
+                            }
+                            orderAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                });
+    }
+
 }

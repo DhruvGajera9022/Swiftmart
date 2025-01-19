@@ -28,26 +28,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class OrdersActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager;
+    private TabLayout orderTabs;
+    private ViewPager2 orderActivityViewPager;
     private TabAdapter tabAdapter;
+    private ImageView backOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
 
+        orderTabs = findViewById(R.id.orderTabs);
+        orderActivityViewPager = findViewById(R.id.orderActivityViewPager);
+        backOrders = findViewById(R.id.backOrders);
 
-        // Initialize views
-        tabLayout = findViewById(R.id.tabs);
-        viewPager = findViewById(R.id.viewPager);
-
-        // Setup adapter
         tabAdapter = new TabAdapter(OrdersActivity.this);
-        viewPager.setAdapter(tabAdapter);
+        orderActivityViewPager.setAdapter(tabAdapter);
 
-        // Connect TabLayout with ViewPager2
-        TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager,
+        TabLayoutMediator mediator = new TabLayoutMediator(orderTabs, orderActivityViewPager,
                 (tab, position) -> {
                     switch (position) {
                         case 0:
@@ -64,5 +62,6 @@ public class OrdersActivity extends AppCompatActivity {
         );
         mediator.attach();
 
+        backOrders.setOnClickListener(v -> onBackPressed());
     }
 }
