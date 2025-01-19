@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ProductModel {
 
-    String pid, name, description, price, company, category, oid;
+    String pid, name, description, price, company, category, oid, totalAmount;
     private List<String> imgurls;
     private boolean isWishlisted;
     private int qty;
@@ -25,7 +25,8 @@ public class ProductModel {
             boolean isWishlisted,
             String oid,
             int qty,
-            double totalPrice
+            double totalPrice,
+            String totalAmount
     ){
         this.pid = pid;
         this.name = name;
@@ -38,6 +39,7 @@ public class ProductModel {
         this.oid = oid;
         this.qty = qty;
         this.totalPrice = totalPrice;
+        this.totalAmount = totalAmount;
     }
 
     public String getPid() {
@@ -126,5 +128,13 @@ public class ProductModel {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

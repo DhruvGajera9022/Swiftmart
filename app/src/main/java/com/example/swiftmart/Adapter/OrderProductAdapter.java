@@ -1,6 +1,7 @@
 package com.example.swiftmart.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.swiftmart.Model.OrderModel;
+import com.example.swiftmart.OrderTrackingActivity;
 import com.example.swiftmart.R;
 
 import java.util.ArrayList;
@@ -48,6 +50,9 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         holder.productPrice.setText("₹" + orderModel.getPrice());
 
         holder.trackOrderButton.setOnClickListener(v -> {
+            Intent intent = new Intent(context, OrderTrackingActivity.class);
+            intent.putExtra("orderID", orderModel.getOid());
+            context.startActivity(intent);
         });
     }
 
