@@ -9,10 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.swiftmart.Adapter.OrderProductAdapter;
+import com.example.swiftmart.Adapter.TabAdapter;
 import com.example.swiftmart.Model.OrderModel;
 import com.example.swiftmart.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,74 +28,41 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class OrdersActivity extends AppCompatActivity {
-
-    private ImageView backOrders;
-    private RecyclerView ordersRecyclerView;
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
-    private ArrayList<OrderModel> orderList;
-    private OrderProductAdapter orderAdapter;
-    private String uid;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    private TabAdapter tabAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
 
-        initialization();
-        getOrders();
-    }
 
-    private void initialization() {
-        backOrders = findViewById(R.id.backOrders);
-        ordersRecyclerView = findViewById(R.id.ordersRecyclerView);
+        // Initialize views
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewPager);
 
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        // Setup adapter
+        tabAdapter = new TabAdapter(OrdersActivity.this);
+        viewPager.setAdapter(tabAdapter);
 
-        // Check if the user is authenticated
-        if (mAuth.getCurrentUser() != null) {
-            uid = mAuth.getCurrentUser().getUid();
-        } else {
-            // Handle case where user is not logged in
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        orderList = new ArrayList<>();
-        orderAdapter = new OrderProductAdapter(this, orderList);
-
-        ordersRecyclerView.setAdapter(orderAdapter);
-        ordersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        backOrders.setOnClickListener(v -> onBackPressed());
-    }
-
-    private void getOrders() {
-        if (uid == null || uid.isEmpty()) {
-            return;
-        }
-
-        db.collection("Orders")
-                .whereEqualTo("uid", uid)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestore Error", "Error loading orders: ", error);
-                            return;
-                        }
-
-                        if (value != null && !value.isEmpty()) {
-                            orderList.clear();
-                            for (QueryDocumentSnapshot documentSnapshot : value) {
-                                OrderModel orderModel = documentSnapshot.toObject(OrderModel.class);
-                                orderList.add(orderModel);
-                            }
-                            orderAdapter.notifyDataSetChanged();
-                        }
+        // Connect TabLayout with ViewPager2
+        TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0:
+                            tab.setText("Active");
+                            break;
+                        case 1:
+                            tab.setText("Completed");
+                            break;
+                        case 2:
+                            tab.setText("Canceled");
+                            break;
                     }
-                });
-    }
+                }
+        );
+        mediator.attach();
 
+    }
 }
