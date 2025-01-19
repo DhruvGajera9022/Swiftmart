@@ -257,6 +257,7 @@ public class AccountFragment extends Fragment {
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
                     progress();
+                    getActivity().finish();
                 }
             }
         });

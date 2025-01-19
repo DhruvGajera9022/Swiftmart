@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class Address_Activity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String uid;
+    private TextView noAvailableText;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,9 +55,10 @@ public class Address_Activity extends AppCompatActivity {
         uid = mAuth.getCurrentUser().getUid();
 
         addressRecyclerView = findViewById(R.id.addressRecyclerView);
-        backaddress=findViewById(R.id.backaddress);
-        cart2=findViewById(R.id.cart2);
-        addnewadr=findViewById(R.id.addnewadr);
+        backaddress = findViewById(R.id.backaddress);
+        cart2 = findViewById(R.id.cart2);
+        addnewadr = findViewById(R.id.addnewadr);
+        noAvailableText = findViewById(R.id.noAvailableText);
 
         getAllAddress();
 
@@ -96,10 +99,6 @@ public class Address_Activity extends AppCompatActivity {
     }
 
     private void getAllAddress() {
-        if (datalist == null) {
-            datalist = new ArrayList<>();
-        }
-
         addressRecyclerView.setLayoutManager(new LinearLayoutManager(Address_Activity.this));
 
         db.collection("Users")
@@ -118,9 +117,19 @@ public class Address_Activity extends AppCompatActivity {
                             addressRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
 
-                            addressRecyclerView.setHasFixedSize(true);
-                            addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            addressRecyclerView.setVisibility(View.VISIBLE);
+                            noAvailableText.setVisibility(View.GONE);
+                        } else {
+                            datalist.clear();
+                            if (adapter != null) {
+                                adapter.notifyDataSetChanged();
+                            }
+                            addressRecyclerView.setVisibility(View.GONE);
+                            noAvailableText.setVisibility(View.VISIBLE);
                         }
+
+                        addressRecyclerView.setHasFixedSize(true);
+                        addressRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     }
                 });
     }

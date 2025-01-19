@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,9 @@ public class ConfirmAddressActivity extends AppCompatActivity {
 
     private Checkout checkout;
 
+    private TextView noAvailableText;
+    private LinearLayout confirmAddressLinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,9 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         confirmAddressEdit = findViewById(R.id.confirmAddressEdit);
 
         confirmAddressDeliver = findViewById(R.id.confirmAddressDeliver);
+
+        noAvailableText = findViewById(R.id.noAvailableText);
+        confirmAddressLinearLayout = findViewById(R.id.confirmAddressLinearLayout);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -109,6 +116,12 @@ public class ConfirmAddressActivity extends AppCompatActivity {
                                 confirmAddressNumber.setText(document.getString("phoneNumber"));
                                 addressID = document.getString("aid");
                             }
+                            noAvailableText.setVisibility(View.GONE);
+                            confirmAddressLinearLayout.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            noAvailableText.setVisibility(View.VISIBLE);
+                            confirmAddressLinearLayout.setVisibility(View.GONE);
                         }
                     }
                 });
