@@ -42,7 +42,6 @@ public class OrderTrackingActivity extends AppCompatActivity {
 
         initialization();
         getOrderProductDetails();
-        getOrderAddressDetails();
         handleRating();
 
     }
@@ -90,6 +89,7 @@ public class OrderTrackingActivity extends AppCompatActivity {
                     productID = value.getString("pid");
 
                     getRatingData(productID);
+                    getOrderAddressDetails(addressID);
 
                     ArrayList<String> imgUrls = (ArrayList<String>) value.get("imgurls");
                     if (imgUrls != null && !imgUrls.isEmpty()) {
@@ -100,10 +100,9 @@ public class OrderTrackingActivity extends AppCompatActivity {
         });
     }
 
-    private void getOrderAddressDetails(){
+    private void getOrderAddressDetails(String addressID){
 
         if (addressID == null || addressID.isEmpty()) {
-            Log.e("OrderTrackingActivity", "Address ID is null or empty");
             return;
         }
         DocumentReference reference = db.collection("Users").document(uid).collection("Addresses").document(addressID);
