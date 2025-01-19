@@ -305,6 +305,7 @@ public class ConfirmAddressActivity extends AppCompatActivity {
         orderMap.put("company", productCompany);
         orderMap.put("paymentID", paymentID);
         orderMap.put("oid", oid);
+        orderMap.put("aid", addressID);
         orderMap.put("quantity", "1");
         orderMap.put("imgurls", currentImageUrls);
         orderMap.put("orderDate", saveCurrentDate);
