@@ -20,15 +20,6 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
         <activity
-            android:name=".TabActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SummeryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PaymentActivity"
-            android:exported="false" />
-        <activity
             android:name=".ConfirmAddressActivity"
             android:exported="false" />
         <activity
@@ -96,28 +87,13 @@
             android:name=".WelcomeActivity"
             android:exported="true" />
         <activity
-            android:name=".tv_detailsActivity"
-            android:exported="false" />
-        <activity
             android:name=".CategoryScreen.tv_brandActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EarbusDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EarbudsActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryScreen.EarphoneActivity"
             android:exported="false" />
         <activity
             android:name=".WarrantyDetails"
-            android:exported="false" />
-        <activity
-            android:name=".PhoneDetails"
-            android:exported="false" />
-        <activity
-            android:name=".PhoneActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryScreen.MobilesActivity"

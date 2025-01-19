@@ -37,34 +37,6 @@
             android:text="@string/earphones"
             android:fontFamily="@font/poppinsbold"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/search"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="105sp"
-            android:src="@drawable/baseline_search_24" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/camera"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="65sp"
-            android:src="@drawable/baseline_photo_camera_24" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/gelery"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="25sp"
-            android:src="@drawable/baseline_insert_photo_24" />
-
-
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
