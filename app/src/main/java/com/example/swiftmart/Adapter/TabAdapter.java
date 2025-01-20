@@ -26,6 +26,6 @@ public class TabAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3; // Number of tabs
+        return 4; // Number of tabs
     }
 }

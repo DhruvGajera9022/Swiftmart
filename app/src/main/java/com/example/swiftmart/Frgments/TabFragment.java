@@ -74,10 +74,14 @@ public class TabFragment extends Fragment {
                 getOrders("Pending");
                 break;
             case 1:
-                emptyView.setText("No completed items");
+                emptyView.setText("No shippinggi items");
                 getOrders("Accepted");
                 break;
             case 2:
+                emptyView.setText("No shipped items");
+                getOrders("Shipped");
+                break;
+            case 3:
                 emptyView.setText("No canceled items");
                 getOrders("Canceled");
                 break;
